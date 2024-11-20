@@ -1,0 +1,53 @@
+
+# .NET Core
+bin/
+obj/
+
+# User-specific files
+.vscode/
+.idea/
+*.[Pp]rivate/
+
+# ASP.NET Core
+wwwroot/uploads
+appsettings.json
+appsettings.Development.json
+
+# Logs
+logs/
+
+# Build directories
+build/
+.vs/
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer files for x86
+x86/
+
+# macOS
+.DS_Store
+
+# Linux
+*.swp
+
+# JetBrains Rider
+.idea/
+
+# User-specific files (Visual Studio for Mac, Rider)
+.vscode/
+
+# Thumbnails
+Thumbs.db
+
+# Npm package lock files
+package-lock.json
+
+# .NET Core 3.x+ SDK check to avoid conflict with global.json
+global.json
+
+#Migration
+Migrations/
