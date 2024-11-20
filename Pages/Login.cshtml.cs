@@ -52,11 +52,11 @@ namespace weekday.Pages
                 else if(userDesignation.Name=="MANAGER"){
                     return RedirectToPage("Manager/Dashboard");
                 }else if(userDesignation.Name=="PROJECT_MANAGER"){
-                    return RedirectToPage("Project_Manager/Dashboard");
+                    return RedirectToPage("ProjectManager/Dashboard");
                 }else if(userDesignation.Name=="TEAM_LEAD"){
-                    return RedirectToPage("Team_Lead/Dashboard");
+                    return RedirectToPage("TeamLead/Dashboard");
                 }else if(userDesignation.Name=="TEAM_MEMBERS"){
-                    return RedirectToPage("Team_Members/Dashboard");
+                    return RedirectToPage("TeamMembers/Dashboard");
                 }
                 return Page();
             }
