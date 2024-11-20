@@ -24,8 +24,8 @@ namespace weekday.Data.Entity
         [Required, StringLength(100)]
         public string Password { get; set; }
 
-        [StringLength(50)]
-        public string UserRole { get; set; }
+    
+        public int DesignationId { get; set; }
 
 
         [StringLength(100)]

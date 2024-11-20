@@ -31,6 +31,9 @@ namespace weekday.Data.Entity
         public int AssignedById { get; set; }
 
         [Required]
+        public DateTime AssignedDate { get; set; }
+
+        public DateTime LatestUpdateTime { get; set; }
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }

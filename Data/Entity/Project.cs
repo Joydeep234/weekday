@@ -34,7 +34,11 @@ namespace weekday.Data.Entity
         [Required]
         public string Details { get; set; }
 
+        public string Status { get; set; }
+
         public int OrgId { get; set; }
+
+
 
     }
 }
