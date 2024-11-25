@@ -1,0 +1,92 @@
+@page
+@model weekday.Pages.Manager.RecentProject
+@{
+    ViewData["Title"] = "RecentProject";
+}
+@* style="overflow-y:hidden; scrollbar-width:none;" *@
+<div class="w-100">
+    <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary w-100" >
+  
+  <!-- Main content -->
+  <div class="flex-grow-1" >
+    <main class="py-6 bg-surface-secondary">
+      <div class="container-fluid" >
+        <!-- Card stats -->
+        <div class="row g-6 mb-6">
+         
+        <div class="card mb-7">
+          <div class="card-header">
+            <h5 class="mb-0">OnGoing Projects</h5>
+          </div>
+          <div class="table-responsive">
+             <table class="table table-hover table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Project Name</th>
+                  <th scope="col">Creation Date</th>
+                  <th scope="col">Deadline</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Progress</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @if(Model.AllprojectData.Count>0)
+                {
+                    @foreach(var item in Model.AllprojectData){
+                <tr>
+                  <td>
+                    <a asp-page="../Manager/ProjectDetails" asp-route-projectId="@item.ProjectId" asp-route-projectName="@item.Name" class="text-heading font-semibold">
+                      @item.Name
+                    </a>
+                  </td>
+                  <td>
+                    <p class="text-heading font-semibold">@item.CreatedAt</p>
+                  </td>
+                  <td>
+                    <p class="text-heading font-semibold">
+                     @item.Deadline
+                    </p>
+                  </td>
+                  <td>
+                   <span class="badge badge-lg badge-dot">
+                      <i class="@(item.Status == "ToDo" ? "bg-warning" : "bg-success")"></i> @item.Status
+                    </span>
+                  </td>
+                  <td>
+                      <div class="progress progress-lg">
+                        <div class="progress-bar bg-primary" role="progressbar" style="@(item.Status == "ToDo" ? "width:1%;" : "width: 50%;")" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                  </td>
+                  <td class="text-end">
+                    <a asp-page="../Manager/ProjectDetails" asp-route-projectId="@item.ProjectId" asp-route-projectName="@item.Name" class="btn btn-sm btn-neutral">View</a>
+                  </td>
+                </tr>
+                }
+                }else{
+                    <tr>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    
+                    <a asp-page="../Manager/CreateProjects" class="btn btn-sm btn-tertiary">
+                      <span class=" pe-2">
+                        <i class="bi bi-plus"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></i>
+                      </span>Add Projects
+                    </a>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                }
+              </tbody>
+                
+             </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</div>
