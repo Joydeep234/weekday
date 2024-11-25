@@ -1,0 +1,309 @@
+@page
+@model weekday.Pages.Team_Lead.ProjectsModel
+@{
+    ViewData["Title"] = "Projects";
+    
+}
+
+<section>
+        <div class="d-flex justify-content-between p-4">
+            <div> Projects </div>
+            <div> 
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-primary dropdown-toggle px-4 py-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-plus" style="margin-right: 10px;"></i> 
+                            Create
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item text-sm py-1 mx-2" href="#" style="font-weight: 500"><i class="fa-solid fa-code-pull-request mx-2"></i> Task</a>
+                        <div class="dropdown-divider"></div>
+                    <a type="button" href="#" data-bs-toggle="modal" data-bs-target="#TeamModal" class="dropdown-item text-sm py-1 mx-2" style="font-weight: 500">
+                        <i class="fa-solid fa-user-plus mx-2"></i>
+                            
+                            
+                            Team</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-12 col-lg-4 col-md-4">
+                <div class="card" style="height: 85vh;">
+                     <div class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+                    @{
+                        if (Model.projectDetails.Count != 0)
+                        {
+                            foreach(var projectCard in Model.projectDetails)
+                            {
+                                if(projectCard.ProjectStatus.Equals("TODO"))
+                                {
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
+                                                                            <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
+                                                                        </div>
+                                                                        <div class="col-auto">
+                                                                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                                                <i class="bi bi-credit-card"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mt-2 mb-0 text-sm">
+                                                                        <span class="badge rounded-pill text-bg-warning bg-opacity-30 text-white me-2">
+                                                                            @projectCard.ProjectStatus
+                                                                        </span>
+                                                                        <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                }
+                               
+                            }
+                        }
+                    }
+                    </div>
+                </div>   
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 ">
+                <div class="card" style="height: 85vh;">
+                    <div class="card-body">
+                    @{
+                        if (Model.projectDetails.Count != 0)
+                        {
+                            foreach (var projectCard in Model.projectDetails)
+                            {
+                                if (projectCard.ProjectStatus.Equals("IN-PROGRESS"))
+                                {
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
+                                                                            <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
+                                                                        </div>
+                                                                        <div class="col-auto">
+                                                                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                                                <i class="bi bi-credit-card"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mt-2 mb-0 text-sm">
+                                                                        <span class="badge rounded-pill text-bg-warning bg-opacity-30 text-warning me-2">
+                                                                            <i class="bi bi-arrow-up me-1"></i>@projectCard.ProjectStatus
+                                                                        </span>
+                                                                        <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                }
+
+                            }
+                        }
+                    }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4">
+                <div class="card" style="height: 85vh;">
+                    <div class="card-body">
+                    @{
+                        if (Model.projectDetails.Count != 0)
+                        {
+                            foreach (var projectCard in Model.projectDetails)
+                            {
+                                if (projectCard.ProjectStatus.Equals("DONE"))
+                                {
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
+                                                                            <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
+                                                                        </div>
+                                                                        <div class="col-auto">
+                                                                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                                                <i class="bi bi-credit-card"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mt-2 mb-0 text-sm">
+                                                                        <span class="badge rounded-pill text-bg-warning bg-opacity-30 text-warning me-2">
+                                                                            @projectCard.ProjectStatus
+                                                                        </span>
+                                                                        <span class="text-nowrap text-xs text-muted"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                }
+
+                            }
+                        }
+                    }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+
+<div class="modal fade" id="TeamModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-surface-secondary">
+            <form method="post" id="projectForm">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Team</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="height : 50vh;">
+                    
+                        @Html.AntiForgeryToken()
+                        <label class="form-label">Project</label>
+                        <select id="projectName" name="projectName" class="form-control">
+                            <option value="-1"> -- Select Project --</option>
+                            @foreach (var project in Model.projectDetails)
+                            {
+                                <option value="@project.ProjectId">@project.ProjectName</option>
+                            }
+                        </select>
+
+                        <label class="form-label">Project</label>
+                        <select id="teamList" asp-for="createTeam.TeamName"  name="teamList" class="form-control">
+                            <option value="-1"> -- Choose Team --</option>
+                                
+                        </select>
+
+
+                        <label class="form-label">Team Members</label>
+                        <div class="dropdown">
+                            <button id="dropdownButton" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                -- Choose Team Members --
+                            </button>
+                            <div class="dropdown-menu" id="membersDropdown">
+                                @foreach (var employee in Model.employees)
+                                {
+                                    <div class="dropdown-item">
+                                        <div class="avatar rounded-circle">
+                                            <img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80">
+                                        </div>
+                                        <input type="checkbox" class="member-checkbox" value="@employee.EmployeeId" data-name="@($"{employee.FirstName} {employee.LastName}")" />
+                                        @($"{employee.FirstName} {employee.LastName}")
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="membersId" name="MembersId" />
+                        @* <button class="btn btn-primary" type="submit">Submit</button> *@
+                    
+
+                    <div id="selectedMembers" class="mt-3">
+                        <h5>Selected Members:</h5>
+                        <div id="selectedMembersList"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $("select[name='projectName']").on('change', function () {           
+                $.ajax({
+                    type : 'GET',
+                    url : '@Url.Page("/TeamLead/Projects","TeamList")',
+                    data: { 'ProjectId': $(this).val() },
+                    success: (response) => {          
+                            $("#teamList").empty().append(`<option value= -1 > -- Choose Team -- </option>`)
+                            response.forEach((item) => {
+                                $("#teamList").append(`<option value=${item.teamId}> ${item.name} </option>`)
+                            })
+                    },
+                    error : (error) => {
+                        console.log("Error occures while fetching the team list");
+                    }
+                })
+            })
+
+
+            // Update selected members dynamically
+            $(document).on('change', '.member-checkbox', function () {
+                const memberId = $(this).val();
+                const memberName = $(this).data('name');
+                const selectedIds = [];
+
+                if ($(this).is(':checked')) {
+                    $('#selectedMembersList').append(`
+                            <div class="selected-member" id="selected-${memberId}">
+                                ${memberName} <span class="remove-member" data-id="${memberId}">&times;</span>
+                            </div>
+                        `);
+                } else {
+                    $(`#selected-${memberId}`).remove();
+                }
+
+                // Update hidden input with selected IDs
+                $('.member-checkbox:checked').each(function () {
+                    selectedIds.push($(this).val());
+                });
+                $('#membersId').val(selectedIds.join(',')); // Store as comma-separated values
+            });
+
+            // Remove member when the cross mark is clicked
+            $(document).on('click', '.remove-member', function () {
+                const memberId = $(this).data('id');
+                $(`#selected-${memberId}`).remove();
+                $(`.member-checkbox[value="${memberId}"]`).prop('checked', false).trigger('change');
+            });
+
+            // Handle form submission with AJAX
+            $('#projectForm').submit(function (e) {
+                e.preventDefault(); // Prevent default form submission
+
+                const formData = {
+                    TeamId: $('#teamList').val(),
+                    TeamName: $('#teamList option:selected').text(),
+                    ProjectId: $('#projectName').val(), // Dynamically get the selected project ID
+                    ProjectName: $('#projectName option:selected').text(), // Get selected project name
+                    MembersId: $('#membersId').val().split(',').map(Number), // Convert to array of numbers
+                };
+
+                console.log(formData);
+
+                $.ajax({
+                    url: '/TeamLead/Projects?handler=CreateOrUpdate',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()  // Add CSRF token to header
+                    },
+                    success: function (response) {
+                        // Handle success response
+                        $("#close-btn").trigger('click');
+                    },
+                    error: function (error) {
+                        alert('Error saving project!');
+                        // Handle error response
+                    },
+                });
+            });
+        });
+    </script>
+
+}

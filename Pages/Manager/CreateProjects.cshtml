@@ -1,0 +1,55 @@
+@page
+@model weekday.Pages.Manager.CreateProjects
+@using weekday.Models
+@{
+    ViewData["Title"] = "CreateProjects";
+}
+
+<div class=" w-full d-flex justify-content-center">
+    <div style="width: 100%; box-shadow: 0px 0px 6px rgba(69, 69, 69, 0.792);" class="rounded-2 w-3/4">
+      <div class="formcontainer">
+        <form method="post" asp-page-handler="AddProject" class="form-control">
+            <div class="inputcontainer">
+                <label asp-for="projectmodel.Name" class="form-label"></label>
+                <input type="text" asp-for="projectmodel.Name" class="form-control"/>
+                <span asp-validation-for="projectmodel.Name" class="fs-5" style="color: rgb(255, 0, 0);"></span>
+            </div>
+            <div class="inputcontainer">
+                <label asp-for="projectmodel.About" class="form-label"></label>
+                <textarea type="text" asp-for="projectmodel.About" class="form-control" style="resize: none;"></textarea>
+                <span asp-validation-for="projectmodel.About" class="fs-5" style="color: rgb(255, 0, 0);"></span>
+            </div>
+            <div class="inputcontainer d-flex justify-content-center">
+                <div class="flex-fill me-2">
+                    <label asp-for="projectmodel.CreatedAt" class="form-label"></label>
+                    <input type="datetime-local" asp-for="projectmodel.CreatedAt" class="form-control"></input>
+                    <span asp-validation-for="projectmodel.CreatedAt" class="fs-5" style="color: rgb(255, 0, 0);"></span>
+                </div>
+                <div class="flex-fill ms-2">
+                    <label asp-for="projectmodel.Deadline" class="form-label"></label>
+                    <input type="datetime-local" asp-for="projectmodel.Deadline" class="form-control" ></input>
+                    <span asp-validation-for="projectmodel.Deadline" class="fs-5" style="color: rgb(255, 0, 0);"></span>
+                </div>
+            </div>
+            <div class="inputcontainer">
+                <label asp-for="projectmodel.Details" class="form-label"></label>
+                <textarea type="text" asp-for="projectmodel.Details" class="form-control" style="resize: none;"></textarea>
+                <span asp-validation-for="projectmodel.Details" class="fs-5" style="color: rgb(255, 0, 0);"></span>
+            </div>
+            <div class="inputcontainer">
+                <label asp-for="projectmodel.Status" class="form-label"></label>
+                <select type="text" asp-for="projectmodel.Status" asp-items="Html.GetEnumSelectList<ProjectStatus>()" class="form-control"> 
+                    <option>None</option>
+                </select>
+                <span asp-validation-for="projectmodel.Status" class="fs-5" style="color: rgb(255, 0, 0);"></span>
+            </div>
+            <div class="inputcontainer mt-6 d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">
+                    Create
+                </button>
+            </div>
+
+        </form>
+      </div>
+</div>
+</div>

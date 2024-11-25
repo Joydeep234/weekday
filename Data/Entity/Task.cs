@@ -24,6 +24,8 @@ namespace weekday.Data.Entity
 
         public string Status { get; set; }
 
+        public string Priority { get; set; }
+
         [Required]
         public int AssignedForId { get; set; }
 

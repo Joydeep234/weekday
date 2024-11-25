@@ -1,0 +1,26 @@
+@model weekday.Pages.Manager.ProjectDetails
+@using weekday.Models
+<form method="post" asp-page-handler="CreateTeam" asp-route-projectID="@Model.projectID" 
+asp-route-projectName="@Model.projectNAME" class="mt-10">
+
+    <div class="mb-3">
+        <label asp-for="team.Name" class="form-label">Team Name</label>
+        <input id="teamName" asp-for="team.Name"  type="text" class="form-control"/>
+        <span asp-validation-for="team.Name" class="fs-6 text-danger" id="NameSapan"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="team.Status" class="form-label">Status</label>
+        <select id="teamStatus" asp-for="team.Status" asp-items="Html.GetEnumSelectList<TeamStatus>()" class="form-control">
+            <option>none</option>
+        </select>
+        <span asp-validation-for="team.Status" class="fs-6 text-danger" id="StatusSapan"></span>
+    </div>
+    <div class="mb-3">
+        <label  asp-for="team.Description" class="form-label">Description</label>
+        <textarea id="teamDescription" asp-for="team.Description" class="form-control" rows="4" style="resize: none;"></textarea>
+        <span asp-validation-for="team.Description" class="fs-6 text-danger" id="DescSapan"></span>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+</form>

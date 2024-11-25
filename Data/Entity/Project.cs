@@ -19,10 +19,11 @@ namespace weekday.Data.Entity
         [StringLength(100)]
         public string About { get; set; }
 
-        [Required]
+        public DateTime CreatedAt { get; set; }
+        
         public DateTime StartDate { get; set; }
 
-        [Required]
+        public DateTime UpdatedAt { get; set; }
         public DateTime EndDate { get; set; }
 
         [Required]
