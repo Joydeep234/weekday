@@ -42,10 +42,7 @@ namespace weekday.Pages.Project_Manager
                                     StartDate = project.StartDate,
                                     EndDate = project.EndDate,
                                     Deadline = project.Deadline,
-                                    Details = project.Details,
-                                    TeamId = team.TeamId,
-                                    TeamName = team.Name,
-                                    Description = team.Description,
+                                    Project_Details = project.Details,
                                    /* EmpImag = Employee.ImageURL,*/
                                     
                                 }).ToList();

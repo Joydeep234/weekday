@@ -17,7 +17,7 @@
                     {
                         foreach(var item in Model.employeeProjects)
                         {
-                            if (item.ProjectStatus == "Active")
+                            if (item.ProjectStatus == "New")
                             {
                                 <a asp-page="/ProjectManager/ProjectDiscription" asp-route-ProjectId="@item.ProjectId">
                                     <div class="card shadow-lg bg-surface-secondary">
@@ -25,7 +25,7 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <span class="h6 font-semibold text-muted text-sm d-block mb-2">@item.ProjectName</span>
-                                                    <span class="h3 font-bold mb-0">@item.StartDate</span>
+                                                    <span class="h3 font-bold mb-0">@item.StartDate.ToString("MMMM dd, yyyy")</span>
                                                 </div>
                                                 <div class="col-auto">
                                                     <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
@@ -69,7 +69,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <span class="h6 font-semibold text-muted text-sm d-block mb-2">@item.ProjectName</span>
-                                                <span class="h3 font-bold mb-0">@item.StartDate</span>
+                                                    <span class="h3 font-bold mb-0">@item.StartDate.ToString("MMMM dd, yyyy")</span>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
@@ -112,7 +112,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <span class="h6 font-semibold text-muted text-sm d-block mb-2">@item.ProjectName</span>
-                                                <span class="h3 font-bold mb-0">@item.StartDate</span>
+                                                    <span class="h3 font-bold mb-0">@item.StartDate.ToString("MMMM dd, yyyy")</span>
                                             </div>
                                             <div class="col-auto">
                                                 <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">

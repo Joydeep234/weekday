@@ -3,108 +3,83 @@
 @{
 }
 <h1 class="ms-4">Project Discription</h1>
-@* <nav class="navbar navbar-expand-lg navbar-light bg-light px-0 py-3 ms-3">
-        <div class="container-xl">
-            <!-- Logo -->
-            <a class="navbar-brand" href="#">
-                <img src="https://preview.webpixels.io/web/img/logos/clever-primary.svg" class="h-8" alt="...">
-            </a>
-            <!-- Navbar toggle -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Collapse -->
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <!-- Nav -->
-                <div class="navbar-nav mx-lg-auto">
-                    <a class="nav-item nav-link active" href="#" aria-current="page">Home</a>
-                    <a class="nav-item nav-link" href="#">Product</a>
-                    <a class="nav-item nav-link" href="#">Features</a>
-                    <a class="nav-item nav-link" href="#">Pricing</a>
-                </div>
-                <!-- Right navigation -->
-                <div class="navbar-nav ms-lg-4">
-                    <a class="nav-item nav-link" href="#">Sign in</a>
-                </div>
-                <!-- Action -->
-                <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
-                    <a href="#" class="btn btn-sm btn-primary w-full w-lg-auto">
-                        Register
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav> *@
+ @* <nav class="navbar navbar-expand-lg navbar-light bg-light px-0 py-3 ms-3" style="width:78.5vw;">
+         <div class="container-xl">
+             <!-- Logo -->
+             <a class="navbar-brand" href="#">
+                 <img src="https://preview.webpixels.io/web/img/logos/clever-primary.svg" class="h-8" alt="...">
+             </a>
+             <!-- Navbar toggle -->
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                 <span class="navbar-toggler-icon"></span>
+             </button>
+             <!-- Collapse -->
+             <div class="collapse navbar-collapse" id="navbarCollapse">
+                 <!-- Nav -->
+                 
+                 <!-- Right navigation -->
+                 <div class="navbar-nav ms-lg-4">
+                     <a class="nav-item nav-link" href="#">Sign in</a>
+                 </div>
+                 <!-- Action -->
+                 <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
+                     <a href="#" class="btn btn-sm btn-primary w-full w-lg-auto">
+                         Register
+                     </a>
+                 </div>
+             </div>
+         </div>
+     </nav> *@
  
-<div class="row bg-white ms-3 mt-4" style="height: 600px;">
+<div class="row bg-white ms-3 mt-5" style="height: 500px;">
     @{
-            <!-- Left Column -->
-            <div class="col-7 h-full">
-                <h2>@Model.ProjectDis.ProjectName</h2>
-                <p>Project ID: @Model.ProjectDis.ProjectId</p>
+        <div class="col-7 h-full">
+            <h2 class="m-4">@Model.ProjectDis.ProjectName</h2>
 
-                <!-- Select Team -->
-                <label class="form-label">Select Team</label>
-                <div class="dropdown">
-                    <button id="teamDropdownButton" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        -- Select a Team --
-                    </button>
-                    <div class="dropdown-menu" id="teamDropdown">
-                        @foreach (var team in Model.teamList)
-                        {
-                            <div class="dropdown-item">
-                                <input type="radio" name="selectedTeam" class="team-radio" value="@team.TeamId"
-                                       data-name="@team.TeamName" />
-                                @team.TeamName
-                            </div>
-                        }
-                    </div>
-                </div>
-
-                <!-- Selected Team Display -->
-                <div class="mt-3" id="selectedTeamContainer">
-                    <h5>Selected Team:</h5>
-                    <div id="selectedTeamName"></div>
-                </div>
-
-                <!-- Select Team Leads -->
-                <label class="form-label mt-4">Select Team Leads</label>
-                <div class="dropdown">
-                    <button id="teamLeadDropdownButton" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        -- Select Team Leads --
-                    </button>
-                    <div class="dropdown-menu" id="teamLeadDropdown">
-                        @foreach (var employee in Model.Employees)
-                        {
-                            <div class="dropdown-item">
-                                <input type="checkbox" class="team-lead-checkbox"
-                                       value="@employee.EmployeeId"
-                                       data-name="@($"{employee.FirstName} {employee.LastName}")" />
-                                @($"{employee.FirstName} {employee.LastName}")
-                            </div>
-                        }
-                    </div>
-                </div>
-
-                <!-- Selected Team Leads Display -->
-                <div class="mt-3" id="selectedTeamLeadsContainer">
-                    <h5>Selected Team Leads:</h5>
-                    <div id="selectedTeamLeads"></div>
-                </div>
-
-                <!-- Submit Button -->
-                <button id="saveSelections" class="btn btn-primary mt-4">Save Selections</button>
-            </div>
             
-            <input type="hidden" id="selectedTeamId" name="SelectedTeamId" />
-            <input type="hidden" id="selectedTeamLeadIds" name="SelectedTeamLeadIds" />
 
-        
+            @Html.AntiForgeryToken()
+
+            <form id="teamForm">
+                <!-- Team Selection -->
+                <div class="d-flex" style="margin-left:20px; margin-top:100px;">
+                    <div class="">
+                        <label id="teamList" class="ms-4">Select Team</label>
+                        <select id="teamList" name="Team" class="form-control">
+                            <option value="-1" selected> Select Team </option>
+                            @foreach (var item in Model.teamList)
+                            {
+                                <option value="@item.TeamId">@item.TeamName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Team Leader Selection -->
+                    <div class="ms-4">
+                        <label id="teamList" class="ms-4">Select Team Leader</label>
+                        <select id="teamLeaderList" name="TeamLeads" class="form-control">
+                            <option value="-1" selected>Select Team Leader</option>
+                            @foreach (var item in Model.Employees)
+                            {
+                                <option value="@item.EmployeeId">@item.FirstName @item.LastName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="ms-4">
+                        <button type="submit" class="btn btn-primary" id="assign" style="margin-top:25px">Assign</button>
+                    </div>
+                </div>
+
+                
+                <!-- Submit Button -->
+                
+            </form>
+        </div>
 
     }
 
     <!-- Right Column: Content with Scrolling -->
-    <div class="col h-full" style="overflow-y: auto;">
+    <div class="col h-full" id="side-scroll" style="overflow-y: auto;  ">
         @{
             if (Model.ProjectDis != null)
             {
@@ -119,38 +94,40 @@
                             <p class="badge badge-lg badge-dot ms-10">
                                 <i class="bg-success"></i>@Model.ProjectDis.ProjectStatus
                             </p>
-                        }else if(Model.ProjectDis.ProjectStatus =="Completed"){
+                        }
+                        else if (Model.ProjectDis.ProjectStatus == "Completed")
+                        {
                             <p class="badge badge-lg badge-dot ms-10">
-                                <i class="bg-Primary"></i>@Model.ProjectDis.ProjectStatus
+                                <i class="bg-primary"></i>@Model.ProjectDis.ProjectStatus
                             </p>
                         }
                     </div>
-                    <div class="projectDetailmain border border-solid py-4 ps-4 h-2/3">
+                    <div class="projectDetailmain border border-solid py-4 ps-4 h-auto">
                         <div class="d-flex">
                             <div class="">
                                 <div class="d-flex px-3 my-4">
-                                    <p class="me-16">Assignee :</p>
+                                    <p class="me-16">Project Name :</p>
                                     <p class="me-2 text-start">@Model.ProjectDis.ProjectName</p>
                                 </div>
                                 <div class="d-flex px-3 my-4">
-                                    <p class="me-10">Designation :</p>
+                                    <p class="me-10">Discription :</p>
                                     <p class="me-2 text-start">@Model.ProjectDis.About</p>
                                 </div>
                                 <div class="d-flex my-4 px-3 ">
                                     <p class="me-8">Created Date :</p>
-                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.StartDate</p>
+                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.StartDate.ToString("MMMM dd, yyyy")</p>
                                 </div>
                                 <div class="d-flex my-4 px-3 ">
                                     <p class="me-2">Project Deadline :</p>
-                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.Deadline</p>
+                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.Deadline.ToString("MMMM dd, yyyy")</p>
                                 </div>
                                 <div class="d-flex my-4 px-3 ">
                                     <p class="me-8">Starting Date :</p>
-                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.StartDate</p>
+                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.StartDate.ToString("MMMM dd, yyyy")</p>
                                 </div>
                                 <div class="d-flex my-4 px-3 ">
                                     <p class="me-16">End Date :</p>
-                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.EndDate</p>
+                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.EndDate.ToString("MMMM dd, yyyy")</p>
                                 </div>
                                 <div class="d-flex my-4 px-3">
                                     <p class="me-20">About :</p>
@@ -158,7 +135,7 @@
                                 </div>
                                 <div class="d-flex my-4 px-3">
                                     <p class="me-20">Details:</p>
-                                    <p class="me-2 text-start">@Model.ProjectDis.Details</p>
+                                    <p class="me-2 text-start">@Model.ProjectDis.Project_Details</p>
                                 </div>
                             </div>
                         </div>
@@ -177,103 +154,44 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // Track selected team and team leads
-            let selectedTeamId = null;
-            let selectedTeamLeads = [];
+            $("#teamForm").on("submit", function (event) {
+                event.preventDefault(); 
+                alert("Called");
 
-            // Handle team selection
-            $(document).on('change', '.team-radio', function () {
-                selectedTeamId = $(this).val(); // Get the selected team ID
-                const teamName = $(this).data('name');
-
-                // Display selected team name
-                $('#selectedTeamName').text(teamName);
-
-                // Store the selected team ID in the hidden input
-                $('#selectedTeamId').val(selectedTeamId);
-
-                // Clear previously selected team leads
-                $('#selectedTeamLeads').empty();
-                selectedTeamLeads = [];
-                $('#selectedTeamLeadIds').val('');
-
-                // Fetch team leads for the selected team using AJAX
-                $.ajax({
-                    url: `/ProjectManager/ProjectDiscription?handler=GetTeamLeads`,
-                    type: 'GET',
-                    data: { teamId: selectedTeamId },
-                    success: function (response) {
-                        const teamLeads = response.teamLeads;
-                        const teamLeadDropdown = $('#teamLeadDropdown');
-                        teamLeadDropdown.empty(); // Clear previous team leads
-
-                        teamLeads.forEach(lead => {
-                            teamLeadDropdown.append(`
-                                    <div class="dropdown-item">
-                                        <input type="checkbox" class="team-lead-checkbox" value="${lead.employeeId}"
-                                               data-name="${lead.firstName} ${lead.lastName}" />
-                                        ${lead.firstName} ${lead.lastName}
-                                    </div>
-                                `);
-                        });
-                    },
-                    error: function (error) {
-                        alert('Error loading team leads!');
-                        console.error(error);
-                    }
-                });
-            });
-
-            // Handle team lead selection
-            $(document).on('change', '.team-lead-checkbox', function () {
-                const leadId = $(this).val();
-                const leadName = $(this).data('name');
-
-                if ($(this).is(':checked')) {
-                    selectedTeamLeads.push(leadId);
-                    $('#selectedTeamLeads').append(`<div id="lead-${leadId}">${leadName}</div>`);
-                } else {
-                    selectedTeamLeads = selectedTeamLeads.filter(id => id !== leadId);
-                    $(`#lead-${leadId}`).remove();
-                }
-
-                // Store the selected team lead IDs in the hidden input
-                $('#selectedTeamLeadIds').val(selectedTeamLeads.join(','));
-            });
-
-            // Handle save selections
-            $('#saveSelections').click(function () {
-                if (!selectedTeamId) {
-                    alert('Please select a team!');
-                    return;
-                }
-
-                const formData = {
-                    SelectedTeamId: selectedTeamId,
-                    SelectedTeamLeadIds: selectedTeamLeads.map(Number)
+                
+                var formData = {
+                    teamId: $("#teamList").val(),
+                    teamLeaderId: $("#teamLeaderList").val()
                 };
 
-                console.log('Saving:', formData);
+                console.log(formData); 
 
-                $.ajax({
-                    url: '/ProjectManager/ProjectDiscription?handler=SaveSelections',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(formData),
-                    headers: {
-                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                    },
-                    success: function (response) {
-                        alert('Selections saved successfully!');
-                    },
-                    error: function (error) {
-                        alert('Error saving selections!');
-                        console.error(error);
-                    }
-                });
+               
+                   $.ajax({
+                        method: "POST",
+                        url: "/ProjectManager/ProjectDiscription?handler=Create",
+                        contentType: "application/json",
+                        data: JSON.stringify(formData),
+                        headers: {
+                            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                alert("Success! Team leader assigned.");
+                            } else {
+                                alert("Team Already Exists " + response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                            alert("Failed to update. Please try again.");
+                        }
+                    });
+
             });
         });
     </script>
-
-
 }
+
+
+
