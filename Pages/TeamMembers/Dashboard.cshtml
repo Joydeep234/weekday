@@ -1,11 +1,126 @@
 @page
 @model weekday.Pages.Team_Members.Dashboard
 @{
-    ViewData["Title"] = "Dashboard";
+    //ViewData["Title"] = "Dashboard";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<div>
-    tm
+
+
+<div class="row my-3">
+    <div class="col-12 col-lg-4 col-md-4">
+        <div class="card" style="height: 85vh;">
+            <div class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+                @* //ToDoList *@
+                <h1>ToDo</h1>
+                @foreach (var tasks in Model.PTList)
+                {
+                    if (Model.employeeID == tasks.AssignedForId && tasks.Status.ToUpper() == "TODO")
+                    {
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Task ID: @tasks.TaskId</h5>
+                                <h5 class="card-title">Title: @tasks.Title</h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>
+                                <h6>Deadline: @tasks.Deadline</h6>
+                                <h6>Status: <span style="color:red">@tasks.Status.ToUpper()</span></h6>
+                                <a class="btn btn-danger" asp-page="/TeamMembers/TaskCompletion" asp-route-taskID="@tasks.TaskId">Working for-></a>
+                                
+                            </div>
+                        </div>
+                    }
+                }
+                
+
+            </div>
+        </div>
+    </div>
+
+    @*---------------------------------Done Card------------------------------ *@
+    @* In Progree row *@
+    <div class="col-12 col-lg-4 col-md-4 ">
+        <div class="card" style="height: 85vh;">
+            <div class="card-body">
+                <h1 class="pb-2">InProgress</h1>
+
+                @foreach(var tasks in Model.PTList)
+                {
+                    if (Model.employeeID == tasks.AssignedForId && tasks.Status.ToUpper() == "WORKING")
+                    {
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Task ID: @tasks.TaskId</h5>
+                                <h5 class="card-title">Title: @tasks.Title</h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>
+                                <h6>Deadline: @tasks.Deadline</h6>
+                                <h6>Status: <span style="color:orange">@tasks.Status.ToUpper()</span></h6>
+                                <a class="btn btn-primary" asp-page="/TeamMembers/TaskCompletion" asp-route-taskID="@tasks.TaskId">For task completion-></a>
+                            </div>
+                        </div>
+                    }
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+
+    @*---------------------------------Done Card------------------------------ *@
+
+    @* Done card row*@
+    <div class="col-lg-4 col-md-4">
+        <div class="card" style="height: 85vh;">
+            <div class="card-body">
+                <h1 class="pb-2">Done</h1>
+                
+
+                @foreach(var tasks in Model.PTList)
+                {
+                    if(Model.employeeID==tasks.AssignedForId && tasks.Status.ToUpper() == "DONE")
+                    {
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Task ID: @tasks.TaskId</h5>
+                                <h5 class="card-title">Title: @tasks.Title</h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>
+                                <h6>Deadline: @tasks.Deadline</h6>
+                                <h6>Status:<span style="color:green">@tasks.Status.ToUpper()</span> </h6>
+                                <a class="btn btn-success" asp-page="/TeamMembers/TaskCompletion" asp-route-taskID="@tasks.TaskId">For task review-></a>
+                            </div>
+                        </div>
+                    }
+                    @* else
+                    {
+                        <h6>Completed Taks are empty.</h6>
+                    } *@
+                }
+
+                @* <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Task ID: </h5>
+                        <h5 class="card-subtitle mb-2 text-body-secondary">Title: </h5>
+                        <h6>Dealine: </h6>
+                        <h6>>Status</h6>
+                        <h6><a class="">For task completion-></a></h6>
+                    </div>
+                </div> *@
+
+
+            </div>
+        </div>
+    </div>
 </div>
+
+@* CSS  ---------------------------------------------------------------------------------------------------------------------------------------
+
+.card-scroll {
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+    .card-scroll::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Edge */
+    } *@

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace weekday.Data.Entity
 {
@@ -33,10 +34,10 @@ namespace weekday.Data.Entity
         [Required]
         public DateTime AssignedDate { get; set; }
 
-        public DateTime LatestUpdateTime { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? LatestUpdateTime { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         [Required]
         public DateTime Deadline { get; set; }
