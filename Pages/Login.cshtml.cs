@@ -56,7 +56,7 @@ namespace weekday.Pages
                 }else if(userDesignation.Name=="TEAM_LEAD"){
                     return RedirectToPage("TeamLead/Dashboard");
                 }else if(userDesignation.Name=="TEAM_MEMBERS"){
-                    return RedirectToPage("TeamMembers/Dashboard");
+                    return RedirectToPage("TeamMember/Dashboard");
                 }
                 return Page();
             }

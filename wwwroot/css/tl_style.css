@@ -1,0 +1,14 @@
+﻿body {
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.card-scroll {
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.card-scroll::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Edge */
+}
+
