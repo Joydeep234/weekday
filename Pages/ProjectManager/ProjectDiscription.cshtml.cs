@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.Runtime.CompilerServices;
 using weekday.Data.Context;
 using weekday.Data.Entity;
 using weekday.Models;
+using weekday.Pages.HR;
 
 namespace weekday.Pages.ProjectManager
 {
@@ -32,6 +34,8 @@ namespace weekday.Pages.ProjectManager
         public List<TeamList> teamList { get; set; } = new List<TeamList>();
         [BindProperty]
         public FormData FormData { get; set; } = new FormData();
+
+        public StatusUpdate statusUpdate { get; set; } = new StatusUpdate();
 
         public async Task OnGetAsync(int ProjectId)
         {
@@ -116,7 +120,26 @@ namespace weekday.Pages.ProjectManager
 
             
         }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> OnPostUpdateStatusAsync(string status)
+        {
+            Console.WriteLine(status);
 
+            int proj_ID = Convert.ToInt32(TempData["tempProjectId"]);
+
+            var project_id = await _context.project.FindAsync(proj_ID);
+
+            project_id.Status = status;
+
+            await _context.SaveChangesAsync();
+
+
+
+
+            return new JsonResult(new { success = true });
+        }
+ 
 
         
     }
@@ -125,5 +148,10 @@ namespace weekday.Pages.ProjectManager
     {
         public int teamId { get; set; }
         public int teamLeaderId { get; set; }
+    }
+
+    public class StatusUpdate()
+    {
+        public string status { get; set; }
     }
 }

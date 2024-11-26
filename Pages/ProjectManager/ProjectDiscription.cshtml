@@ -66,7 +66,7 @@
                         </select>
                     </div>
                     <div class="ms-4">
-                        <button type="submit" class="btn btn-primary" id="assign" style="margin-top:25px">Assign</button>
+                        <button type="submit" class="btn btn-success" id="assign" style="margin-top:25px">Assign</button>
                     </div>
                 </div>
 
@@ -81,10 +81,21 @@
     <!-- Right Column: Content with Scrolling -->
     <div class="col h-full" id="side-scroll" style="overflow-y: auto;  ">
         @{
+            <!-- Example single danger button -->
+
+            <div class="btn-group mt-3">
+                <select id="statusList" name="status" class="btn btn-secondary p-1">
+                    
+                    <option value="New">New</option>
+                    <option value="OnGoing">OnGoing</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            
             if (Model.ProjectDis != null)
             {
                 <div class="h-full" id="CreateTeamFeild">
-                    <div class="projectDetailheader d-flex border border-solid py-4 ps-4 mt-10">
+                    <div class="projectDetailheader d-flex border border-solid py-4 ps-4 mt-4">
                         <p class="ms-3">Details</p>
                         @if(Model.ProjectDis.ProjectStatus == "New"){
                             <p class="badge badge-lg badge-dot ms-10">
@@ -154,41 +165,76 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            // Handle form submission
             $("#teamForm").on("submit", function (event) {
-                event.preventDefault(); 
-                alert("Called");
+                event.preventDefault();
 
-                
+                // Prepare form data
                 var formData = {
                     teamId: $("#teamList").val(),
                     teamLeaderId: $("#teamLeaderList").val()
                 };
 
-                console.log(formData); 
+                console.log(formData);
 
-               
-                   $.ajax({
-                        method: "POST",
-                        url: "/ProjectManager/ProjectDiscription?handler=Create",
-                        contentType: "application/json",
-                        data: JSON.stringify(formData),
-                        headers: {
-                            RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
-                        },
-                        success: function (response) {
-                            if (response.success) {
-                                alert("Success! Team leader assigned.");
-                            } else {
-                                alert("Team Already Exists " + response.message);
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(error);
-                            alert("Failed to update. Please try again.");
+                // AJAX request for form submission
+                $.ajax({
+                    method: "POST",
+                    url: "/ProjectManager/ProjectDiscription?handler=Create",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Success! Team leader assigned.");
+                        } else {
+                            alert("Team Already Exists: " + response.message);
                         }
-                    });
-
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert("Failed to update. Please try again.");
+                    }
+                });
             });
+
+            // Handle status list change
+            $("#statusList").on("change", function (event) {
+                event.preventDefault();
+                
+                var status_text = $('#statusList option:selected').text();
+                alert(status_text);
+
+                // AJAX request for status update
+                $.ajax({
+                    method: "POST",
+                    url: "/ProjectManager/ProjectDiscription?handler=UpdateStatus",
+                    data: { status: status_text }, 
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        window.location.href = "/ProjectManager/Dashboard";
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert("Failed to update status. Please try again.");
+                    }
+                });
+            });
+                   
+            var currentStatus = "@Model.ProjectDis.ProjectStatus"; 
+
+           console.log(currentStatus);
+            $('#statusList option').each(function () {
+                if ($(this).val() === currentStatus) {
+                    $(this).prop('selected', true);
+                }
+            });
+       
+
         });
     </script>
 }
