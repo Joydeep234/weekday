@@ -1,5 +1,5 @@
 ﻿@page
-@model weekday.Pages.TeamMembers.TaskCompletionModel
+@model weekday.Pages.TeamMember.TaskCompletionModel
 @{
 }
 
@@ -62,7 +62,7 @@
                 </div>
                 <div>
                     <button type="submit" class="btn btn-outline-info">Update</button>
-                    <a asp-page="/TeamMembers/Dashboard" class="btn btn-outline-danger" asp-route-empId="@Model.TaskMdIP.AssignedForIdM">Cancel</a>
+                    <a asp-page="/TeamMember/Dashboard" class="btn btn-outline-danger" asp-route-empId="@Model.TaskMdIP.AssignedForIdM">Cancel</a>
 
                 </div>
 

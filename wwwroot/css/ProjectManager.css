@@ -1,0 +1,33 @@
+﻿.card-scroll {
+    overflow-y: scroll; 
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+    .card-scroll::-webkit-scrollbar {
+        display: none; 
+    }
+
+#side-scroll{
+    overflow-y:scroll;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+    #side-scroll::-webkit-scrollbar{
+        display:none;
+    }
+#heading {
+    margin-left: 140px;
+    margin-bottom: 10px;
+}
+#heading-2{
+    margin-left:120px;
+    margin-bottom:20px;
+}
+#heading-3{
+    margin-left:110px;
+    margin-bottom:20px;
+}
+#h1{
+    margin-top:0;
+}

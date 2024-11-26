@@ -1,0 +1,212 @@
+﻿@page
+@model weekday.Pages.TeamLead.BoardModel
+@{
+    
+}
+
+<section >
+        <div class="d-flex justify-content-between p-4">
+            <div> Projects </div>
+            <div> 
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-primary dropdown-toggle px-4 py-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-plus" style="margin-right: 10px;"></i> 
+                            Create
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item text-sm py-1 mx-2" href="#" style="font-weight: 500"><i class="fa-solid fa-code-pull-request mx-2"></i> Task</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-sm py-1 mx-2" href="#" style="font-weight: 500"><i class="fa-solid fa-user-plus mx-2"></i> Team</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12 col-lg-4 col-md-4">
+                
+                <div class="card" style="height: 88vh;">
+                    <h5 class=" card-title h5 my-3 text-uppercase text-center text-primary">TO DO</h5>
+                    <div id="todo-list" class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+                        
+                    @* // another inside card  *@
+
+                        <div class="card" data-id="1">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Budget</span>
+                                        <span class="h3 font-bold mb-0">$750.90</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                            <i class="bi bi-credit-card"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 mb-0 text-sm">
+                                    <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
+                                        <i class="bi bi-arrow-up me-1"></i>13%
+                                    </span>
+                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    @* another card  *@
+
+                        <div class="card " data-id="3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">New projects</span>
+                                        <span class="h3 font-bold mb-0">215</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 mb-0 text-sm">
+                                    <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
+                                        <i class="bi bi-arrow-up me-1"></i>30%
+                                    </span>
+                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    @* // another card  *@
+
+                        <div class="card " data-id="4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">New projects</span>
+                                        <span class="h3 font-bold mb-0">215</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 mb-0 text-sm">
+                                    <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
+                                        <i class="bi bi-arrow-up me-1"></i>30%
+                                    </span>
+                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    @* // another card  *@
+
+                        <div class="card " data-id="5">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">New projects</span>
+                                        <span class="h3 font-bold mb-0">215</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 mb-0 text-sm">
+                                    <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
+                                        <i class="bi bi-arrow-up me-1"></i>30%
+                                    </span>
+                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>   
+            </div>
+
+            <div  class="col-12 col-lg-4 col-md-4 ">
+                <div class="card" style="height: 88vh;">
+                    <h5 class="card-title h5 my-3 text-uppercase text-center text-primary">In Progress</h5>
+                    <div id="in-progress-list"  class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+                        
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div  class="col-lg-4 col-md-4">
+                <div class="card" style="height: 88vh;">
+                    <h5 class=" card-title h5 my-3 text-uppercase text-center text-primary">Done</h5>
+                    <div id="done-list" class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+                        
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+        <script>
+            // Initialize SortableJS for each list
+            new Sortable(document.querySelector('#todo-list'), {
+                group: 'shared', // Allow cards to be moved between lists
+                animation: 150,
+                onEnd: function (evt) {
+                    // After drag and drop, update task order
+                    updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
+                }
+            });
+
+            new Sortable(document.getElementById('in-progress-list'), {
+                group: 'shared',
+                animation: 150,
+                onEnd: function (evt) {
+                    updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
+                }
+            });
+
+            new Sortable(document.getElementById('done-list'), {
+                group: 'shared',
+                animation: 150,
+                onEnd: function (evt) {
+                    updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
+                }
+            });
+
+            // Function to send updated order via AJAX to the server
+            function updateTaskOrder(fromColumn, toColumn, oldIndex, newIndex) {
+                var taskIds = [];
+
+                // Collect task IDs from the updated column
+                $("#" + toColumn + " .card").each(function () {
+                    taskIds.push($(this).data('id'));
+                });
+
+                // Send updated order of task IDs to the server
+                $.ajax({
+                    url: '/TeamLead/UpdateTaskOrder', // Update with the correct endpoint
+                    method: 'POST',
+                    data: {
+                        fromColumn: fromColumn,
+                        toColumn: toColumn,
+                        taskIds: taskIds // Send the new order of tasks
+                    },
+                    success: function (response) {
+                        console.log('Order updated successfully');
+                    },
+                    error: function () {
+                        console.log('Error updating order');
+                    }
+                });
+            }
+        </script>
+}

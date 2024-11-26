@@ -6,7 +6,7 @@ using weekday.Data.Context;
 using weekday.Data.Entity;
 using weekday.Models.Team_Member;
 
-namespace weekday.Pages.TeamMembers
+namespace weekday.Pages.TeamMember
 {
     public class TaskCompletionModel : PageModel
     {
@@ -59,7 +59,7 @@ namespace weekday.Pages.TeamMembers
                         editWork.EndDate = DateTime.Now;
                     }
                     _context.SaveChanges();
-                    return RedirectToPage("/TeamMembers/DashBoard");
+                    return RedirectToPage("/TeamMember/DashBoard");
                 }
             
             

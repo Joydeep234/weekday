@@ -10,7 +10,7 @@ using weekday.Data.Context;
 using weekday.Data.Entity;
 using weekday.Models.Team_Member;
 
-namespace weekday.Pages.Team_Members
+namespace weekday.Pages.TeamMember
 {
     public class Dashboard : PageModel
     {

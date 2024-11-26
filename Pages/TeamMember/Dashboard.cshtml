@@ -1,5 +1,5 @@
 @page
-@model weekday.Pages.Team_Members.Dashboard
+@model weekday.Pages.TeamMember.Dashboard
 @{
     //ViewData["Title"] = "Dashboard";
 }
@@ -25,7 +25,7 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>
                                 <h6>Deadline: @tasks.Deadline</h6>
                                 <h6>Status: <span style="color:red">@tasks.Status.ToUpper()</span></h6>
-                                <a class="btn btn-danger" asp-page="/TeamMembers/TaskCompletion" asp-route-taskID="@tasks.TaskId">Working for-></a>
+                                <a class="btn btn-danger" asp-page="/TeamMember/TaskCompletion" asp-route-taskID="@tasks.TaskId">Working for-></a>
                                 
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>
                                 <h6>Deadline: @tasks.Deadline</h6>
                                 <h6>Status: <span style="color:orange">@tasks.Status.ToUpper()</span></h6>
-                                <a class="btn btn-primary" asp-page="/TeamMembers/TaskCompletion" asp-route-taskID="@tasks.TaskId">For task completion-></a>
+                                <a class="btn btn-primary" asp-page="/TeamMember/TaskCompletion" asp-route-taskID="@tasks.TaskId">For task completion-></a>
                             </div>
                         </div>
                     }
@@ -87,7 +87,7 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>
                                 <h6>Deadline: @tasks.Deadline</h6>
                                 <h6>Status:<span style="color:green">@tasks.Status.ToUpper()</span> </h6>
-                                <a class="btn btn-success" asp-page="/TeamMembers/TaskCompletion" asp-route-taskID="@tasks.TaskId">For task review-></a>
+                                <a class="btn btn-success" asp-page="/TeamMember/TaskCompletion" asp-route-taskID="@tasks.TaskId">For task review-></a>
                             </div>
                         </div>
                     }
