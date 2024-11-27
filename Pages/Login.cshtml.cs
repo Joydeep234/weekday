@@ -41,7 +41,10 @@ namespace weekday.Pages
                     throw new Exception("All data should be filled");
                 }
                 userData = await _context.employee.Where(u=>u.Email==userlogin.Email && u.Password==userlogin.Password).FirstOrDefaultAsync();
-                if(userData==null)throw new Exception("Invalid Credentials");
+                if(userData==null){
+                    TempData["err"]="Invalid Credentials";
+                    throw new Exception("Invalid Credentials");
+                }
                 userDesignation = await _context.designation.FirstOrDefaultAsync(d=>d.DesignationId==userData.DesignationId);
                 if(userDesignation==null)throw new Exception("UserDesignation not found");
                 
@@ -56,12 +59,13 @@ namespace weekday.Pages
                 }else if(userDesignation.Name=="TEAM_LEAD"){
                     return RedirectToPage("TeamLead/Dashboard");
                 }else if(userDesignation.Name=="TEAM_MEMBERS"){
-                    return RedirectToPage("TeamMembers/Dashboard");
+                    return RedirectToPage("TeamMember/Dashboard");
                 }
                 return Page();
             }
             catch (Exception e)
             {
+                
                Console.WriteLine($"login error=> {e.Message}");
                return Page();
             }

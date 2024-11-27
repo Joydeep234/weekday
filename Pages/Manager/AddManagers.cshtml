@@ -4,3 +4,245 @@
     ViewData["Title"] = "AddManagers";
 }
 
+
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-0 py-3 ms-3">
+        <div class="d-flex">
+                <a asp-page="../Manager/AddManagers" asp-route-projID="@Model.projectID" asp-route-teamID="@Model.newteamID"  class=" fs-6 list-group-item mx-5 p-3">Add Members</a>
+                <a href="#" class="ajax-link fs-6 list-group-item mx-5 p-3" data-url="../Manager/AllTeamShow">See All Members</a>
+        </div>
+</div>
+</nav>
+<div class="row bg-white  ms-3 mt-4" style="height:600px;">
+  
+    <div class="col-7 h-full d-flex flex-column align-items-center" style="overflow-y:auto; overflow-x: hidden;">
+      @* <div class="d-flex justify-content-start mt-5 w-full">
+        <button id="projectDet" class="btn btn-secondary mx-10 ">ProjectDetails</button>
+      </div> *@
+        <div class="w-3/4 d-flex flex-column align-items-center mt-8">
+        @if(TempData["msg"]!=null){
+                    <p class="text-danger text-center fs-6" id="displaytext" style="display: block;">
+                        @TempData["msg"]
+                    </p> 
+        }
+
+        <div class="w-full d-flex flex-column align-items-center mt-8 " id="content-area">
+          <div class="d-flex justify-content-start mt-5 w-full">
+            <button id="projectDet" class="btn btn-secondary mb-10">ProjectDetails</button>
+          </div>
+           <div class="card mb-7">
+          
+          <div class="table-responsive">
+            <form method="post" asp-page-handler="AddingMAnagers" asp-route-projeID="@Model.projectID" asp-route-postteamID="@Model.newteamID">
+             <table class="table table-hover table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Member Name</th>
+                  <th scope="col">Status</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                @foreach(var emp in Model.empdetails){
+                  
+                    <tr>
+                  <td>
+                    <p class="text-heading font-semibold">
+                      <input type="checkbox" name="ManagerList" value="@emp.employeeid" class="" style="display:@(emp.assigned?"none":"block")">
+                    </p>
+                  </td>
+                  <td>
+                    <p class="text-heading font-semibold">@emp.firstname @emp.lastname</p>
+                  </td>
+                  <td>
+                    <p class="text-heading font-semibold">
+                     @emp.status
+                    </p>
+                  </td>
+                  <td>
+                   <button type="button" class="btn border border-solid viewbtn" data-employeeid="@emp.employeeid">
+                        view
+                    </button>
+                  </td>
+                  <td>
+                  </td>
+                  <td class="text-end text-success">
+                   @(emp.assigned?"Assigned":"") 
+                  </td>
+                </tr>
+                  
+                }
+                
+            
+              </tbody>
+                
+             </table>
+             <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-warning m-5 ">
+                  Add
+                </button>
+             </div>
+             </form>
+          </div>
+        </div>
+        </div>    
+        </div>
+    </div>
+    <div class="col h-full fs-6 " style="position-fixed">
+        <div class="">
+          
+        </div>
+                    <div class="h-full" id="CreateTeamFeild">
+                    <div class="projectDetailheader d-flex border border-solid py-4 ps-4 mt-10">
+                        <p class="ms-3">Details</p>
+                        @if(Model.projectDetails.Status=="ToDo"){
+                            <p class="badge badge-lg badge-dot ms-10">
+                                <i class="bg-warning"></i>@Model.projectDetails.Status
+                            </p>
+                        }else if(Model.projectDetails.Status=="InProgress"){
+                            <p class="badge badge-lg badge-dot ms-10">
+                                <i class="bg-success"></i>@Model.projectDetails.Status
+                            </p>
+                        }else if(Model.projectDetails.Status=="Completed"){
+                            <p class="badge badge-lg badge-dot ms-10">
+                                <i class="bg-Primary"></i>@Model.projectDetails.Status
+                            </p>
+                        }
+                    </div>
+                    <div class="projectDetailmain border border-solid py-4 ps-4 h-2/3">
+                        <div class="d-flex">
+                            <div class="">
+                                <div class="d-flex px-3 my-4">
+                                    <p class="me-16">Assignee :</p>
+                                    <p class="me-2 text-start">@Model.projectDetails.FirstName @Model.projectDetails.LastName</p>
+                                </div>
+                                <div class="d-flex px-3 my-4">
+                                    <p class="me-10">Designation :</p>
+                                    <p class="me-2 text-start">@Model.projectDetails.DesignationName</p>
+                                </div>
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-8">Created Date :</p>
+                                    <p class="me-2 text-start text-primary">@Model.projectDetails.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-2">Project Deadline :</p>
+                                    <p class="me-2 text-start text-primary">@Model.projectDetails.Deadline.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-8">Starting Date :</p>
+                                    <p class="me-2 text-start text-primary">@Model.projectDetails.StartDate.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-16">End Date :</p>
+                                    <p class="me-2 text-start text-primary">@Model.projectDetails.EndDate.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <div class="d-flex my-4 px-3">
+                                    <p class="me-20">About :</p>
+                                    <p class="me-2 text-start">@Model.projectDetails.About</p>
+                                </div>
+                                <div class="d-flex my-4 px-3">
+                                    <p class="me-20">Details:</p>
+                                    <p class="me-2 text-start">@Model.projectDetails.Details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            
+        </div>
+</div>
+
+</div>
+
+@section Scripts{
+    <script>
+    $(document).ready(function () {
+      setTimeout(function () {
+            $('#displaytext').css('display', 'none'); 
+        }, 4000);
+      let prevdet = $('#CreateTeamFeild').html();
+        $('.ajax-link').on('click',function(e){
+             e.preventDefault();
+
+           
+            var url = $(this).data('url');
+
+            
+            $('#content-area').load(url);
+        })
+        $('#projectDet').on('click',(e)=>{
+
+            e.preventDefault();
+            $('#CreateTeamFeild').empty().append(prevdet);
+           
+        })
+        $('.viewbtn').on('click',function(){
+          var empID = $(this).data('employeeid');
+          $.ajax({
+            type:"GET",
+            url:window.location.pathname + "?handler=EmployeeDetails",
+            data:{
+              managerId : empID,
+            },
+            success:function(response){
+              if(response.success)
+             {
+              console.log(response.employeedet.firstName)
+              var detailsHTML = `
+                        <div class="h-full" id="CreateTeamFeild">
+                            <div class="projectDetailheader d-flex border border-solid py-4 ps-4 mt-10">
+                                <p class="ms-3">Project Manager Details</p>
+                            </div>
+                            <div class="projectDetailmain border border-solid py-4 ps-4 h-2/3">
+                                <div class="d-flex">
+                                    <div class="">
+                                        <div class="d-flex px-3 my-4">
+                                            <p class="me-16">Name :</p>
+                                            <p class="me-2 text-start">${response.employeedet.firstName} ${response.employeedet.lastName}</p>
+                                        </div>
+
+                                        <div class="d-flex my-4 px-3 ">
+                                            <p class="me-8">Email :</p>
+                                            <p class="me-2 ms-10 text-start text-primary">${response.employeedet.email}</p>
+                                        </div>
+                                        <div class="d-flex my-4 px-3 ">
+                                            <p class="me-2">Status :</p>
+                                            <p class="me-2 ms-14 text-start ${response.empandtask.length === 0 ? 'text-danger' : 'text-success'}">
+                                                ${response.empandtask.length === 0 ? 'Not in Work' : 'In Work'}
+                                            </p>
+                                        </div>
+                                        `;
+
+                        // Add extra HTML based on empandtask length condition
+                        if (response.empandtask.length > 0) {
+                            detailsHTML += `
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-8">Project Assigned :</p>
+                                    <ul>`;
+                            response.empandtask.forEach(task=>{
+                              detailsHTML+=`<li>${task.name}</li>`
+                            })
+                            detailsHTML+=`</ul>
+                                </div>`;
+                        } else {
+                            detailsHTML += `<p class="text-danger">No Projects Assigned</p>`;
+                        }
+// Close the HTML structure
+                        detailsHTML += `
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                $('#CreateTeamFeild').empty().append(detailsHTML)
+              }
+            }
+          })
+        })
+    });
+    </script>
+}

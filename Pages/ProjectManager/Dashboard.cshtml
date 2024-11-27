@@ -4,8 +4,228 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 >My Projects</h1>
+<div class="row my-3" >
+    <div class="col-12 col-lg-4 col-md-4">
 
-<div>
-    pm
+        <div class="card" style="height: 85vh;">
+            <div class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+               @* -------Frist Card--------- *@ 
+               <h3 id="heading">New</h3>
+                @{
+                    if(Model.employeeProjects.Count != 0)
+                    {
+                        foreach(var item in Model.employeeProjects)
+                        {
+                            if (item.ProjectStatus == "New")
+                            {
+                                <a asp-page="/ProjectManager/ProjectDiscription" asp-route-ProjectId="@item.ProjectId">
+                                    <div class="card shadow-lg bg-surface-secondary mb-5">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">@item.ProjectName</span>
+                                                    <span class="h3 font-bold mb-0">@item.StartDate.ToString("MMMM dd, yyyy")</span>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                        <i class="bi bi-credit-card"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 text-sm">
+                                                <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
+                                                    <i class="bi bi-arrow-up me-1"></i>@item.ProjectStatus
+                                                </span>
+                                                <span class="text-nowrap text-xs text-muted">@item.About</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                
+                            }
+
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4 col-md-4 ">
+        <div class="card" style="height: 85vh;">
+            <div class="card-body">
+                <h3 id="heading-2">On Going</h3>
+                @{
+                    if (Model.employeeProjects.Count != 0)
+                    {
+                        foreach (var item in Model.employeeProjects)
+                        {
+                            if (item.ProjectStatus == "OnGoing")
+                            {
+                                <a asp-page="/ProjectManager/ProjectDiscription" asp-route-ProjectId="@item.ProjectId">
+                                <div class="card shadow-lg bg-surface-secondary mb-5">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">@item.ProjectName</span>
+                                                    <span class="h3 font-bold mb-0">@item.StartDate.ToString("MMMM dd, yyyy")</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                    <i class="bi bi-credit-card"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-0 text-sm">
+                                            <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
+                                                <i class="bi bi-arrow-up me-1"></i>@item.ProjectStatus
+                                            </span>
+                                            <span class="text-nowrap text-xs text-muted">@item.About</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </a>
+                            }
+
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4">
+        <div class="card" style="height: 85vh;">
+            <div class="card-body">
+                <h3 id="heading-3">Completed</h3>
+                @{
+                    if (Model.employeeProjects.Count != 0)
+                    {
+                        foreach (var item in Model.employeeProjects)
+                        {
+                            if (item.ProjectStatus == "Completed")
+                            {
+                                <a asp-page="/ProjectManager/ProjectDiscription" asp-route-ProjectId="@item.ProjectId">
+                                    <div class="card shadow-lg bg-surface-secondary mb-5">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">@item.ProjectName</span>
+                                                    <span class="h3 font-bold mb-0">@item.StartDate.ToString("MMMM dd, yyyy")</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                    <i class="bi bi-credit-card"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 mb-0 text-sm">
+                                            <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
+                                                <i class="bi bi-arrow-up me-1"></i>@item.ProjectStatus
+                                            </span>
+                                            <span class="text-nowrap text-xs text-muted">@item.About</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </a>
+                            }
+
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
 </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <div class="row d-flex justify-content-around">
+    <div class="card shadow-lg" style="width: 18rem; height:90vh;">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h3 style="margin-left:100px;">New</h3></li>
+            <li class="list-group-item">
+                <div class="card shadow-lg border-3" style="width: 16rem;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Project Name</li>
+                        
+                    </ul>
+                </div>
+            </li>
+            <li class="list-group-item">A third item</li>
+        </ul>
+    </div>
+    <div class="col-3 bg-light">
+        <div class="card shadow-lg" style="width: 18rem; height:90vh;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h3 style="margin-left:100px;">On Going</h3></li>
+                <li class="list-group-item">
+                    <div class="card shadow-lg border-3" style="width: 16rem; margin-left:16px;">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Project Name</li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="list-group-item">A third item</li>
+            </ul>
+        </div>
+     </div>
+    <div class="col-3 bg-light">
+        <div class="card shadow-lg" style="width: 18rem; height:90vh;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h3 style="margin-left:100px;">Completed</h3></li>
+                <li class="list-group-item">
+                    <div class="card shadow-lg border-3" style="width: 16rem; margin-left:16px;">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Project Name</li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="list-group-item">A third item</li>
+            </ul>
+        </div>
+    </div>
+</div> *@

@@ -1,0 +1,243 @@
+﻿@page
+@model weekday.Pages.ProjectManager.ProjectDiscriptionModel
+@{
+}
+<h1 class="ms-4">Project Discription</h1>
+ @* <nav class="navbar navbar-expand-lg navbar-light bg-light px-0 py-3 ms-3" style="width:78.5vw;">
+         <div class="container-xl">
+             <!-- Logo -->
+             <a class="navbar-brand" href="#">
+                 <img src="https://preview.webpixels.io/web/img/logos/clever-primary.svg" class="h-8" alt="...">
+             </a>
+             <!-- Navbar toggle -->
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                 <span class="navbar-toggler-icon"></span>
+             </button>
+             <!-- Collapse -->
+             <div class="collapse navbar-collapse" id="navbarCollapse">
+                 <!-- Nav -->
+                 
+                 <!-- Right navigation -->
+                 <div class="navbar-nav ms-lg-4">
+                     <a class="nav-item nav-link" href="#">Sign in</a>
+                 </div>
+                 <!-- Action -->
+                 <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
+                     <a href="#" class="btn btn-sm btn-primary w-full w-lg-auto">
+                         Register
+                     </a>
+                 </div>
+             </div>
+         </div>
+     </nav> *@
+ 
+<div class="row bg-white ms-3 mt-5" style="height: 500px;">
+    @{
+        <div class="col-7 h-full">
+            <h2 class="m-4">@Model.ProjectDis.ProjectName</h2>
+
+            
+
+            @Html.AntiForgeryToken()
+
+            <form id="teamForm">
+                <!-- Team Selection -->
+                <div class="d-flex" style="margin-left:20px; margin-top:100px;">
+                    <div class="">
+                        <label id="teamList" class="ms-4">Select Team</label>
+                        <select id="teamList" name="Team" class="form-control">
+                            <option value="-1" selected> Select Team </option>
+                            @foreach (var item in Model.teamList)
+                            {
+                                <option value="@item.TeamId">@item.TeamName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Team Leader Selection -->
+                    <div class="ms-4">
+                        <label id="teamList" class="ms-4">Select Team Leader</label>
+                        <select id="teamLeaderList" name="TeamLeads" class="form-control">
+                            <option value="-1" selected>Select Team Leader</option>
+                            @foreach (var item in Model.Employees)
+                            {
+                                <option value="@item.EmployeeId">@item.FirstName @item.LastName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="ms-4">
+                        <button type="submit" class="btn btn-success" id="assign" style="margin-top:25px">Assign</button>
+                    </div>
+                </div>
+
+                
+                <!-- Submit Button -->
+                
+            </form>
+        </div>
+
+    }
+
+    <!-- Right Column: Content with Scrolling -->
+    <div class="col h-full" id="side-scroll" style="overflow-y: auto;  ">
+        @{
+            <!-- Example single danger button -->
+
+            <div class="btn-group mt-3">
+                <select id="statusList" name="status" class="btn btn-secondary p-1">
+                    
+                    <option value="New">New</option>
+                    <option value="OnGoing">OnGoing</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            
+            if (Model.ProjectDis != null)
+            {
+                <div class="h-full" id="CreateTeamFeild">
+                    <div class="projectDetailheader d-flex border border-solid py-4 ps-4 mt-4">
+                        <p class="ms-3">Details</p>
+                        @if(Model.ProjectDis.ProjectStatus == "New"){
+                            <p class="badge badge-lg badge-dot ms-10">
+                                <i class="bg-warning"></i>@Model.ProjectDis.ProjectStatus
+                            </p>
+                        }else if(Model.ProjectDis.ProjectStatus =="OnGoing"){
+                            <p class="badge badge-lg badge-dot ms-10">
+                                <i class="bg-success"></i>@Model.ProjectDis.ProjectStatus
+                            </p>
+                        }
+                        else if (Model.ProjectDis.ProjectStatus == "Completed")
+                        {
+                            <p class="badge badge-lg badge-dot ms-10">
+                                <i class="bg-primary"></i>@Model.ProjectDis.ProjectStatus
+                            </p>
+                        }
+                    </div>
+                    <div class="projectDetailmain border border-solid py-4 ps-4 h-auto">
+                        <div class="d-flex">
+                            <div class="">
+                                <div class="d-flex px-3 my-4">
+                                    <p class="me-16">Project Name :</p>
+                                    <p class="me-2 text-start">@Model.ProjectDis.ProjectName</p>
+                                </div>
+                                <div class="d-flex px-3 my-4">
+                                    <p class="me-10">Discription :</p>
+                                    <p class="me-2 text-start">@Model.ProjectDis.About</p>
+                                </div>
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-8">Created Date :</p>
+                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.StartDate.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-2">Project Deadline :</p>
+                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.Deadline.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-8">Starting Date :</p>
+                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.StartDate.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <div class="d-flex my-4 px-3 ">
+                                    <p class="me-16">End Date :</p>
+                                    <p class="me-2 text-start text-primary">@Model.ProjectDis.EndDate.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                                <div class="d-flex my-4 px-3">
+                                    <p class="me-20">About :</p>
+                                    <p class="me-2 text-start">@Model.ProjectDis.About</p>
+                                </div>
+                                <div class="d-flex my-4 px-3">
+                                    <p class="me-20">Details:</p>
+                                    <p class="me-2 text-start">@Model.ProjectDis.Project_Details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Handle form submission
+            $("#teamForm").on("submit", function (event) {
+                event.preventDefault();
+
+                // Prepare form data
+                var formData = {
+                    teamId: $("#teamList").val(),
+                    teamLeaderId: $("#teamLeaderList").val()
+                };
+
+                console.log(formData);
+
+                // AJAX request for form submission
+                $.ajax({
+                    method: "POST",
+                    url: "/ProjectManager/ProjectDiscription?handler=Create",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Success! Team leader assigned.");
+                        } else {
+                            alert("Team Already Exists: " + response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert("Failed to update. Please try again.");
+                    }
+                });
+            });
+
+            // Handle status list change
+            $("#statusList").on("change", function (event) {
+                event.preventDefault();
+                
+                var status_text = $('#statusList option:selected').text();
+                alert(status_text);
+
+                // AJAX request for status update
+                $.ajax({
+                    method: "POST",
+                    url: "/ProjectManager/ProjectDiscription?handler=UpdateStatus",
+                    data: { status: status_text }, 
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        window.location.href = "/ProjectManager/Dashboard";
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert("Failed to update status. Please try again.");
+                    }
+                });
+            });
+                   
+            var currentStatus = "@Model.ProjectDis.ProjectStatus"; 
+
+           console.log(currentStatus);
+            $('#statusList option').each(function () {
+                if ($(this).val() === currentStatus) {
+                    $(this).prop('selected', true);
+                }
+            });
+       
+
+        });
+    </script>
+}
+
+
+
