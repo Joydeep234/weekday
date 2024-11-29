@@ -10,6 +10,61 @@
     <link rel="stylesheet" href="~/weekday.styles.css" asp-append-version="true" /> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css" integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
 
+<div class="w-full d-flex flex-column align-items-center mt-8 " id="content-area">
+           <div class="card mb-7">
+          
+          <div class="table-responsive">
+            <form method="post">
+             <table class="table table-hover table-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Member Name</th>
+                  <th scope="col">Designation</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Replace</th>
+                  <th scope="col"></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                @foreach(var emp in Model.memdetails){
+                  
+                    <tr>
+                  <td>
+                       <p class="text-heading font-semibold">@emp.firstname @emp.lastname</p> 
+                  </td>
+                  <td>
+                    <p class="text-heading font-semibold">@emp.designation</p>
+                  </td>
+                  <td>
+                    <p class="font-semibold bg-success text-white p-1 rounded-1">
+                     @emp.status
+                    </p>
+                  </td>
+                  <td>
+                    <button type="submit" class="bg-danger text-white viewbtn  rounded-1" asp-page-handler="RemoveMember" asp-route-memberID ="@emp.empid" asp-route-projid="@Model.projectID" asp-route-teamid ="@Model.newteamID">
+                        <i class="fa-regular fa-trash-can fs-6 p-1" style="color: #ffffff;"></i>
+                    </button>
+                  </td>
+                  <td>
+                  </td>
+                  <td class="text-end text-success">
+                    
+                  </td>
+                </tr>
+                  
+                }
+                
+            
+              </tbody>
+                
+             </table>
+             </form>
+          </div>
+        </div>
+        </div> 
+
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

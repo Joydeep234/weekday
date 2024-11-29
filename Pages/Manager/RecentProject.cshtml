@@ -33,33 +33,38 @@
               <tbody>
                 @if(Model.AllprojectData.Count>0)
                 {
-                    @foreach(var item in Model.AllprojectData){
+                    @foreach(var item in Model.projectandtask){
                 <tr>
                   <td>
-                    <a asp-page="../Manager/ProjectDetails" asp-route-projectId="@item.ProjectId" asp-route-projectName="@item.Name" class="text-heading font-semibold">
-                      @item.Name
+                    <a asp-page="../Manager/ProjectDetails" asp-route-projectId="@item.projectid" asp-route-projectName="@item.projectname" class="text-heading font-semibold">
+                      @item.projectname
                     </a>
                   </td>
                   <td>
-                    <p class="text-heading font-semibold">@item.CreatedAt</p>
+                    <p class="text-heading font-semibold">@item.creationdate.ToString("MMMM-dd-yyyy")</p>
                   </td>
                   <td>
                     <p class="text-heading font-semibold">
-                     @item.Deadline
+                     @item.deadline.ToString("MMMM-dd-yyyy")
                     </p>
                   </td>
                   <td>
                    <span class="badge badge-lg badge-dot">
-                      <i class="@(item.Status == "ToDo" ? "bg-warning" : "bg-success")"></i> @item.Status
+                      <i class="@(item.status == "ToDo" ? "bg-warning" : "bg-success")"></i> @item.status
                     </span>
                   </td>
                   <td>
                       <div class="progress progress-lg">
-                        <div class="progress-bar bg-primary" role="progressbar" style="@(item.Status == "ToDo" ? "width:1%;" : "width: 50%;")" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
+                        <div class="progress-bar bg-primary" role="progressbar" 
+                          style="width: @(item.status == "ToDo" ? "1" : item.complete)%;"
+                          aria-valuenow="@(item.status == "ToDo" ? 1 : item.complete)" 
+                          aria-valuemin="0" 
+                          aria-valuemax="100">
+                        </div>
+                </div>
                   </td>
                   <td class="text-end">
-                    <a asp-page="../Manager/ProjectDetails" asp-route-projectId="@item.ProjectId" asp-route-projectName="@item.Name" class="btn btn-sm btn-neutral">View</a>
+                    <a asp-page="../Manager/ProjectDetails" asp-route-projectId="@item.projectid" asp-route-projectName="@item.projectname" class="btn btn-sm btn-neutral">View</a>
                   </td>
                 </tr>
                 }

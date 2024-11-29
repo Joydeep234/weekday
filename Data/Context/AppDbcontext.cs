@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using weekday.Data.Entity;
@@ -18,5 +19,9 @@ namespace weekday.Data.Context
         public DbSet<ProjectTask> projecttask { get; set; }
         public DbSet<TeamMembers> teamMembers { get; set; }
         public DbSet<Team> team { get; set; }
+
+        public DbSet<Features> feature { get; set; }
+        public DbSet<PLans> plans { get; set; }
+         public DbSet<FeatureManagement> featuremanagement { get; set; }
     }
 }

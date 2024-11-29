@@ -35,11 +35,24 @@ namespace weekday.Pages.TeamMember
 
         public List<ProjectTask> PTList { get; set; } = new List<ProjectTask>();
         public int employeeID;
-        public void OnGet(int empId = 2)
-        {
+        public int ProjectId;
+        public string ProjectName;
+        //prjid and prjName getting from ProjectDashboard page
+        public async Task OnGetAsync(int prjid, string prjName, int empId = 1) //assigned parameters follows un-assigned parameters 
+        {// empId need to get from session after implemention login page 
             employeeID = empId;
-            
+            ProjectName = prjName;
+            ProjectId = prjid;
+
             PTList = _context.projecttask.ToList();
+
+            /*PTList=await (from ProjectTask in _context.projecttask where 
+                
+                )*/
+
+
+
+
 
             /*var validID = _context.projecttask.FirstOrDefaultAsync();*/
 

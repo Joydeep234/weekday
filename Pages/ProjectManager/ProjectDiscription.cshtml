@@ -45,7 +45,7 @@
                 <div class="d-flex" style="margin-left:20px; margin-top:100px;">
                     <div class="">
                         <label id="teamList" class="ms-4">Select Team</label>
-                        <select id="teamList" name="Team" class="form-control">
+                        <select  name="Team" class="teamList form-control">
                             <option value="-1" selected> Select Team </option>
                             @foreach (var item in Model.teamList)
                             {
@@ -169,11 +169,13 @@
             $("#teamForm").on("submit", function (event) {
                 event.preventDefault();
 
-                // Prepare form data
+               
+                
                 var formData = {
-                    teamId: $("#teamList").val(),
+                    teamId: $(".teamList").val(),
                     teamLeaderId: $("#teamLeaderList").val()
                 };
+                
 
                 console.log(formData);
 
@@ -190,7 +192,7 @@
                         if (response.success) {
                             alert("Success! Team leader assigned.");
                         } else {
-                            alert("Team Already Exists: " + response.message);
+                            alert("Team Already Exists");
                         }
                     },
                     error: function (xhr, status, error) {
