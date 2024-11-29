@@ -6,7 +6,7 @@
 
 <section >
     <div class="d-flex justify-content-between p-4">
-        <h3 class="h3">Projects</h3>
+        <h3 class="h3">Task Board</h3>
         <div>
             <div class="dropdown">
                 <button class="btn btn-sm btn-primary dropdown-toggle px-4 py-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -33,127 +33,244 @@
         <div class="col-12 col-lg-4 col-md-4">
             <div class="card" style="height: 88vh;">
                 <h5 class=" card-title h5 my-3 text-uppercase text-center text-primary">TO DO</h5>
-                <div id="todo-list" class="card-body card-scroll d-flex flex-column" style="gap : 10px;">        
-                    @* // another inside card  *@
-                    <div class="card" data-id="1">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Budget</span>
-                                    <span class="h3 font-bold mb-0">$750.90</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="avatar-group">
-                                        <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"> </a>
-                                        <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"> </a>
-                                        <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"></a>
-                                        <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"></a>
-                                        <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-2 mb-0 text-sm">
-                                <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
-                                    <i class="bi bi-arrow-up me-1"></i>13%
-                                </span>
-                                <span class="text-nowrap text-xs text-muted">Since last month</span>
-                            </div>
+                <div id="To-Do" class="card-body card-scroll d-flex flex-column" style="gap : 10px;">        
+
+                   @*  <div class="col-auto">
+                        <div class="avatar-group">
+                            <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"> </a>
+                            <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"> </a>
+                            <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"></a>
+                            <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"></a>
+                            <a href="#" class="avatar avatar-xs rounded-circle text-white border border-1 border-solid border-card"><img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"></a>
                         </div>
-                    </div>
+                    </div> *@
 
-                    @* another card  *@
+                    @{
+                        if (Model.projectTasks.Count != 0) {
+                            foreach(var task in Model.projectTasks)
+                            {
+                                int taskId = task.TaskId * 5 + 102;
 
-                        <div class="card " data-id="3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">New projects</span>
-                                        <span class="h3 font-bold mb-0">215</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                                            <i class="bi bi-people"></i>
+                                if(task.Status == "To-Do")
+                                {
+                                    <div class="card task-cards" data-id="@task.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="h4 font-semibold text-muted text-sm d-block">@task.Summary</span>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="mt-2 mb-0 row">
+                                                <div class="col-1">
+                                                    <span>
+                                                        @{
+                                                            if(task.Title == "Bug")
+                                                            {
+                                                                <i class="fa-solid fa-lg fa-bug" style="color: #ff4000;"></i>
+                                                            }
+                                                            if(task.Title == "Feature")
+                                                            {
+                                                                <i class="fa-solid fa-lg fa-circle-stop" style="color: #63E6BE;"></i>
+                                                            }
+                                                            if(task.Title == "Improvement")
+                                                            {
+                                                                <i class="fa-solid fa-chart-line fa-lg" style="color: #74C0FC;"></i>
+                                                            }
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span class="font-semibold text-muted text-sm d-flex align-items-center" style="margin-top: 2px;"><i class="fa-solid fa-sm fa-hashtag me-1" style="color: #616161;"></i> @taskId </span>
+                                                </div>
+                                                <div class="col-4 d-flex justify-content-end ms-auto">
+                                                    <span class="me-3">
+                                                        @{
+                                                            if(task.Priority == "High")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-angles-up fa-fade" style="color: #ff0000;"></i>
+                                                            }
+                                                            if(task.Priority == "Medium")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-grip-lines" style="color: #FFD43B;"></i>
+                                                            }
+                                                            if(task.Priority == "Low")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-angles-down" style="color: #63E6BE;"></i>
+                                                            }
+                                                        }
+                                                    </span>
+                                                    <div class="avatar rounded-circle" style="height: 28px; width: 28px;">
+                                                        <img alt="..." src="~/Images/profile-photo.png">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mt-2 mb-0 text-sm">
-                                    <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
-                                        <i class="bi bi-arrow-up me-1"></i>30%
-                                    </span>
-                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                </div>
-                            </div>
-                        </div>
+                                }     
+                            }
+                        }
+                    }
+                </div>
+            </div>   
+        </div>
 
-                    @* // another card  *@
-
-                        <div class="card " data-id="4">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">New projects</span>
-                                        <span class="h3 font-bold mb-0">215</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                                            <i class="bi bi-people"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 mb-0 text-sm">
-                                    <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
-                                        <i class="bi bi-arrow-up me-1"></i>30%
-                                    </span>
-                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    @* // another card  *@
-
-                        <div class="card " data-id="5">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">New projects</span>
-                                        <span class="h3 font-bold mb-0">215</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                                            <i class="bi bi-people"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 mb-0 text-sm">
-                                    <span class="badge badge-pill bg-opacity-30 bg-success text-success me-2">
-                                        <i class="bi bi-arrow-up me-1"></i>30%
-                                    </span>
-                                    <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>   
-            </div>
-
-            <div  class="col-12 col-lg-4 col-md-4 ">
+        <div  class="col-12 col-lg-4 col-md-4 ">
                 <div class="card" style="height: 88vh;">
                     <h5 class="card-title h5 my-3 text-uppercase text-center text-primary">In Progress</h5>
-                    <div id="in-progress-list"  class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
-                        
+                    <div id="In-Progress"  class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+                    @{
+                        if (Model.projectTasks.Count != 0)
+                        {
+                            foreach (var task in Model.projectTasks)
+                            {
+                                int taskId = task.TaskId * 5 + 102;
 
+                                if (task.Status == "In-Progress")
+                                {
+                                    <div class="card" data-id="@task.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="h4 font-semibold text-muted text-sm d-block">@task.Summary</span>
+                                                </div>
+                                            </div>
 
+                                            <div class="mt-2 mb-0 row">
+                                                <div class="col-1">
+                                                    <span>
+                                                        @{
+                                                            if (task.Title == "Bug")
+                                                            {
+                                                                <i class="fa-solid fa-lg fa-bug" style="color: #ff4000;"></i>
+                                                            }
+                                                            if (task.Title == "Feature")
+                                                            {
+                                                                <i class="fa-solid fa-lg fa-circle-stop" style="color: #63E6BE;"></i>
+                                                            }
+                                                            if (task.Title == "Improvement")
+                                                            {
+                                                                <i class="fa-solid fa-chart-line fa-lg" style="color: #74C0FC;"></i>
+                                                            }
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span class="font-semibold text-muted text-sm d-flex align-items-center" style="margin-top: 2px;"><i class="fa-solid fa-sm fa-hashtag me-1" style="color: #616161;"></i> @taskId </span>
+                                                </div>
+                                                <div class="col-4 d-flex justify-content-end ms-auto">
+                                                    <span class="me-3">
+                                                        @{
+                                                            if (task.Priority == "High")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-angles-up fa-fade" style="color: #ff0000;"></i>
+                                                            }
+                                                            if (task.Priority == "Medium")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-grip-lines" style="color: #FFD43B;"></i>
+                                                            }
+                                                            if (task.Priority == "Low")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-angles-down" style="color: #63E6BE;"></i>
+                                                            }
+                                                        }
+                                                    </span>
+                                                    <div class="avatar rounded-circle" style="height: 28px; width: 28px;">
+                                                        <img alt="..." src="~/Images/profile-photo.png">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    }
                     </div>
                 </div>
-            </div>
+        </div>
 
             <div  class="col-lg-4 col-md-4">
                 <div class="card" style="height: 88vh;">
                     <h5 class=" card-title h5 my-3 text-uppercase text-center text-primary">Done</h5>
-                    <div id="done-list" class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
-                        
+                    <div id="Done" class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
 
+                    @{
+                        if (Model.projectTasks.Count != 0)
+                        {
+                            foreach (var task in Model.projectTasks)
+                            {
+                                int taskId = task.TaskId * 5 + 102;
+
+                                if (task.Status == "Done")
+                                {
+                                    <div class="card" data-id="@task.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="h4 font-semibold text-muted text-sm d-block">@task.Summary</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-2 mb-0 row">
+                                                <div class="col-1">
+                                                    <span>
+                                                        @{
+                                                            if (task.Title == "Bug")
+                                                            {
+                                                                <i class="fa-solid fa-lg fa-bug" style="color: #ff4000;"></i>
+                                                            }
+                                                            if (task.Title == "Feature")
+                                                            {
+                                                                <i class="fa-solid fa-lg fa-circle-stop" style="color: #63E6BE;"></i>
+                                                            }
+                                                            if (task.Title == "Improvement")
+                                                            {
+                                                                <i class="fa-solid fa-chart-line fa-lg" style="color: #74C0FC;"></i>
+                                                            }
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span class="font-semibold text-muted text-sm d-flex align-items-center" style="margin-top: 2px;"><i class="fa-solid fa-sm fa-hashtag me-1" style="color: #616161;"></i> @taskId </span>
+                                                </div>
+                                                <div class="col-4 d-flex justify-content-end ms-auto">
+                                                    <span class="me-3">
+                                                        @{
+                                                            if (task.Priority == "High")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-angles-up fa-fade" style="color: #ff0000;"></i>
+                                                            }
+                                                            if (task.Priority == "Medium")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-grip-lines" style="color: #FFD43B;"></i>
+                                                            }
+                                                            if (task.Priority == "Low")
+                                                            {
+                                                                <i class="fa-solid fa-xl fa-angles-down" style="color: #63E6BE;"></i>
+                                                            }
+                                                        }
+                                                    </span>
+                                                    <div class="avatar rounded-circle" style="height: 28px; width: 28px;">
+                                                        <img alt="..." src="~/Images/profile-photo.png">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    }
 
                     </div>
                 </div>
@@ -251,14 +368,14 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Create Task</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div style="height:50vh;">
+                <div class="modal-body" style="height:56vh;">
+                    
                         @Html.AntiForgeryToken()
                         <div class="row">
                             <div class="col-6">
                                 <label asp-for="createTask.ProjectId" class="form-label">Project</label>
                                 <select asp-for="createTask.ProjectId" id="T_ProjectId" class="form-select">
-                                    
+                                    <option value="-1"></option>
                                     @foreach (var project in Model.projectDetails)
                                     {
                                         <option value="@project.ProjectId">@project.ProjectName</option>
@@ -268,56 +385,42 @@
                             </div>
                             <div class="col-6">
                                 <label asp-for="createTask.TeamId" class="form-label">Team</label>
-                                <select asp-for="createTask.TeamId" id="T_teamList" class="form-select">
-                                    <option value="-1"></option>
-
+                                <select asp-for="createTask.TeamId" id="T_TeamList" class="form-select">
+                                   
                                 </select>
                                 <span asp-validation-for="createTeam.TeamId" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-4">
-                                <label class="form-label d-block">Assignee</label>
+                                <label asp-for="createTask.Assignee" class="form-label d-block">Assignee</label>
                                 <div class="dropdown w-full profile-dropdown">
                                     <button class="form-select text-start" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Select Member
                                     </button>
                                     <div class="dropdown-menu w-100">
                                         <div class="p-2">
-                                            <input type="text" class="form-control" id="profileSearch" placeholder="Search profiles...">
+                                            <input type="text" class="form-control" id="profileSearch">
                                         </div>
                                         <div id="profileList">
-                                            @{
-                                                if(Model.employees.Count == 0)
-                                                {
-                                                    <a class="dropdown-item profile-item" href="#" data-user-id="2" data-user-name="No Data Found" data-user-img="" >
-                                                        No Data Found 
-                                                    </a>
-                                                }
-                                                else
-                                                {
-                                                    foreach (var employee in Model.employees)
-                                                    {
-                                                        String userName =  @employee.FirstName + " " + @employee.LastName;
 
-                                                        <a class="dropdown-item profile-item" href="#" data-user-id="@employee." data-user-name="@userName" data-user-img="https://pics.craiyon.com/2023-12-05/_Aqc-hELTrSTfFsgYDoHwA.webp">
-                                                            <img src="https://pics.craiyon.com/2023-12-05/_Aqc-hELTrSTfFsgYDoHwA.webp" alt="Profile">
-                                                            @userName
-                                                        </a>
-                                                    }
-                                                }  
-                                            }
+                                        <a class="dropdown-item profile-item h5" href="#" data-user-id="-1" data-user-name="No Data Found" data-user-img="https://pics.craiyon.com/2023-12-05/_Aqc-hELTrSTfFsgYDoHwA.webp">
+                                                     Select Project and Team to Load Members 
+                                            </a>
+                                        
                                         </div>
                                     </div>
                                 </div>
+                                <input asp-for="createTask.Assignee" type="hidden" id="selectedUserId" value="-1">
+                                <span class="text-danger" asp-validation-for="createTask.Assignee"></span>
                             </div>
                             <div class="col-4">
                                 <label asp-for="createTask.TaskType" class="form-label">Task Type</label>
                                 <select asp-for="createTask.TaskType" id="T_TaskType" class="form-select">
                                     <option value="-1"></option>
-                                    <option value="1">Bug</option>
-                                    <option value="2">Epic</option>
-                                    <option value="3">Story</option>
+                                    <option value="Bug">Bug</option>
+                                    <option value="Feature">Feature</option>
+                                    <option value="Improvement">Improvement</option>
                                 </select>
                                 <span asp-validation-for="createTask.TaskType" class="text-danger"></span>
                             </div>
@@ -325,9 +428,9 @@
                                 <label asp-for="createTask.Priority" class="form-label">Priority</label>
                                 <select asp-for="createTask.Priority" id="T_Priority" class="form-select">
                                     <option value="-1"></option>
-                                    <option value="1">High</option>
-                                    <option value="2">Medium</option>
-                                    <option value="3">Low</option>
+                                    <option value="High">High</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Low">Low</option>
                                 </select>
                                 <span asp-validation-for="createTask.Priority" class="text-danger"></span>
                             </div>
@@ -335,16 +438,17 @@
                         <div class="row mt-3">
                             <div class="col-8">
                                 <label asp-for="createTask.Summary" class="form-label">Summary</label>
-                                <input asp-for="createTask.Summary" class="form-control" placeholder="headline of the task"/>
+                                <input asp-for="createTask.Summary" id="T_Summary" class="form-control" placeholder="headline of the task"/>
                                 <span asp-validation-for="createTask.Summary" class="text-danger"></span>
                             </div>
                             <div class="col-4">
-                                <label asp-for="createTask.Status" class="form-label">Priority</label>
-                                <select asp-for="createTask.Status" id="T_Priority" class="form-select"> 
-                                    <option value="1">To Do</option>
-                                    <option value="2">In Progress</option>
-                                    <option value="3">Done</option>
+                                <label asp-for="createTask.Status" class="form-label">Status</label>
+                                <select asp-for="createTask.Status" id="T_Status" class="form-select">
+                                    <option value="To-Do" selected>To-Do</option>
+                                    <option value="In-Progress">In-Progress</option>
+                                    <option value="Done">Done</option>
                                 </select>
+                                <span class="text-danger" asp-validation-for="createTask.Status"></span>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -357,21 +461,23 @@
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label class="form-label" asp-for="createTask.StartDate">Start Date</label>
-                                <input type="date" class="form-control" id="AttendanceDate"
-                                       asp-for="createTask.StartDate" required
-                                       value="@DateTime.Now.ToString("yyyy-mm-dd")" />
+                                <input type="date" class="form-control" id="StartDate"
+                                       asp-for="createTask.StartDate"
+                                       value="" />
+                                <span id="startDateSpan" class="text-danger" asp-validation-for="createTask.StartDate"></span>
                             </div>
                             <div class="col-6">
                                 <label class="form-label" asp-for="createTask.Deadline">Deadline Date</label>
-                                <input type="date" class="form-control" id="AttendanceDate"
-                                       asp-for="createTask.Deadline" required
-                                       value="@DateTime.Now.ToString("yyyy-mm-dd")" />
+                                <input type="date" class="form-control" id="Deadline"
+                                       asp-for="createTask.Deadline"
+                                       value="" />
+                                <span id="deadlineDateSapn" class="text-danger" asp-validation-for="createTask.Deadline"></span>
                             </div>
                         </div>           
                     </div>  
-                </div>
+                
                 <div class="modal-footer">
-                    <button id="close-btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="task_close-btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save Task</button>
                 </div>
             </form>
@@ -383,6 +489,9 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
         <script>
+
+        const randomDigit = Math.floor(Math.random() * 10);
+
             $(document).ready(function () {
 
                 $("#projectName").on('change', function () {
@@ -468,133 +577,256 @@
 
 
                 /// drop down with images
-            $('#profileSearch').on('keyup', function () {
-                var value = $(this).val().toLowerCase();
-                $("#profileList .dropdown-item").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                $('#profileSearch').on('keyup', function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#profileList .dropdown-item").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
-            });
 
             
-            $('#profileList').on('click', '.dropdown-item', function (e) {
-                e.preventDefault();
+                $('#profileList').on('click', '.dropdown-item', function (e) {
+                    e.preventDefault();
 
                
-                var userId = $(this).data('user-id');
-                var userName = $(this).data('user-name');
-                var userImg = $(this).data('user-img');
+                    var userId = $(this).data('user-id');
+                    var userName = $(this).data('user-name');
+                    var userImg = $(this).data('user-img');
+
+                    console.log(userId + " " + userName);
      
-                $('#profileDropdown').html(`
+                    // $('#profileDropdown').html(`
+                    //             <div class="d-flex align-items-center">
+                    //                                 <img src="https:pics.craiyon.com/2023-12-05/_Aqc-hELTrSTfFsgYDoHwA.webp" data-user-id="${userId}" alt="Profile" class="rounded-circle me-2" style="width: 30px; height: 30px;">
+                    //                 ${userName}
+                    //             </div>
+
+                    // `);
+
+                        $('#profileDropdown').html(`
                             <div class="d-flex align-items-center">
                                 <img src="${userImg}" alt="Profile" class="rounded-circle me-2" style="width: 30px; height: 30px;">
                                 ${userName}
                             </div>
                         `);
 
-                $('#selectedProfileInfo').html(
-                    `User ID: ${userId}<br>Name: ${userName}`
-                );
-            });
+                      // Update the hidden input value
+                     $('#selectedUserId').val(userId);
+                });
 
 
-            $("#T_ProjectId").on('change', function () {
-                $.ajax({
-                    type: 'GET',
-                    url: '@Url.Page("/TeamLead/Board", "TeamList")',
-                    data: { 'ProjectId': $(this).val() },
-                    success: (response) => {
-                        $("#T_teamList").empty().append(`<option value= -1></option>`)
-                        response.forEach((item) => {
-                            $("#T_teamList").append(`<option value=${item.teamId}> ${item.name} </option>`)
-                        })
-                    },
-                    error: (error) => {
-                        console.log("Error occures while fetching the team list");
-                    }
+                $("#T_ProjectId").on('change', function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Page("/TeamLead/Board", "TeamList")',
+                        data: { 'ProjectId': $(this).val() },
+                        success: (response) => {
+                            $("#T_TeamList").empty().append(`<option value= -1></option>`)
+                            response.forEach((item) => {
+                                $("#T_TeamList").append(`<option value=${item.teamId}> ${item.name} </option>`)
+                            })
+                        },
+                        error: (error) => {
+                            console.log("Error occures while fetching the team list");
+                        }
+                    })
                 })
-            })
 
 
-            $("#taskForm").submit(function(e) {
-                e.preventDefault()
-                const taskData = {
+                $("#T_TeamList").on('change', function() {
+                    $('#profileDropdown').html(`<div>Choose Assignee</div>`);
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Page("/TeamLead/Board","ProjectTeamMembers")',
+                        data: {
+                            ProjectId: $("#T_ProjectId").val(),
+                            TeamId: $("#T_TeamList").val()
+                        },
+                        success: function (response) {
+                            
+                            console.log(response.teamMembers.length);
+                            if (response.teamMembers.length == 0) {
+                            
+                            $("#profileList").empty();
+                                $("#profileList").append(`<a class="dropdown-item profile-item" href="#" data-user-id="-1" data-user-name="No Data Found" data-user-img="" >
+                                        No Data Found
+                                     </a > `)
+                            }
+                            else {
+                            $("#profileList").empty();
+                                response.teamMembers.forEach((item) => {
+                                    const userName = item.firstName + " " + item.lastName;
+                                    
+                                    $("#profileList").append(`<a class="dropdown-item profile-item" href="#" data-user-id="${item.employeeId}" data-user-name="${userName}" data-user-img="https://pics.craiyon.com/2023-12-05/_Aqc-hELTrSTfFsgYDoHwA.webp">
+                                            <img src="https://pics.craiyon.com/2023-12-05/_Aqc-hELTrSTfFsgYDoHwA.webp" alt="Profile">
+                                                         ${userName}
+                                          </a>`)
+                                });
+                            }       
                     
-                }
-            })
-        });
+                        },
+                        error: (error) => {
+                            console.log("Error occures while fetching the team list");
+                        }
+                    })
+                })
+
+                
+                 
+                    // Validate Start Date
+                    $('#StartDate').on('change', function () {
+                        const startDate = new Date($(this).val());
+                        const today = new Date();
+
+                        if (startDate < today.setHours(0, 0, 0, 0)) {
+                            $("#startDateSpan").text("Start Date must be today or later"); 
+                            $(this).val(""); // Reset invalid date
+                        }
+                    });
+
+                    // Validate Deadline
+                    $('#Deadline').on('change', function () {
+                        const startDate = new Date($('#StartDate').val());
+                        const deadline = new Date($(this).val());
+                        const today = new Date();
+
+                        if (deadline < today.setHours(0, 0, 0, 0)) {
+                            $("#deadlineDateSpan").text("Deadline must be today or later.");
+                            $(this).val(""); // Reset invalid date
+                        } else if (startDate && deadline < startDate) {
+                            $("#deadlineDateSpan").text("Deadline must be after or equal to the Start Date.");
+                            $(this).val(""); // Reset invalid date
+                        }
+                    });
+                
+    
 
 
-            // Initialize SortableJS for each list
-            new Sortable(document.querySelector('#todo-list'), {
-                group: 'shared', // Allow cards to be moved between lists
-                animation: 150,
-                onEnd: function (evt) {
-                    // After drag and drop, update task order
-                    updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
-                }
-            });
 
-            new Sortable(document.getElementById('in-progress-list'), {
-                group: 'shared',
-                animation: 150,
-                onEnd: function (evt) {
-                    updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
-                }
-            });
+                $("#taskForm").submit(function (e) {
+                    e.preventDefault()
 
-            new Sortable(document.getElementById('done-list'), {
-                group: 'shared',
-                animation: 150,
-                onEnd: function (evt) {
-                    updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
-                }
-            });
+                    const taskData = {
+                        ProjectId: parseInt($('#T_ProjectId').val(), 10),
+                        TeamId : parseInt($("#T_TeamList").val(), 10),
+                        TaskType : $("#T_TaskType").val(),
+                        Assignee: parseInt($('#selectedUserId').val(), 10),
+                        Priority : $('#T_Priority').val(),
+                        Summary : $('#T_Summary').val(),
+                        Status : $('#T_Status').val(),
+                        Description : descriptionInput.value,
+                        StartDate : $('#StartDate').val(),
+                        Deadline : $('#Deadline').val()
+                    }
 
-            // Function to send updated order via AJAX to the server
-            function updateTaskOrder(fromColumn, toColumn, oldIndex, newIndex) {
-                var taskIds = [];
+                   
 
-                // Collect task IDs from the updated column
-                $("#" + toColumn + " .card").each(function () {
-                    taskIds.push($(this).data('id'));
+                    $.ajax({
+                        url: '@Url.Page("/TeamLead/Board", "CreateOrUpdateTask")',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(taskData),
+                        headers: {
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                $("#task_close-btn").trigger('click');
+
+                            // Clear the form fields
+                            $('#projectForm')[0].reset();
+
+                            // Reset dropdown button to default
+                            $('#profileDropdown').html('Select Member');
+                            $('#selectedUserId').val('');
+
+                            location.reload();
+
+                            }
+                        },
+                        error: function (error) {
+                            alert('Error saving project!');
+
+                        },
+                    })
                 });
 
-                // Send updated order of task IDs to the server
-                $.ajax({
-                    url: '/TeamLead/UpdateTaskOrder', // Update with the correct endpoint
-                    method: 'POST',
-                    data: {
-                        fromColumn: fromColumn,
-                        toColumn: toColumn,
-                        taskIds: taskIds // Send the new order of tasks
-                    },
-                    success: function (response) {
-                        console.log('Order updated successfully');
-                    },
-                    error: function () {
-                        console.log('Error updating order');
+
+
+
+
+                new Sortable(document.getElementById('To-Do'), {
+                    group: 'shared', // Allow cards to be moved between lists
+                    animation: 150,
+                    onEnd: function (evt) {
+                        // After drag and drop, update task order
+                        updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
                     }
                 });
-            }
 
+                new Sortable(document.getElementById('In-Progress'), {
+                    group: 'shared',
+                    animation: 150,
+                    onEnd: function (evt) {
+                        updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
+                    }
+                });
 
-            // Quill configuration options
+                new Sortable(document.getElementById('Done'), {
+                    group: 'shared',
+                    animation: 150,
+                    onEnd: function (evt) {
+                        updateTaskOrder(evt.from.id, evt.to.id, evt.oldIndex, evt.newIndex);
+                    }
+                });
+
+                function updateTaskOrder(fromColumn, toColumn, oldIndex, newIndex) {
+                    var taskIds = [];
+
+                    console.log(fromColumn + " " + toColumn + " " + oldIndex + " " + newIndex);
+
+                    // Collect task IDs from the updated column
+                    $("#" + toColumn + " .card").each(function () {
+                        taskIds.push($(this).data('id'));
+                    });
+
+                    // Send updated order of task IDs to the server
+                    $.ajax({
+                        url: '@Url.Page("/TeamLead/Board", "UpdateTaskOrder")',  //'/TeamLead/Board?UpdateTaskOrder', // Update with the correct endpoint
+                        type: 'POST',
+                        headers: {
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        data: {
+                            fromColumn: fromColumn,
+                            toColumn: toColumn,
+                            taskIds: taskIds // Send the new order of tasks
+                        },
+                        success: function (response) {
+                            console.log('Order updated successfully');
+                        },
+                        error: function () {
+                            console.log('Error updating order');
+                        }
+                    });
+                }
+
             var quillOptions = {
                 theme: 'snow', // or 'bubble'
-            modules: {
-                toolbar: [
-            ['bold', 'italic', 'underline'],        // toggled buttons
-            ['blockquote', 'code-block'],
-            [{'header': 1 }, {'header': 2 }],     // custom button values
-            [{'list': 'ordered'}, {'list': 'bullet' }],
-            [{'script': 'sub'}, {'script': 'super' }],    // superscript/subscript
-            [{'indent': '-1'}, {'indent': '+1' }],        // outdent/indent
-            [{'direction': 'rtl' }],                       // text direction
-            [{'color': [] }, {'background': [] }],        // dropdown with defaults
-            [{'font': [] }],
-            [{'align': [] }],
-            ['clean']                               // remove formatting
-            ]
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline'],        // toggled buttons
+                        ['blockquote', 'code-block'],
+                        [{ 'header': 1 }, { 'header': 2 }],     // custom button values
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        [{ 'script': 'sub' }, { 'script': 'super' }],    // superscript/subscript
+                        [{ 'indent': '-1' }, { 'indent': '+1' }],        // outdent/indent
+                        [{ 'direction': 'rtl' }],                       // text direction
+                        [{ 'color': [] }, { 'background': [] }],        // dropdown with defaults
+                        [{ 'font': [] }],
+                        [{ 'align': [] }],
+                        ['clean']                               // remove formatting
+                    ]
                 }
             };
 
@@ -602,12 +834,13 @@
             var quill = new Quill('#quillEditor', quillOptions);
 
             // Update hidden input with Quill content
-            quill.on('text-change', function() {
+            quill.on('text-change', function () {
                 var descriptionInput = document.getElementById('descriptionInput');
-            descriptionInput.value = quill.root.innerHTML;
+                descriptionInput.value = quill.root.innerHTML;
             });
-    
-            
-        </script>
+        });
+
+
+    </script>
 }
 
