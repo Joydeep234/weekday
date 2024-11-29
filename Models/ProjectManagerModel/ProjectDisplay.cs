@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace weekday.Models
+namespace weekday.Models.ProjectManagerModel
 {
     public class ProjectDisplay
     {
@@ -22,6 +22,6 @@ namespace weekday.Models
 
         public string ProjectStatus { get; set; }
 
-        
+
     }
 }
