@@ -9,7 +9,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-0 py-3 ms-3">
         <div class="d-flex">
                 <a asp-page="../Manager/AddManagers" asp-route-projID="@Model.projectID" asp-route-teamID="@Model.newteamID"  class=" fs-6 list-group-item mx-5 p-3">Add Members</a>
-                <a href="#" class="ajax-link fs-6 list-group-item mx-5 p-3" data-url="../Manager/AllTeamShow">See All Members</a>
+                <a href="#" class="ajax-link fs-6 list-group-item mx-5 p-3" data-url="../Manager/AllTeamShow/?projID=@Model.projectID&teamID=@Model.newteamID">See All Members</a>
         </div>
 </div>
 </nav>
@@ -28,7 +28,7 @@
 
         <div class="w-full d-flex flex-column align-items-center mt-8 " id="content-area">
           <div class="d-flex justify-content-start mt-5 w-full">
-            <button id="projectDet" class="btn btn-secondary mb-10">ProjectDetails</button>
+            <button id="projectDet" class="btn btn-secondary mb-10" style="display: none;">ProjectDetails</button>
           </div>
            <div class="card mb-7">
           
@@ -52,7 +52,7 @@
                     <tr>
                   <td>
                     <p class="text-heading font-semibold">
-                      <input type="checkbox" name="ManagerList" value="@emp.employeeid" class="" style="display:@(emp.assigned?"none":"block")">
+                      <input type="checkbox" name="ManagerList" value="@emp.employeeid"  class="checkboxinput" style="display:@(emp.assigned?"none":"block")">
                     </p>
                   </td>
                   <td>
@@ -70,8 +70,10 @@
                   </td>
                   <td>
                   </td>
-                  <td class="text-end text-success">
-                   @(emp.assigned?"Assigned":"") 
+                  <td class="text-center text-white ">
+                    <p class="p-1 rounded-1 @(emp.assigned?"bg-success":" bg-danger")">
+                      @(emp.assigned?"Assigned":"Not Assigned") 
+                    </p>
                   </td>
                 </tr>
                   
@@ -82,7 +84,7 @@
                 
              </table>
              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-warning m-5 ">
+                <button type="submit" id="chckedsubmitbtn" class="btn btn-warning m-5 " style="display: none;">
                   Add
                 </button>
              </div>
@@ -175,11 +177,20 @@
             
             $('#content-area').load(url);
         })
+
+        $('.checkboxinput').on('change',function(){
+          if ($('.checkboxinput:checked').length > 0) {
+              $('#chckedsubmitbtn').css('display', 'block');
+          } else {
+              $('#chckedsubmitbtn').css('display', 'none');
+          }
+        })
+
         $('#projectDet').on('click',(e)=>{
 
             e.preventDefault();
             $('#CreateTeamFeild').empty().append(prevdet);
-           
+           $('#projectDet').css('display','none');
         })
         $('.viewbtn').on('click',function(){
           var empID = $(this).data('employeeid');
@@ -192,8 +203,8 @@
             success:function(response){
               if(response.success)
              {
-              console.log(response.employeedet.firstName)
-              var detailsHTML = `
+                console.log(response.employeedet.firstName)
+                var detailsHTML = `
                         <div class="h-full" id="CreateTeamFeild">
                             <div class="projectDetailheader d-flex border border-solid py-4 ps-4 mt-10">
                                 <p class="ms-3">Project Manager Details</p>
@@ -232,13 +243,14 @@
                         } else {
                             detailsHTML += `<p class="text-danger">No Projects Assigned</p>`;
                         }
-// Close the HTML structure
+
                         detailsHTML += `
                                     </div>
                                 </div>
                             </div>
                         </div>`;
                 $('#CreateTeamFeild').empty().append(detailsHTML)
+                $('#projectDet').css('display','block');
               }
             }
           })

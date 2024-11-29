@@ -15,12 +15,15 @@
             </p>
 
             <form method="post" asp-page-handler="Toggle_Team" asp-route-projectID="@Model.projectID"
-                asp-route-projectName="@Model.projectNAME" class="d-flex align-items-lg-center mt-3 mt-lg-0 me-10">
-                <button type="submit" class="btn d-inline-flex btn-sm btn-info" id="CreateTeam">
-                    <span class=" pe-2">
-                        <i class="bi bi-plus"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></i>
-                    </span>
-                    <span class="text-white">Create Team</span>
+                asp-route-projectName="@Model.projectNAME" class="d-flex align-items-lg-center mt-3 mt-lg-0 me-10" >
+                <button type="submit" 
+                        class="btn btn-sm btn-info" 
+                        id="CreateTeam" 
+                        style="display:@(Model.projectDetails.Status == "Completed" ? "none;" : "inline-flex;")">
+                        <span class="pe-2">
+                            <i class="bi bi-plus"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></i>
+                        </span>
+                        <span class="text-white">Create Team</span>
                 </button>
             </form>
         </div>
@@ -36,17 +39,17 @@
                     </p> 
         }
 
-        @foreach(var team in Model.teamList){
-            <a asp-page="../Manager/AddManagers" asp-route-projID="@Model.projectID" asp-route-teamID="@team.TeamId" class="teams w-full rounded-1 my-5 h-20" style="box-shadow: 0px 0px 6px rgba(82, 82, 82, 0.529);">
+        @foreach(var team in Model.teamandtask){
+            <a asp-page="../Manager/AddManagers" asp-route-projID="@Model.projectID" asp-route-teamID="@team.teamid" class="teams w-full rounded-1 my-5 h-20" style="box-shadow: 0px 0px 6px rgba(82, 82, 82, 0.529);">
                 <div class=" w-full">
-                    <div class="progress progress-lg" style="height: 5px;">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 50%;" aria-valuenow="50"
+                    <div class="progress progress-lg" style="height: 7px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: @team.taskcomplete%;" aria-valuenow="50"
                             aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     <div class="fs-5 pt-4 d-flex justify-content-around">
-                        <p class="" style="color: rgb(99, 99, 99);">@team.Name</p>
+                        <p class="" style="color: rgb(99, 99, 99);">@team.teamname</p>
                         <p class="badge badge-lg badge-dot">
-                            <i class="@(team.Status == "Active" ? "bg-success" : "bg-danger")"></i>@team.Status
+                            <i class="@(team.teamstatus == "Active" ? "bg-success" : "bg-danger")"></i>@team.teamstatus
                         </p>
                     </div>
                 </div>
@@ -75,7 +78,7 @@
                             </p>
                         }else if(Model.projectDetails.Status=="Completed"){
                             <p class="badge badge-lg badge-dot ms-10">
-                                <i class="bg-Primary"></i>@Model.projectDetails.Status
+                                <i class="bg-primary"></i>@Model.projectDetails.Status
                             </p>
                         }
                     </div>
