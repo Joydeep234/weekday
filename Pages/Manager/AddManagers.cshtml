@@ -47,31 +47,31 @@
               </thead>
               <tbody>
                 
-                @foreach(var emp in Model.employeelist){
+                @foreach(var emp in Model.empdetails){
                   
                     <tr>
                   <td>
                     <p class="text-heading font-semibold">
-                      <input type="checkbox" name="ManagerList" value="@emp.EmployeeId" class="">
+                      <input type="checkbox" name="ManagerList" value="@emp.employeeid" class="" style="display:@(emp.assigned?"none":"block")">
                     </p>
                   </td>
                   <td>
-                    <p class="text-heading font-semibold">@emp.FirstName @emp.LastName</p>
+                    <p class="text-heading font-semibold">@emp.firstname @emp.lastname</p>
                   </td>
                   <td>
                     <p class="text-heading font-semibold">
-                     @emp.Status
+                     @emp.status
                     </p>
                   </td>
                   <td>
-                   <button type="button" class="btn border border-solid viewbtn" data-employeeid="@emp.EmployeeId">
+                   <button type="button" class="btn border border-solid viewbtn" data-employeeid="@emp.employeeid">
                         view
                     </button>
                   </td>
                   <td>
                   </td>
                   <td class="text-end text-success">
-                    Assigned
+                   @(emp.assigned?"Assigned":"") 
                   </td>
                 </tr>
                   
@@ -162,6 +162,9 @@
 @section Scripts{
     <script>
     $(document).ready(function () {
+      setTimeout(function () {
+            $('#displaytext').css('display', 'none'); 
+        }, 4000);
       let prevdet = $('#CreateTeamFeild').html();
         $('.ajax-link').on('click',function(e){
              e.preventDefault();

@@ -14,7 +14,8 @@ namespace weekday.Data.Entity
 
         [Required]
         public int ProjectId { get; set; }
-
+        [Required]
+        public int TeamId { get; set; }
         [Required]
         public string Title { get; set; }
 

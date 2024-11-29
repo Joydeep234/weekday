@@ -37,11 +37,12 @@
             <div class="mb-5">
               <label class="form-label" asp-for="userlogin.Email">Email address</label>
               <input type="email" asp-for="userlogin.Email" class="form-control form-control-muted" id="email">
-
+              <span asp-validation-for="userlogin.Email" class="text-danger" style="z-index: 2;"></span>
             </div>
             <div class="mb-5">
               <label class="form-label" asp-for="userlogin.Password">Password</label>
               <input type="password"  asp-for="userlogin.Password" class="form-control form-control-muted" id="password" autocomplete="current-password">
+              <span asp-validation-for="userlogin.Password" class="text-danger" style="z-index: 2;"></span>
             </div>
             <div class="mb-5">
               <div class="form-check">
@@ -50,6 +51,9 @@
                   Keep me logged in
                 </label>
               </div>
+              @if( TempData["err"]!=null){
+                <span asp-validation-for="userlogin.Password" class="text-danger" style="z-index: 2;">@TempData["err"]</span>
+              }
             </div>
             <div>
               <button type="submit" class="btn btn-primary w-full">

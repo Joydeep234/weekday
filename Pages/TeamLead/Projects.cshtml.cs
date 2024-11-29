@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Models;
 using weekday.Data.Entity;
@@ -54,7 +49,8 @@ namespace weekday.Pages.Team_Lead
                                         ManagerFirstName = e.FirstName,  
                                         ManagerLastName = e.LastName,    
                                         ManagerEmail = e.Email           
-                                    }).ToList();
+                                    }).Distinct()
+                                    .ToList();
 
             employees = (from E in _context.employee
                                join D in _context.designation
@@ -63,7 +59,11 @@ namespace weekday.Pages.Team_Lead
                                select E)
                                .ToList();
 
-            TempData["designationId"] = employees[0].DesignationId;
+            //if (TempData["designationId"] == null)
+            //{
+            //    TempData["designationId"] = 0;
+            //}
+            //TempData["designationId"] = employees[0].DesignationId;
 
         }
 
@@ -91,7 +91,7 @@ namespace weekday.Pages.Team_Lead
                     {
                         TeamId = team.TeamId,
                         MemberId = memberId,
-                        DesignationId = Convert.ToInt32(TempData["designationId"]),
+                        //DesignationId = Convert.ToInt32(TempData["designationId"]),
                         status = "Active",
                         OrgId = 2
                     };
@@ -122,7 +122,6 @@ namespace weekday.Pages.Team_Lead
         public string Details { get; set; }
         public string ProjectStatus { get; set; }
         public int ProjectOrgId { get; set; }
-
         public int ManagerId { get; set; }
         public string ManagerFirstName { get; set; }
         public string ManagerLastName { get; set; }

@@ -11,6 +11,13 @@ using weekday.Data.Entity;
 
 namespace weekday.Pages.Manager
 {
+    public class EmpDetailsClass{
+        public string firstname { get; set; }
+        public string lastname { get; set;}
+        public string status { get; set; }
+        public int employeeid { get; set; }
+        public bool assigned { get; set; }
+    } 
     public class AddManagers : PageModel
     {
         private readonly AppDbcontext _context;
@@ -26,6 +33,7 @@ namespace weekday.Pages.Manager
         [BindProperty]
         public List<int> ManagerList { get; set; }
         public List<Employee> employeelist { get; set; } = new List<Employee>();
+        public List<EmpDetailsClass> empdetails { get; set; } = new List<EmpDetailsClass>();
         public ProjectAndTeam projectDetails { get; set; } = new ProjectAndTeam();
 
         public int projectID { get; set; }
@@ -44,6 +52,22 @@ namespace weekday.Pages.Manager
 
 
                 if (employeelist.Count < 1) throw new Exception("Employee list is empty");
+                foreach(var emp in employeelist){
+                     bool checkalreadyassigned = await (from te in _context.teamMembers
+                                   join t in _context.team on te.TeamId equals t.TeamId
+                                   join pr in _context.project on t.ProjectId equals pr.ProjectId
+                                   where te.MemberId == emp.EmployeeId && pr.ProjectId==projID
+                                   select te).AnyAsync();
+                    var empdet = new EmpDetailsClass{
+                        firstname = emp.FirstName,
+                        lastname = emp.LastName,
+                        status = emp.Status,
+                        employeeid = emp.EmployeeId,
+                        assigned = checkalreadyassigned
+                    };
+                    empdetails.Add(empdet);
+                }
+               
 
                 projectDetails = await (from p in _context.project
                                         join e in _context.employee
@@ -152,6 +176,7 @@ namespace weekday.Pages.Manager
             catch (Exception e)
             {
                 Console.WriteLine($"det==>{e.Message}");
+                TempData["msg"] = e.Message;
                 return RedirectToPage("../Manager/AddManagers", new { projID = projeID, teamID = postteamID });
             }
         }
