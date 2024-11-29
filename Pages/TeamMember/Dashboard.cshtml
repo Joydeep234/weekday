@@ -12,20 +12,25 @@
         <div class="card" style="height: 85vh;">
             <div class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
                 @* //ToDoList *@
+                <h4>@Model.TempData["Success Message"]</h4>
                 <h1>ToDo</h1>
                 @foreach (var tasks in Model.PTList)
                 {
-                    if (Model.employeeID == tasks.AssignedForId && tasks.Status.ToUpper() == "TODO")
+                    if (Model.employeeID == tasks.AssignedForId && Model.ProjectId == tasks.ProjectId && tasks.Status.ToUpper() == "TODO")
                     {
                         <div class="card">
                             <div class="card-body">
+                                <h5>ProjectName: @Model.ProjectName</h5>
                                 <h5>Task ID: @tasks.TaskId</h5>
                                 <h5 class="card-title">Title: @tasks.Title</h5>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>
                                 <h6>Deadline: @tasks.Deadline</h6>
                                 <h6>Status: <span style="color:red">@tasks.Status.ToUpper()</span></h6>
-                                <a class="btn btn-danger" asp-page="/TeamMember/TaskCompletion" asp-route-taskID="@tasks.TaskId">Working for-></a>
-                                
+                                <a class="btn btn-danger" asp-page="/TeamMember/TaskCompletion" asp-route-taskID="@tasks.TaskId" asp-route-ProjectName="@Model.ProjectName">Working for-></a>
+                                @* asp-route-ProjectName="@Model.ProjectName" *@
+                                @* asp-route-ProjectName="@Model.ProjectName" *@
+                                @* asp-route-ProjectName="@Model.ProjectName" *@
+
                             </div>
                         </div>
                     }
@@ -45,10 +50,11 @@
 
                 @foreach(var tasks in Model.PTList)
                 {
-                    if (Model.employeeID == tasks.AssignedForId && tasks.Status.ToUpper() == "WORKING")
+                    if (Model.employeeID == tasks.AssignedForId && Model.ProjectId==tasks.ProjectId && tasks.Status.ToUpper() == "INPROGRESS")
                     {
                         <div class="card">
                             <div class="card-body">
+                                <h5>ProjectName: @Model.ProjectName</h5>
                                 <h5>Task ID: @tasks.TaskId</h5>
                                 <h5 class="card-title">Title: @tasks.Title</h5>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>
@@ -77,10 +83,11 @@
 
                 @foreach(var tasks in Model.PTList)
                 {
-                    if(Model.employeeID==tasks.AssignedForId && tasks.Status.ToUpper() == "DONE")
+                    if (Model.employeeID == tasks.AssignedForId && Model.ProjectId == tasks.ProjectId && tasks.Status.ToUpper() == "DONE")
                     {
                         <div class="card">
                             <div class="card-body">
+                                <h5>ProjectName: @Model.ProjectName</h5>
                                 <h5>Task ID: @tasks.TaskId</h5>
                                 <h5 class="card-title">Title: @tasks.Title</h5>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Assigned by @tasks.AssignedById</h6>

@@ -2,3 +2,52 @@
 @model weekday.Pages.TeamMember.ProjectDashboardModel
 @{
 }
+
+
+<div>
+    
+        <h3 class="p-3">Project List</h3>
+    <h3 style="color:Red">@TempData["Success Message"]</h3>
+    @{
+        if (Model.ProjectList.Count() == 0)
+        {
+            <h3 style="color:blue;margin-top:10px">Till now You din't worked for any Project with us.</h3>
+        }
+        else
+        {
+            <table class="table table-md table-Info">
+            
+                <thead class="table-info">
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Created Date</th>
+                        <th>Dealine</th>
+                        <th>Status</th>
+                        <th>Explore</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                @foreach (var proj in Model.ProjectList)
+                {
+                    <tr>
+                        <td>@proj.Name</td>
+                        <td>@proj.CreatedAt.ToString("dd/MM/yyyy")</td>
+                        <td>@proj.Deadline.ToString("dd/MM/yyyy")</td>
+                        <td>@proj.Status.ToUpper()</td>
+                        <td><a class="btn-outline-info" asp-page="/TeamMember/Dashboard" asp-route-prjid="@proj.ProjectId" asp-route-prjName="@proj.Name">View</a>   </td>
+                    </tr>
+                    
+                }    
+            </table>
+        }
+    }
+        
+    @* <div class="card m-2">
+        <div class="card-body" style="font-size:25px;">
+            <a class="btn-outline-info" asp-page="/TeamMember/Dashboard" asp-route-prjid="@proj.ProjectId" asp-route-prjName="@proj.Name">@proj.Name</a>
+        </div>
+    </div> *@
+    
+
+</div>
