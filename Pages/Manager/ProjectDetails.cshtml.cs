@@ -12,6 +12,12 @@ using weekday.Models;
 
 namespace weekday.Pages.Manager
 {
+    public class teamandtaskdetails{
+        public int teamid { get; set; }
+        public string teamname { get; set; }
+        public string teamstatus { get; set; }
+        public double taskcomplete { get; set; }
+    }
     public class ProjectDetails : PageModel
     {
         private readonly AppDbcontext _context;
@@ -32,6 +38,10 @@ namespace weekday.Pages.Manager
         public Team teamDetails { get; set; }
         public ProjectAndTeam projectDetails { get; set; } = new ProjectAndTeam();
         public List<Team> teamList { get; set; } = new List<Team>();
+
+        
+
+        public List<teamandtaskdetails> teamandtask { get; set; } = new List<teamandtaskdetails>();
         public async Task OnGet(int projectId, string projectName)
         {
             projectID = projectId;
@@ -63,6 +73,36 @@ namespace weekday.Pages.Manager
                 if(projectDetails == null)throw new Exception("ProjectDetails is not there");
                 teamList = await _context.team.Where(p => p.ProjectId == projectId).ToListAsync();
                 if (teamList.Count < 1) throw new Exception("Team is not there");
+                
+                foreach(var team in teamList){
+                    var tasklist = await _context.projecttask.Where(t=>t.ProjectId == projectId && t.TeamId==team.TeamId).Select(t=>new { t.AssignedDate, t.EndDate }).ToListAsync();
+                    var totaltaskcount = tasklist.Count;
+                    
+                    double percent=0;
+                    var completeCount = 0;
+                    foreach(var task in tasklist){
+                        if(task.EndDate>task.AssignedDate){
+                            completeCount++;
+                        }
+                    }
+                    if (totaltaskcount > 0)
+                    {
+                        percent = (double)completeCount / totaltaskcount * 100;
+                    }
+                    else
+                    {
+                        percent = 0;
+                    }
+
+                    var tandt = new teamandtaskdetails{
+                        teamid = team.TeamId,
+                        teamname = team.Name,
+                        teamstatus = team.Status,
+                        taskcomplete = percent
+                    };
+                    teamandtask.Add(tandt);
+                }
+                
             }
             catch (Exception e)
             {

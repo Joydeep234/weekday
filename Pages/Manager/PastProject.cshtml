@@ -16,7 +16,7 @@
          
         <div class="card mb-7">
           <div class="card-header">
-            <h5 class="mb-0">OnGoing Projects</h5>
+            <h5 class="mb-0">Past Projects</h5>
           </div>
           <div class="table-responsive">
              <table class="table table-hover table-nowrap">
@@ -36,7 +36,7 @@
                 @foreach(var item in Model.AllprojectData){
                 <tr>
                   <td>
-                    <a asp-page="../Manager/ProjectDetails" class="text-heading font-semibold">
+                    <a asp-page="../Manager/ProjectDetails" asp-route-projectId="@item.ProjectId" asp-route-projectName="@item.Name" class="text-heading font-semibold">
                       @item.Name
                     </a>
                   </td>

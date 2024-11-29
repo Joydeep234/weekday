@@ -14,13 +14,13 @@ namespace weekday.Data.Entity
         public int OrgId { get; set; }
 
         [Required]
-        public string ClientName { get; set; }
+        public int ClientID { get; set; }
         [Required]
         public string OrgName { get; set; }
 
-        public DateTime PurchasedData { get; set; }
+        public DateTime PurchasedDate { get; set; }
 
-        public string AccountType { get; set; }
+        public int PlanID { get; set; }
 
         public DateTime PurchaseExpiration { get; set; }
     }
