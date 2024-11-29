@@ -8,10 +8,19 @@
         display: none; 
     }
 
-#side-scroll{
-    overflow-y:scroll;
-    scrollbar-width:none;
-    -ms-overflow-style:none;
+.table-responsive{
+    overflow-x:scroll;
+    
+}
+
+.table-responsive::-webkit-scrollbar {
+    display: none;
+}
+
+#side-scroll {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
     #side-scroll::-webkit-scrollbar{
         display:none;
@@ -31,3 +40,13 @@
 #h1{
     margin-top:0;
 }
+
+#preloader {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+    #preloader p {
+        margin-top: 10px;
+        font-size: 1.2rem;
+        color: #007bff;
+    }

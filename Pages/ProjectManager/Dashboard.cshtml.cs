@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Data.Entity;
-using weekday.Models;
+using weekday.Models.ProjectManagerModel;
 
 namespace weekday.Pages.Project_Manager
 {
@@ -45,7 +45,7 @@ namespace weekday.Pages.Project_Manager
                                     Project_Details = project.Details,
                                    /* EmpImag = Employee.ImageURL,*/
                                     
-                                }).ToList();
+                                }).Distinct().ToList();
 
             Console.WriteLine(employeeProjects);
         }
