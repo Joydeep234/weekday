@@ -1,8 +1,7 @@
 @page
 @model weekday.Pages.Team_Lead.ProjectsModel
 @{
-    ViewData["Title"] = "Projects";
-    
+    ViewData["Title"] = "Projects";  
 }
 
 <section>
@@ -19,10 +18,7 @@
                         <a class="dropdown-item text-sm py-1 mx-2" href="#" style="font-weight: 500"><i class="fa-solid fa-code-pull-request mx-2"></i> Task</a>
                         <div class="dropdown-divider"></div>
                     <a type="button" href="#" data-bs-toggle="modal" data-bs-target="#TeamModal" class="dropdown-item text-sm py-1 mx-2" style="font-weight: 500">
-                        <i class="fa-solid fa-user-plus mx-2"></i>
-                            
-                            
-                            Team</a>
+                        <i class="fa-solid fa-user-plus mx-2"></i> Team</a>
                     </div>
                 </div>
             </div>
@@ -39,27 +35,25 @@
                             {
                                 if(projectCard.ProjectStatus.Equals("TODO"))
                                 {
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="row">
-                                                                        <div class="col">
-                                                                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
-                                                                            <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
-                                                                        </div>
-                                                                        <div class="col-auto">
-                                                                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
-                                                                                <i class="bi bi-credit-card"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mt-2 mb-0 text-sm">
-                                                                        <span class="badge rounded-pill text-bg-warning bg-opacity-30 text-white me-2">
-                                                                            @projectCard.ProjectStatus
-                                                                        </span>
-                                                                        <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
+                                                    <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                    <i class="bi bi-credit-card"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 text-sm">
+                                                <span class="badge rounded-pill text-bg-info bg-opacity-30 text-info me-2">@projectCard.ProjectStatus</span>
+                                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                                
                             }
@@ -71,7 +65,7 @@
 
             <div class="col-12 col-lg-4 col-md-4 ">
                 <div class="card" style="height: 85vh;">
-                    <div class="card-body">
+                <div class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
                     @{
                         if (Model.projectDetails.Count != 0)
                         {
@@ -79,27 +73,25 @@
                             {
                                 if (projectCard.ProjectStatus.Equals("IN-PROGRESS"))
                                 {
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="row">
-                                                                        <div class="col">
-                                                                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
-                                                                            <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
-                                                                        </div>
-                                                                        <div class="col-auto">
-                                                                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
-                                                                                <i class="bi bi-credit-card"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mt-2 mb-0 text-sm">
-                                                                        <span class="badge rounded-pill text-bg-warning bg-opacity-30 text-warning me-2">
-                                                                            <i class="bi bi-arrow-up me-1"></i>@projectCard.ProjectStatus
-                                                                        </span>
-                                                                        <span class="text-nowrap text-xs text-muted">Since last month</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
+                                                    <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                        <i class="bi bi-credit-card"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 text-sm">
+                                                <span class="badge rounded-pill text-bg-warning bg-opacity-30 text-warning me-2">@projectCard.ProjectStatus</span>
+                                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
 
                             }
@@ -111,7 +103,7 @@
 
             <div class="col-lg-4 col-md-4">
                 <div class="card" style="height: 85vh;">
-                    <div class="card-body">
+                <div class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
                     @{
                         if (Model.projectDetails.Count != 0)
                         {
@@ -119,27 +111,25 @@
                             {
                                 if (projectCard.ProjectStatus.Equals("DONE"))
                                 {
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="row">
-                                                                        <div class="col">
-                                                                            <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
-                                                                            <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
-                                                                        </div>
-                                                                        <div class="col-auto">
-                                                                            <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
-                                                                                <i class="bi bi-credit-card"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mt-2 mb-0 text-sm">
-                                                                        <span class="badge rounded-pill text-bg-warning bg-opacity-30 text-warning me-2">
-                                                                            @projectCard.ProjectStatus
-                                                                        </span>
-                                                                        <span class="text-nowrap text-xs text-muted"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">@projectCard.ManagerFirstName</span>
+                                                    <span class="h3 font-bold mb-0">@projectCard.ProjectName</span>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                                        <i class="bi bi-credit-card"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 text-sm">
+                                                <span class="badge rounded-pill text-bg-sucess bg-opacity-30 text-success me-2">@projectCard.ProjectStatus</span>
+                                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
 
                             }
@@ -175,7 +165,7 @@
                         </select>
 
                         <label class="form-label">Project</label>
-                        <select id="teamList" asp-for="createTeam.TeamName"  name="teamList" class="form-control">
+                        <select id="teamList" asp-for="createTeam.TeamId"  name="teamList" class="form-control">
                             <option value="-1"> -- Choose Team --</option>
                                 
                         </select>
@@ -241,7 +231,6 @@
             })
 
 
-            // Update selected members dynamically
             $(document).on('change', '.member-checkbox', function () {
                 const memberId = $(this).val();
                 const memberName = $(this).data('name');
@@ -257,30 +246,28 @@
                     $(`#selected-${memberId}`).remove();
                 }
 
-                // Update hidden input with selected IDs
                 $('.member-checkbox:checked').each(function () {
                     selectedIds.push($(this).val());
                 });
-                $('#membersId').val(selectedIds.join(',')); // Store as comma-separated values
+                $('#membersId').val(selectedIds.join(',')); 
             });
 
-            // Remove member when the cross mark is clicked
             $(document).on('click', '.remove-member', function () {
                 const memberId = $(this).data('id');
                 $(`#selected-${memberId}`).remove();
                 $(`.member-checkbox[value="${memberId}"]`).prop('checked', false).trigger('change');
             });
 
-            // Handle form submission with AJAX
+            
             $('#projectForm').submit(function (e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault(); 
 
                 const formData = {
                     TeamId: $('#teamList').val(),
                     TeamName: $('#teamList option:selected').text(),
-                    ProjectId: $('#projectName').val(), // Dynamically get the selected project ID
-                    ProjectName: $('#projectName option:selected').text(), // Get selected project name
-                    MembersId: $('#membersId').val().split(',').map(Number), // Convert to array of numbers
+                    ProjectId: $('#projectName').val(), 
+                    ProjectName: $('#projectName option:selected').text(), 
+                    MembersId: $('#membersId').val().split(',').map(Number), 
                 };
 
                 console.log(formData);
@@ -291,19 +278,18 @@
                     contentType: 'application/json',
                     data: JSON.stringify(formData),
                     headers: {
-                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()  // Add CSRF token to header
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() 
                     },
                     success: function (response) {
-                        // Handle success response
+                        
                         $("#close-btn").trigger('click');
                     },
                     error: function (error) {
                         alert('Error saving project!');
-                        // Handle error response
+                        
                     },
                 });
             });
         });
     </script>
-
 }
