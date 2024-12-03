@@ -1,0 +1,191 @@
+﻿@page
+@model weekday.Pages.TeamLead.TaskModel
+@{
+}
+
+    <div class="row mt-5">
+        <div class="col-8 d-flex flex-column" style="gap: 20px" >
+        <div class="accordion bg-white" id="accordionPanelsStayOpen">
+            <div class="accordion-item">
+                <button class="accordion-button text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#Details" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    Details
+                </button>
+
+                <div id="Details" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                       <div class="row">
+                           <div class="col-6">
+                                <div class="d-flex justify-content-start align-items-center ms-10">
+                                    <p class="h6 text-muted w-20">Type</p>
+                                    <div class="ms-5">
+                                        @{
+                                            if (Model.taskInfo?.taskDetails.Title == "Bug")
+                                            {
+                                                <i class="fa-solid fa-sm fa-bug me-2" style="color: #ff4000;"></i>
+                                            }
+                                            if (Model.taskInfo?.taskDetails.Title == "Feature")
+                                            {
+                                                <i class="fa-solid fa-sm fa-circle-stop me-2" style="color: #63E6BE;"></i>
+                                            }
+                                            if (Model.taskInfo?.taskDetails.Title == "Improvement")
+                                            {
+                                                <i class="fa-solid fa-chart-line fa-sm me-2" style="color: #74C0FC;"></i>
+                                            }
+                                        }
+                                        
+                                        <span class="text-dark font-semibold">@Model.taskInfo?.taskDetails.Title</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center ms-10">
+                                    <p class="h6 text-muted w-20">Priority</p>
+                                    <div class="ms-5">
+                                        @{
+                                            if (Model.taskInfo?.taskDetails.Priority == "High")
+                                            {
+                                                <i class="fa-solid fa-sm fa-angles-up fa-fade me-2" style="color: #ff0000;"></i>
+                                            }
+                                            if (Model.taskInfo?.taskDetails.Priority == "Medium")
+                                            {
+                                                <i class="fa-solid fa-sm fa-grip-lines me-2" style="color: #FFD43B;"></i>
+                                            }
+                                            if (Model.taskInfo?.taskDetails.Priority == "Low")
+                                            {
+                                                <i class="fa-solid fa-sm fa-angles-down me-2" style="color: #63E6BE;"></i>
+                                            }
+                                        }
+                                        <span class="text-dark font-semibold">@Model.taskInfo?.taskDetails.Priority</span>
+                                    </div>
+                                </div>
+                           </div>
+                           <div class="col-6">
+                                <div class="d-flex justify-content-start align-items-center ms-10">
+                                    <p class="h6 text-muted w-20">Labels:</p>
+                                    <div class="ms-5">
+                                        <span class="text-dark font-semibold">None</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center ms-10">
+                                    <p class="h6 text-muted w-20">Resolution:</p>
+                                    <div class="ms-5">       
+                                        @{
+                                            if (Model.taskInfo?.taskDetails.Status == "Done")
+                                            {
+                                                <span class="text-dark font-semibold">Resolved</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-dark font-semibold">Unresolved</span>
+                                            }
+                                        }        
+                                    </div>
+                                </div>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* ------------------------------------------------------ *@
+
+        <div class="accordion bg-white" id="accordionPanelsStayOpen">
+            <div class="accordion-item">
+                <button class="accordion-button text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#Description" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    Description
+                </button>
+                <div id="Description" class="accordion-collapse collapse show">
+                    <div class="accordion-body"> 
+                        <p class="h5 text-muted font-semibold mb-2">
+                            Summary: <span class="text-dark font-semibold ms-3"> @Model.taskInfo?.taskDetails.Summary </span>
+                        </p>
+                         <p class="h5 text-muted font-semibold mb-1">Task Information: </p>
+                        <div class="ql-editor mt-0 p-2">
+                            @(string.IsNullOrEmpty(Model.taskInfo?.taskDetails.Details)
+                                ? "No content available"
+                                : Html.Raw(Model.taskInfo?.taskDetails.Details))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="col-4 d-flex flex-column" style="gap: 40px;">
+            <div class="accordion bg-white" id="accordionPanelsStayOpen">
+                <div class="accordion-item">
+                    <button class="accordion-button text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#people" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            People
+                    </button>
+                    
+                    <div id="people" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="d-flex flex-column" style="gap : 15px;">
+                                <div class="d-flex justify-content-start align-items-center ms-10">
+                                    <p class="h6 text-muted mb-1">Assignee:</p>
+                                    <div class="ms-5">
+                                        <div class="avatar rounded-circle me-2" style="height: 28px; width: 28px;">
+                                            <img alt="..." src="~/Images/profile-photo.png">
+                                        </div>
+                                        <span class="text-body font-semibold">@Model.taskInfo?.Assignee</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center ms-10">
+                                    <p class="h6 text-muted mb-1">Reporter:</p>
+                                    <div class="ms-5">
+                                        <div class="avatar rounded-circle me-2" style="height: 28px; width: 28px;">
+                                            <img alt="..." src="~/Images/profile-photo.png">
+                                        </div>
+                                        <span class="text-body font-semibold">@Model.Reporter</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion bg-white" id="accordionPanelsStayOpen">
+                <div class="accordion-item">
+                    <button class="accordion-button text-bold" type="button" data-bs-toggle="collapse" data-bs-target="#Dates" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Dates
+                    </button>
+
+                    <div id="Dates" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="d-flex flex-column" style="gap : 15px;">
+                                <div class="d-flex justify-content-start align-items-center ms-10">
+                                    <p class="h6 text-muted">Created:</p>
+                                    <div class="ms-5 h6">
+                                    <span class="text-body font-semibold">
+                                        @TaskModel.GetRelativeTime(Model.taskInfo?.taskDetails.StartDate)
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center ms-10">
+                                    <p class="h6 text-muted">Updated:</p>
+                                    <div class="ms-5 h6">
+                                    <span class="text-body font-semibold">
+                                        @TaskModel.GetRelativeTime(Model.taskInfo?.taskDetails.LatestUpdateTime)
+                                    </span>
+                                    </div>
+                                </div>
+                            <div class="d-flex justify-content-start align-items-center ms-10">
+                                <p class="h6 text-muted">Deadline:</p>
+                                <div class="ms-5 h6">
+                                    <span class="text-body font-semibold">
+                                        @TaskModel.GetRelativeTime(Model.taskInfo?.taskDetails.Deadline)
+                                    </span>
+                                </div>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
