@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Diagnostics.Contracts;
-using System.Security.Cryptography.Xml;
+using System.Text.Json;
 using weekday.Data.Context;
 using weekday.Data.Entity;
 using weekday.Models;
@@ -32,7 +30,7 @@ namespace weekday.Pages.TeamLead
         public List<ProjectTeamMembers> projectTeamMembers { get; set; } = new List<ProjectTeamMembers>(); 
         public List<Team> teamList { get; set; } = new List<Team>();
 
-        public List<ProjectTask> projectTasks { get; set; }
+        public List<ProjectTasks> projectTasks { get; set; } = new List<ProjectTasks>();
 
         public int randomDigitNonZero;
 
@@ -62,26 +60,40 @@ namespace weekday.Pages.TeamLead
                                   ManagerFirstName = e.FirstName,
                                   ManagerLastName = e.LastName,
                                   ManagerEmail = e.Email
-                              }).Distinct()
-                                    .ToList();
+                              })
+                              .Distinct()
+                              .ToList();
 
-            employees = (from E in _context.employee
-                         join D in _context.designation
-                         on E.DesignationId equals D.DesignationId
-                         where D.Name == "TEAM_MEMBER"
-                         select E)
-                         .ToList();
+                employees = (from E in _context.employee
+                             join D in _context.designation
+                             on E.DesignationId equals D.DesignationId
+                             where D.Name == "TEAM_MEMBER"
+                             select E)
+                             .ToList();
 
 
-            projectTasks = (from T in _context.projecttask
-                            where T.AssignedById == 3
-                            select T).ToList();
+                projectTasks = (from Ta in _context.projecttask
+                                join T in _context.team
+                                on Ta.TeamId equals T.TeamId
+                                join P in _context.project
+                                on Ta.ProjectId equals P.ProjectId
+                                where Ta.AssignedById == 3
+                                select new ProjectTasks
+                                {
+                                    taskDetails = Ta,
+                                    ProjectName = P.Name,
+                                    ProjectStatus = P.Status,
+                                    TeamName = T.Name,
+                                    TeamStatus = T.Status,
+                                }).ToList();
 
             //TempData["designationId"] = employees[0].DesignationId;
             TempData["designationId"] = employees.FirstOrDefault()?.DesignationId ?? 0;
 
             return Page();
         }
+
+
 
         public async Task<IActionResult> OnGetProjectTeamMembers(int ProjectId, int TeamId)
         {
@@ -248,6 +260,19 @@ namespace weekday.Pages.TeamLead
 
         public string ImageURL { get; set; }
 
+
+    }
+
+    public class ProjectTasks 
+    {
+        public ProjectTask taskDetails { get; set; }
+        public string ProjectName { get; set; }
+
+        public string ProjectStatus { get; set; }
+
+        public string TeamName { get; set;}
+
+        public string TeamStatus { get; set; }
 
     }
 }

@@ -6,9 +6,21 @@
 
 <section >
     <div class="d-flex justify-content-between p-4">
-        <h3 class="h3">Task Board</h3>
-        <div>
-            <div class="dropdown">
+        <h3 class="h3">Board</h3>
+        <div class="d-flex justify-content-evenly" style="gap: 20px">
+            <div class="btn btn-scondary p-0 m-0 ">
+                <select asp-for="createTeam.ProjectId" id="projectNameSort" class="form-select py-2 pe-5 me-5 h6 font-semibold text-muted text-sm">
+                    <option class=" h6 font-semibold text-muted text-sm" value="-1">All Projects</option>
+                    @foreach (var project in Model.projectDetails)
+                    {
+                        <option class="h6 font-semibold text-muted text-sm" value="@project.ProjectId">
+                            @project.ProjectName
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="dropdown">    
                 <button class="btn btn-sm btn-primary dropdown-toggle px-4 py-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-plus" style="margin-right: 10px;"></i>
                     Create
@@ -32,8 +44,8 @@
     <div class="row mb-3">
         <div class="col-12 col-lg-4 col-md-4">
             <div class="card" style="height: 88vh;">
-                <h5 class=" card-title h5 my-3 text-uppercase text-center text-primary">TO DO</h5>
-                <div id="To-Do" class="card-body card-scroll d-flex flex-column" style="gap : 10px;">        
+                <h5 class="card-title h5 my-3 text-uppercase text-center text-primary">TO DO</h5>
+                <div id="To-Do" class="card-body card-scroll d-flex flex-column pt-1" style="gap: 10px;">        
 
                    @*  <div class="col-auto">
                         <div class="avatar-group">
@@ -49,15 +61,16 @@
                         if (Model.projectTasks.Count != 0) {
                             foreach(var task in Model.projectTasks)
                             {
-                                int taskId = task.TaskId * 5 + 102;
+                                int taskId = task.taskDetails.TaskId * 5 + 102;
 
-                                if(task.Status == "To-Do")
+                                if(task.taskDetails.Status == "To-Do")
                                 {
-                                    <div class="card task-cards" data-id="@task.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                                    <a id="navigateLink" asp-page="/TeamLead/Task" asp-route-taskId="@task.taskDetails.TaskId" ondblclick="handleDoubleClick()">
+                                    <div class="card task-cards" data-id="@task.taskDetails.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <span class="h4 font-semibold text-muted text-sm d-block">@task.Summary</span>
+                                                    <span class="h4 font-semibold text-muted text-sm d-block">@task.taskDetails.Summary</span>
                                                 </div>
                                             </div>
                                            
@@ -65,15 +78,15 @@
                                                 <div class="col-1">
                                                     <span>
                                                         @{
-                                                            if(task.Title == "Bug")
+                                                            if(task.taskDetails.Title == "Bug")
                                                             {
                                                                 <i class="fa-solid fa-lg fa-bug" style="color: #ff4000;"></i>
                                                             }
-                                                            if(task.Title == "Feature")
+                                                            if (task.taskDetails.Title == "Feature")
                                                             {
                                                                 <i class="fa-solid fa-lg fa-circle-stop" style="color: #63E6BE;"></i>
                                                             }
-                                                            if(task.Title == "Improvement")
+                                                            if (task.taskDetails.Title == "Improvement")
                                                             {
                                                                 <i class="fa-solid fa-chart-line fa-lg" style="color: #74C0FC;"></i>
                                                             }
@@ -86,15 +99,15 @@
                                                 <div class="col-4 d-flex justify-content-end ms-auto">
                                                     <span class="me-3">
                                                         @{
-                                                            if(task.Priority == "High")
+                                                            if (task.taskDetails.Priority == "High")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-angles-up fa-fade" style="color: #ff0000;"></i>
                                                             }
-                                                            if(task.Priority == "Medium")
+                                                            if (task.taskDetails.Priority == "Medium")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-grip-lines" style="color: #FFD43B;"></i>
                                                             }
-                                                            if(task.Priority == "Low")
+                                                            if (task.taskDetails.Priority == "Low")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-angles-down" style="color: #63E6BE;"></i>
                                                             }
@@ -105,11 +118,19 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-
+                                            <div class="row mt-1">
+                                                <div class="col-6">
+                                                    <i class="fa-solid fa-code fa-xs me-1"></i>
+                                                    <span class="font-semibold text-muted text-sm"> @task.ProjectName </span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <i class="fa-solid fa-user-group fa-xs me-1"></i>
+                                                    <span class="font-semibold text-muted text-sm"> @task.TeamName </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </a>
                                 }     
                             }
                         }
@@ -118,24 +139,26 @@
             </div>   
         </div>
 
-        <div  class="col-12 col-lg-4 col-md-4 ">
+        <div class="col-12 col-lg-4 col-md-4 ">
                 <div class="card" style="height: 88vh;">
                     <h5 class="card-title h5 my-3 text-uppercase text-center text-primary">In Progress</h5>
-                    <div id="In-Progress"  class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+                    <div id="In-Progress"  class="card-body card-scroll d-flex flex-column pt-1" style="gap : 10px;">
                     @{
                         if (Model.projectTasks.Count != 0)
-                        {
+                         {
+                         
                             foreach (var task in Model.projectTasks)
                             {
-                                int taskId = task.TaskId * 5 + 102;
+                                int taskId = task.taskDetails.TaskId * 5 + 102;
 
-                                if (task.Status == "In-Progress")
+                                if (task.taskDetails.Status == "In-Progress")
                                 {
-                                    <div class="card" data-id="@task.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                                     <a id="navigateLink" asp-page="/TeamLead/Task" asp-route-taskId="@task.taskDetails.TaskId" ondblclick="handleDoubleClick()">
+                                    <div class="card" data-id="@task.taskDetails.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <span class="h4 font-semibold text-muted text-sm d-block">@task.Summary</span>
+                                                    <span class="h4 font-semibold text-muted text-sm d-block">@task.taskDetails.Summary</span>
                                                 </div>
                                             </div>
 
@@ -143,15 +166,15 @@
                                                 <div class="col-1">
                                                     <span>
                                                         @{
-                                                            if (task.Title == "Bug")
+                                                            if (task.taskDetails.Title == "Bug")
                                                             {
                                                                 <i class="fa-solid fa-lg fa-bug" style="color: #ff4000;"></i>
                                                             }
-                                                            if (task.Title == "Feature")
+                                                            if (task.taskDetails.Title == "Feature")
                                                             {
                                                                 <i class="fa-solid fa-lg fa-circle-stop" style="color: #63E6BE;"></i>
                                                             }
-                                                            if (task.Title == "Improvement")
+                                                            if (task.taskDetails.Title == "Improvement")
                                                             {
                                                                 <i class="fa-solid fa-chart-line fa-lg" style="color: #74C0FC;"></i>
                                                             }
@@ -164,15 +187,15 @@
                                                 <div class="col-4 d-flex justify-content-end ms-auto">
                                                     <span class="me-3">
                                                         @{
-                                                            if (task.Priority == "High")
+                                                            if (task.taskDetails.Priority == "High")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-angles-up fa-fade" style="color: #ff0000;"></i>
                                                             }
-                                                            if (task.Priority == "Medium")
+                                                            if (task.taskDetails.Priority == "Medium")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-grip-lines" style="color: #FFD43B;"></i>
                                                             }
-                                                            if (task.Priority == "Low")
+                                                            if (task.taskDetails.Priority == "Low")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-angles-down" style="color: #63E6BE;"></i>
                                                             }
@@ -183,11 +206,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row mt-1">
+                                                <div class="col-6">
+                                                    <i class="fa-solid fa-code fa-xs me-1"></i>
+                                                    <span class="font-semibold text-muted text-sm"> @task.ProjectName </span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <i class="fa-solid fa-user-group fa-xs me-1"></i>
+                                                    <span class="font-semibold text-muted text-sm"> @task.TeamName </span>
+                                                </div>
                                             </div>
 
                                         </div>
                                     </div>
+                                    </a>
                                 }
                             }
                         }
@@ -199,22 +231,23 @@
             <div  class="col-lg-4 col-md-4">
                 <div class="card" style="height: 88vh;">
                     <h5 class=" card-title h5 my-3 text-uppercase text-center text-primary">Done</h5>
-                    <div id="Done" class="card-body card-scroll d-flex flex-column" style="gap : 10px;">
+                    <div id="Done" class="card-body card-scroll d-flex flex-column pt-1" style="gap : 10px;">
 
                     @{
                         if (Model.projectTasks.Count != 0)
                         {
                             foreach (var task in Model.projectTasks)
                             {
-                                int taskId = task.TaskId * 5 + 102;
+                                int taskId = task.taskDetails.TaskId * 5 + 102;
 
-                                if (task.Status == "Done")
+                                if (task.taskDetails.Status == "Done")
                                 {
-                                    <div class="card" data-id="@task.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                                     <a id="navigateLink" asp-page="/TeamLead/Task" asp-route-taskId="@task.taskDetails.TaskId" ondblclick="handleDoubleClick()">
+                                    <div class="card" data-id="@task.taskDetails.TaskId" style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <span class="h4 font-semibold text-muted text-sm d-block">@task.Summary</span>
+                                                        <span class="h4 font-semibold text-muted text-sm d-block text-decoration-line-through">@task.taskDetails.Summary</span>
                                                 </div>
                                             </div>
 
@@ -222,15 +255,15 @@
                                                 <div class="col-1">
                                                     <span>
                                                         @{
-                                                            if (task.Title == "Bug")
+                                                            if (task.taskDetails.Title == "Bug")
                                                             {
                                                                 <i class="fa-solid fa-lg fa-bug" style="color: #ff4000;"></i>
                                                             }
-                                                            if (task.Title == "Feature")
+                                                            if (task.taskDetails.Title == "Feature")
                                                             {
                                                                 <i class="fa-solid fa-lg fa-circle-stop" style="color: #63E6BE;"></i>
                                                             }
-                                                            if (task.Title == "Improvement")
+                                                            if (task.taskDetails.Title == "Improvement")
                                                             {
                                                                 <i class="fa-solid fa-chart-line fa-lg" style="color: #74C0FC;"></i>
                                                             }
@@ -240,18 +273,21 @@
                                                 <div class="col-2">
                                                     <span class="font-semibold text-muted text-sm d-flex align-items-center" style="margin-top: 2px;"><i class="fa-solid fa-sm fa-hashtag me-1" style="color: #616161;"></i> @taskId </span>
                                                 </div>
-                                                <div class="col-4 d-flex justify-content-end ms-auto">
+                                                <div class="col-6 d-flex justify-content-end ms-auto">
+                                                    <span class="me-4">
+                                                            <i class="fa-solid fa-circle-check fa-xl" style="color: #71fe7a;"></i>
+                                                    </span>
                                                     <span class="me-3">
                                                         @{
-                                                            if (task.Priority == "High")
+                                                            if (task.taskDetails.Priority == "High")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-angles-up fa-fade" style="color: #ff0000;"></i>
                                                             }
-                                                            if (task.Priority == "Medium")
+                                                            if (task.taskDetails.Priority == "Medium")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-grip-lines" style="color: #FFD43B;"></i>
                                                             }
-                                                            if (task.Priority == "Low")
+                                                            if (task.taskDetails.Priority == "Low")
                                                             {
                                                                 <i class="fa-solid fa-xl fa-angles-down" style="color: #63E6BE;"></i>
                                                             }
@@ -262,11 +298,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row mt-1">
+                                                <div class="col-6">
+                                                    <i class="fa-solid fa-code fa-xs me-1"></i>
+                                                    <span class="font-semibold text-muted text-sm"> @task.ProjectName </span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <i class="fa-solid fa-user-group fa-xs me-1"></i>
+                                                    <span class="font-semibold text-muted text-sm"> @task.TeamName </span>
+                                                </div>
                                             </div>
 
                                         </div>
                                     </div>
+                                    </a>
                                 }
                             }
                         }
@@ -490,6 +535,11 @@
     <partial name="_ValidationScriptsPartial" />
         <script>
 
+        function handleDoubleClick() {
+            // Simulate a click on the anchor tag
+            document.getElementById('navigateLink').click();
+        }
+
         const randomDigit = Math.floor(Math.random() * 10);
 
             $(document).ready(function () {
@@ -509,7 +559,26 @@
                             console.log("Error occures while fetching the team list");
                         }
                     })
-                })
+                });
+
+
+                
+                    $('#projectNameSort').on('change',function () {
+                        var projectId = $(this).val();
+
+                        $.ajax({
+                            url: '@Url.Page("/TeamLead/Board","FilterTask")', // Replace with the correct Razor Page route
+                            method: 'GET',
+                            data: { projectId: projectId },
+                            success: function (response) {
+                                console.log(response.success);
+                            },
+                            error: function (error) {
+                                console.error('Error fetching tasks:', error);
+                            }
+                        });
+                    });
+                
 
 
                 $(document).on('change', '.member-checkbox', function () {
