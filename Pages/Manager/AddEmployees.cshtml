@@ -1,0 +1,76 @@
+@page
+@model weekday.Pages.Manager.AddEmployees
+@{
+    ViewData["Title"] = "AddEmployees";
+}
+
+<div class="w-full d-flex justify-content-center">
+    <div class="w-3/4 bg-white rounded-1" style="box-shadow: 0px 0px 7px rgba(48, 48, 48, 0.616);">
+    @if(TempData["msg"]!=null){
+        <p class="text-center fs-5 text-danger" id="errortext">@TempData["msg"]</p>
+    }
+        <form method="post" asp-page-handler="AddingEmployees" class="d-flex flex-column align-items-center justify-content-center" enctype="multipart/form-data">
+            <div class=" d-flex w-full justify-content-evenly">
+                <div class="">
+                    <label asp-for="employeeSelection.FirstName" class="form-label"></label>
+                    <input type="text" asp-for="employeeSelection.FirstName" class="form-control px-12"/>
+                    <span class="text-danger" asp-validation-for="employeeSelection.FirstName"></span>
+                </div>
+                <div class="">
+                    <label asp-for="employeeSelection.LastName" class="form-label"></label>
+                    <input type="text" asp-for="employeeSelection.LastName" class="form-control px-12"/>
+                    <span class="text-danger" asp-validation-for="employeeSelection.LastName"></span>
+                </div>
+            </div>
+            <div class="w-3/4 ">
+                    <label asp-for="employeeSelection.Email" class="form-label"></label>
+                    <input type="email" asp-for="employeeSelection.Email" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="employeeSelection.Email"></span>
+            </div>
+            <div class="w-3/4">
+                <label asp-for="employeeSelection.Designation" class="form-label"></label>
+                <select asp-for="employeeSelection.Designation" asp-items="@Model.Designationlist" class="form-control w-full" id="">
+                    <option >none</option>
+                </select>
+                <span class="text-danger" asp-validation-for="employeeSelection.Designation"></span>
+            </div>
+            <div class="w-3/4">
+                <label asp-for="employeeSelection.Status" class="form-label"></label>
+                <select asp-for="employeeSelection.Status" class="form-control w-full" id="">
+                    <option >none</option>
+                    <option value="Active">Active</option>
+                    <option value="NotActive">Not Active</option>
+                </select>
+                <span class="text-danger" asp-validation-for="employeeSelection.Status"></span>
+            </div>
+            <div class="w-3/4 ">
+                    <label asp-for="employeeSelection.ImageURL" class="form-label"></label>
+                    <input type="file" asp-for="employeeSelection.ImageURL" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="employeeSelection.ImageURL"></span>
+            </div>
+             <div class="w-3/4 ">
+                    <label asp-for="employeeSelection.Password" class="form-label"></label>
+                    <input type="password" asp-for="employeeSelection.Password" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="employeeSelection.Password"></span>
+            </div>
+             <div class="w-3/4 ">
+                    <label asp-for="employeeSelection.CPassword" class="form-label"></label>
+                    <input type="password" asp-for="employeeSelection.CPassword" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="employeeSelection.CPassword"></span>
+            </div>
+            
+            <div class="w-3/4 ">
+                    <button type="submit" class="btn btn-primary form-control my-10">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+            setTimeout(()=>{
+                $('#errortext').css('display','none');
+            },5000)
+        })
+    </script>
+}

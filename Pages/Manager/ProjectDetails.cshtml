@@ -49,7 +49,7 @@
                     <div class="fs-5 pt-4 d-flex justify-content-around">
                         <p class="" style="color: rgb(99, 99, 99);">@team.teamname</p>
                         <p class="badge badge-lg badge-dot">
-                            <i class="@(team.teamstatus == "Active" ? "bg-success" : "bg-danger")"></i>@team.teamstatus
+                            <i class="@(team.teamstatus == "Active" ? "fa-beat-fade bg-success" : "fa-beat-fade bg-danger")"></i>@team.teamstatus
                         </p>
                     </div>
                 </div>
@@ -70,15 +70,15 @@
                         <p class="ms-3">Details</p>
                         @if(Model.projectDetails.Status=="ToDo"){
                             <p class="badge badge-lg badge-dot ms-10">
-                                <i class="bg-warning"></i>@Model.projectDetails.Status
+                                <i class="fa-beat-fade bg-warning"></i>@Model.projectDetails.Status
                             </p>
                         }else if(Model.projectDetails.Status=="InProgress"){
                             <p class="badge badge-lg badge-dot ms-10">
-                                <i class="bg-success"></i>@Model.projectDetails.Status
+                                <i class="fa-beat-fade bg-success"></i>@Model.projectDetails.Status
                             </p>
                         }else if(Model.projectDetails.Status=="Completed"){
                             <p class="badge badge-lg badge-dot ms-10">
-                                <i class="bg-primary"></i>@Model.projectDetails.Status
+                                <i class="fa-beat-fade bg-primary"></i>@Model.projectDetails.Status
                             </p>
                         }
                     </div>
