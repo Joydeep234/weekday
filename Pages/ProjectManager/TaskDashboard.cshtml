@@ -2,4 +2,99 @@
 @model weekday.Pages.ProjectManager.TaskDashboardModel
 @{
 }
-<h1>Task</h1>
+<h1 class="ms-3">List</h1>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="fs-6">Type</th>
+                <th class="fs-6"><i class="fa-solid fa-hashtag fs-6"></i> Key</th>
+                <th class="fs-6"><i class="fa-solid fa-bars-staggered fs-6"></i> Summary</th>
+                <th class="fs-6"><i class="fa-solid fa-circle-arrow-right fs-6"></i> Status</th>
+                <th class="fs-6"><i class="fa-solid fa-at fs-6"></i> Assignee</th>
+                <th class="fs-6"><i class="fa-solid fa-tag fs-6"></i> Due Date</th>
+                <th class="fs-6"><i class="fa-solid fa-circle-arrow-up fs-6"></i> Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model.taskLists != null)
+            {
+                foreach (var item in Model.taskLists)
+                {
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-square-check fs-6" style="color: #74C0FC;"></i>
+                        </td>
+                        <td>
+                            @{
+                                int taskId = item.TaskId * 5 + 102;
+                            }
+                            <p class="fs-6">Task-@taskId</p>
+                        </td>
+                        <td>
+                            <p class="fs-6">@item.summary</p>
+                        </td>
+                        <td>
+                            @if (item.taskStatus == "To Do ")
+                            {
+                                <span class="badge text-bg-secondary text-dark fs-6">@item.taskStatus</span>
+                            }
+                            else if (item.taskStatus == "In Progress")
+                            {
+                                <span class="badge text-bg-info fs-6">@item.taskStatus</span>
+                            }
+                            else if (item.taskStatus == "Done")
+                            {
+                                <span class="badge text-bg-success fs-6">@item.taskStatus</span>
+                            }
+                            else
+                            {
+                                <span class="badge text-bg-danger">Error in Task Status</span>
+                            }
+                        </td>
+                        <td>
+                            <p class="fs-6">@item.AssignedByFristName @item.AssignedByLastName</p>
+                        </td>
+                        <td>
+                            <span class="badge text-bg-secondary text-dark fs-6">@item.DueDate.ToShortDateString()</span>
+                        </td>
+                        <td>
+                            @if (item.Priority == "Highest")
+                            {
+                                <i class="fa-solid fa-angles-up" style="color: #f4982f;"></i>
+                                <p class="fs-6">@item.Priority</p>
+                            }
+                            else if (item.Priority == "Medium")
+                            {
+                                <i class="fa-solid fa-equals" style="color: #FFD43B;"></i>
+                                <p class="fs-6">@item.Priority</p>
+                            }
+                            else if (item.Priority == "Low")
+                            {
+                                <div class="d-flex justify-content-center align-items-center" style="gap:10px">
+                                    <i class="fa-solid fa-angle-down fs-4" style="color: #3077f3;"></i>
+                                    <p class="fs-6" style="font-size:20px;">@item.Priority</p>
+                                </div>
+                                
+
+                                
+                                
+                            }
+                            else
+                            {
+                                <span class="badge text-bg-danger">Error in Priority</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center">No tasks available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
