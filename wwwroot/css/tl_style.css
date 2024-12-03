@@ -40,10 +40,15 @@
     padding: 5px 10px;
 }
 
-    .profile-item img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
+.profile-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+ }
+
+.task-cards:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add hover effect */
+    cursor: pointer;
+}
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
 using weekday.Data.Context;
 using weekday.Data.Entity;
@@ -21,9 +22,12 @@ namespace weekday.Pages.TeamMember
         }
         [BindProperty]
         public TaskMdl TaskMdIP { get; set; }
+        
+        public string PrjName {  get; set; }// 29/11/2024
 
-        public async Task<IActionResult> OnGetAsync(int taskId)
+        public async Task<IActionResult> OnGetAsync(int taskId,string ProjectName)
         {
+            PrjName = ProjectName;
             TaskList = _context.projecttask.ToList();
             var validTask = await _context.projecttask.FirstOrDefaultAsync(p=>p.TaskId == taskId);
             if (validTask != null) {
@@ -59,14 +63,14 @@ namespace weekday.Pages.TeamMember
                         editWork.EndDate = DateTime.Now;
                     }
                     _context.SaveChanges();
-                    return RedirectToPage("/TeamMember/DashBoard");
+                    TempData["Success Message"] = "Status Updated Successfully";
+                    return RedirectToPage("/TeamMember/DashBoard", new {prjid=editWork.ProjectId,prjName= PrjName });  //29/11/2024 
+                    //int prjid, string prjName
+                    //return RedirectToPage("/TeamMember/ProjectDashBoard");
                 }
-            
-            
             }
 
             return Page();
         }
-        
     }
 }
