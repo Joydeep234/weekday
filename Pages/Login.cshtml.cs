@@ -36,7 +36,6 @@ namespace weekday.Pages
 
 
         }
-
         public async Task<IActionResult> OnPostLogin(){
             try
             {
@@ -53,6 +52,7 @@ namespace weekday.Pages
                 
                     var claims = new List<Claim>{new Claim("empID",userData.EmployeeId.ToString()),
                                                     new Claim("OrgID",userData.OrgId.ToString()),
+                                                    new Claim("DesigName",userDesignation.Name.ToString()),
                                                     new Claim("DesigID",userData.DesignationId.ToString())};
 
                     var claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);

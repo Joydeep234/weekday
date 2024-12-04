@@ -27,15 +27,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization(options =>
     {
         options.AddPolicy("MANAGER", policy =>
-        policy.RequireClaim("DesigID", "1"));
+        policy.RequireClaim("DesigName", "MANAGER"));
         options.AddPolicy("PROJECT_MANAGER", policy =>
-        policy.RequireClaim("DesigID", "2"));
+        policy.RequireClaim("DesigName", "PROJECT_MANAGER"));
         options.AddPolicy("TEAM_LEAD", policy =>
-        policy.RequireClaim("DesigID", "3"));
+        policy.RequireClaim("DesigName", "TEAM_LEAD"));
         options.AddPolicy("TEAM_MEMBERS", policy =>
-        policy.RequireClaim("DesigID", "4"));
+        policy.RequireClaim("DesigName", "TEAM_MEMBERS"));
         options.AddPolicy("HR", policy =>
-        policy.RequireClaim("DesigID", "5"));
+        policy.RequireClaim("DesigName", "HR"));
     });
 
 var app = builder.Build();
