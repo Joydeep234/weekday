@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Data.Entity;
+using weekday.Middleware;
 using weekday.Models;
 
 namespace weekday.Pages.Manager
@@ -35,24 +36,22 @@ namespace weekday.Pages.Manager
         }
 
         public async Task<IActionResult> OnPostAddingEmployees(){
-            try
-            {
-                if(!ModelState.IsValid){
+            if(!ModelState.IsValid){
                     
-                    throw new Exception("feilds shoud not be empty");
+                    throw new CustomExceptionClass("feilds shoud not be empty");
                 }
                 bool checkemailExisted = await _context.employee.Where(e=>e.Email==employeeSelection.Email).AnyAsync();
                 if(checkemailExisted){
                      
-                     throw new Exception("Email Already Existed");
+                     throw new CustomExceptionClass("Email Already Existed");
                 }
                 if(employeeSelection.ImageURL==null){
                    
-                    throw new Exception("Image Not Existed");
+                    throw new CustomExceptionClass("Image Not Existed");
                     }
                 if(employeeSelection.Password!=employeeSelection.CPassword){
                    
-                    throw new Exception("Password And Confirm Password Not Same");
+                    throw new CustomExceptionClass("Password And Confirm Password Not Same");
                 }
                 var filename = Guid.NewGuid().ToString() + Path.GetExtension(employeeSelection.ImageURL.FileName);
                 var filepath = Path.Combine(_enviroment.WebRootPath,"uploads",filename);
@@ -74,13 +73,6 @@ namespace weekday.Pages.Manager
                 await _context.SaveChangesAsync();
 
                 return RedirectToPage("../Manager/AddEmployees");
-            }
-            catch (Exception e)
-            {
-                TempData["msg"] = e.Message;
-                System.Console.WriteLine(e.Message);
-                return RedirectToPage("../Manager/AddEmployees");
-            }
         }
     }
   

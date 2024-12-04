@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using weekday.Models;
 
 namespace weekday.Pages.TeamLead
 {
+    [Authorize (Policy ="TEAM_LEAD")]
     public class BoardModel : PageModel
     {
         private readonly AppDbcontext _context;

@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Data.Entity;
+using weekday.Middleware;
 
 namespace weekday.Pages.Manager
 {
+
     public class projectandtask{
         public int projectid { get; set; }
         public string projectname { get; set; }
@@ -19,6 +22,7 @@ namespace weekday.Pages.Manager
         public string status { get; set; }
         public double complete { get; set; }
     }
+    [Authorize (Policy ="MANAGER")]
     public class RecentProject : PageModel
     {
         private readonly AppDbcontext _context;
@@ -35,10 +39,8 @@ namespace weekday.Pages.Manager
         public List<ProjectTask> task {get; set;} = new List<ProjectTask>();
         public async Task OnGet()
         {
-            try
-            {
-                AllprojectData = await _context.project.Where(p=>p.OrgId==2 && p.Status!="Completed").ToListAsync();
-                if(AllprojectData.Count<1)throw new Exception("Product cannot fetch from db");
+           AllprojectData = await _context.project.Where(p=>p.OrgId==2 && p.Status!="Completed").ToListAsync();
+                if(AllprojectData.Count<1)throw new CustomExceptionClass("Project cannot fetch from db");
                 
                 foreach(var team in AllprojectData){
                     var tasklist = await _context.projecttask.Where(t=>t.ProjectId == team.ProjectId).Select(t=>new { t.AssignedDate, t.EndDate }).ToListAsync();
@@ -70,11 +72,7 @@ namespace weekday.Pages.Manager
                     };
                     projectandtask.Add(tandt);
                 }
-            }
-            catch (Exception e)
-            {
-               Console.WriteLine($"products fetching error=>{e.Message}");
-            }
+
         }
     }
 }

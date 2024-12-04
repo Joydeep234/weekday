@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Data.Entity;
+using weekday.Middleware;
 
 namespace weekday.Pages.Manager
 {
@@ -42,8 +43,7 @@ namespace weekday.Pages.Manager
         {
             projectID = projID;
             newteamID = teamID;
-            try
-            {
+           
                 employeelist = await (from e in _context.employee
                                       join d in _context.designation
                                       on e.DesignationId equals d.DesignationId
@@ -51,7 +51,7 @@ namespace weekday.Pages.Manager
                                       select e).ToListAsync();
 
 
-                if (employeelist.Count < 1) throw new Exception("Employee list is empty");
+                if (employeelist.Count < 1) throw new CustomExceptionClass("Employee list is empty");
                 foreach(var emp in employeelist){
                      bool checkalreadyassigned = await (from te in _context.teamMembers
                                    join t in _context.team on te.TeamId equals t.TeamId
@@ -91,21 +91,13 @@ namespace weekday.Pages.Manager
                                             Status = p.Status
                                         }).FirstOrDefaultAsync();
 
-                if (projectDetails == null) throw new Exception("ProjectDetails is not there");
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Add Manager error {e.Message}");
-                TempData["msg"] = e.Message;
-            }
+                if (projectDetails == null) throw new CustomExceptionClass("ProjectDetails is not there");
 
         }
 
         public async Task<IActionResult> OnGetEmployeeDetails(int managerId)
         {
-            try
-            {
+            
                 var employeedet = await (from e in _context.employee
                                          where e.EmployeeId == managerId && e.Status == "Active"
                                          select new
@@ -133,23 +125,13 @@ namespace weekday.Pages.Manager
                     empandtask,
                     message = "Successfully MAnager Task Retrived"
                 });
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Retrive Manager error {e.Message}");
-                return new JsonResult(new
-                {
-                    success = false,
-                    message = "error occured while retriving manager task details"
-                });
-            }
+            
         }
 
         public async Task<IActionResult> OnPostAddingMAnagers(int projeID, int postteamID)
         {
-            try
-            {
-                if (ManagerList.Count < 1) throw new Exception("Atleast select a member");
+           
+                if (ManagerList.Count < 1) throw new CustomExceptionClass("Atleast select a member");
                 foreach (var i in ManagerList)
                 {
                     var desig = await (from e in _context.employee
@@ -172,13 +154,6 @@ namespace weekday.Pages.Manager
                     System.Console.WriteLine($"det==>{i}");
                 }
                 return RedirectToPage("../Manager/AddManagers", new { projID = projeID, teamID = postteamID });
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"det==>{e.Message}");
-                TempData["msg"] = e.Message;
-                return RedirectToPage("../Manager/AddManagers", new { projID = projeID, teamID = postteamID });
-            }
         }
     }
 
