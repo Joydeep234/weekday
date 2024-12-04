@@ -1,0 +1,57 @@
+﻿@page
+@model weekday.Pages.SignUpModel
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="~/css/SignUpStyleSheet.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body class=" m-0 p-0">
+    <div class="row d-flex">
+        <div class="signup-container   container col-md-5 px-3 " style="max-width: 450px; margin-top: 50px; height: 600px; margin-left:170px;">
+            <h1 style="color:rgb(95,111,136);">Create Your Account</h1>
+            <form class="p-4" method="post" enctype="multipart/form-data">
+                <input type="text" id="firstName" asp-for="signUp.FirstName" placeholder="First Name*" class="form-control mb-3">
+                <span asp-validation-for="signUp.FirstName" class="text-danger"></span>
+
+                <input type="text" id="lastName" asp-for="signUp.LastName" placeholder="Last Name*"  class="form-control mb-3">
+                <span asp-validation-for="signUp.LastName" class="text-danger"></span>
+
+                <input type="email" id="email" asp-for="signUp.Email" placeholder="Email*" class="form-control mb-3">
+                <span asp-validation-for="signUp.Email" class="text-danger"></span>
+
+                <input type="password" id="password" asp-for="signUp.Password" placeholder="Password*" class="form-control mb-3">
+                <span asp-validation-for="signUp.Password" class="text-danger"></span>
+
+                <input type="password" id="confirmPassword" asp-for="signUp.ConfirmPassword" placeholder="Confirm Password*" class="form-control mb-3">
+                <span asp-validation-for="signUp.ConfirmPassword" class="text-danger"></span>
+
+              
+
+                <input type="file" id="profilePicture" asp-for="signUp.ImageURL" placeholder="Profile Picture" class="form-control mb-3">
+                
+                <p>Already have an account? <a href="~/Login">Log In</a></p>
+
+                <button type="submit" class="btn btn-primary w-100">Create Account</button>
+            </form>
+
+
+            
+        </div>
+        <div class="col-md-7 p-0 m-0" style="height:700px">
+            <img src="~/image/Sign up-rafiki.png" class="" style="width:100%; height:700px;"/>
+        </div>
+        
+    </div>
+   
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
