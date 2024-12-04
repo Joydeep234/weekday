@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using weekday.Data.Context;
+using weekday.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,22 +17,42 @@ builder.Services.AddSession(options=>{
     options.Cookie.IsEssential = true;
     options.Cookie.HttpOnly = true;
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddCookie(Options=>{
+    Options.LoginPath = "/Login";   
+    Options.AccessDeniedPath = "/AccessDeniedPage";
+    Options.LogoutPath = "/Index";
+});
+
+builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("MANAGER", policy =>
+        policy.RequireClaim("DesigName", "MANAGER"));
+        options.AddPolicy("PROJECT_MANAGER", policy =>
+        policy.RequireClaim("DesigName", "PROJECT_MANAGER"));
+        options.AddPolicy("TEAM_LEAD", policy =>
+        policy.RequireClaim("DesigName", "TEAM_LEAD"));
+        options.AddPolicy("TEAM_MEMBERS", policy =>
+        policy.RequireClaim("DesigName", "TEAM_MEMBERS"));
+        options.AddPolicy("HR", policy =>
+        policy.RequireClaim("DesigName", "HR"));
+    });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseMiddleware<GlobalExceptionHandler>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

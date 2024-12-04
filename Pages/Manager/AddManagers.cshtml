@@ -2,6 +2,7 @@
 @model weekday.Pages.Manager.AddManagers
 @{
     ViewData["Title"] = "AddManagers";
+    var errorMessage = Request.Query["error"];
 }
 
 
@@ -20,9 +21,9 @@
         <button id="projectDet" class="btn btn-secondary mx-10 ">ProjectDetails</button>
       </div> *@
         <div class="w-3/4 d-flex flex-column align-items-center mt-8">
-        @if(TempData["msg"]!=null){
+        @if(!string.IsNullOrEmpty(errorMessage)){
                     <p class="text-danger text-center fs-6" id="displaytext" style="display: block;">
-                        @TempData["msg"]
+                        @errorMessage
                     </p> 
         }
 

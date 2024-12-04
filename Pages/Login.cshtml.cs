@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +36,6 @@ namespace weekday.Pages
 
 
         }
-
         public async Task<IActionResult> OnPostLogin(){
             try
             {
@@ -48,8 +50,19 @@ namespace weekday.Pages
                 userDesignation = await _context.designation.FirstOrDefaultAsync(d=>d.DesignationId==userData.DesignationId);
                 if(userDesignation==null)throw new Exception("UserDesignation not found");
                 
+                    var claims = new List<Claim>{new Claim("empID",userData.EmployeeId.ToString()),
+                                                    new Claim("OrgID",userData.OrgId.ToString()),
+                                                    new Claim("DesigName",userDesignation.Name.ToString()),
+                                                    new Claim("DesigID",userData.DesignationId.ToString())};
+
+                    var claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
+                    var authProperties= new AuthenticationProperties{IsPersistent=false};
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(claimsIdentity),authProperties);
+
 
                 if(userDesignation.Name=="HR"){
+                    
                     return RedirectToPage("HR/Dashboard");
                 }
                 else if(userDesignation.Name=="MANAGER"){
@@ -57,7 +70,7 @@ namespace weekday.Pages
                 }else if(userDesignation.Name=="PROJECT_MANAGER"){
                     return RedirectToPage("ProjectManager/Dashboard");
                 }else if(userDesignation.Name=="TEAM_LEAD"){
-                    return RedirectToPage("TeamLead/Dashboard");
+                    return RedirectToPage("TeamLead/Board");
                 }else if(userDesignation.Name=="TEAM_MEMBERS"){
                     return RedirectToPage("TeamMember/Dashboard");
                 }
