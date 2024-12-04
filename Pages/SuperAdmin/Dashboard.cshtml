@@ -6,6 +6,172 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<div>
-    
+<!-- Add Feature Button -->
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#featureModal">
+    Add Feature
+</button>
+
+<!-- Feature Modal -->
+<div class="modal fade" id="featureModal" tabindex="-1" aria-labelledby="featureModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="featureModalLabel">New Feature</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="p-4" method="post" id="featureForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="text" id="featureName" asp-for="featureInsert.FeatureName" placeholder="Feature Name*" class="form-control mb-3">
+                    <span asp-validation-for="featureInsert.FeatureName" class="text-danger"></span>
+
+                    <input type="text" id="featureURL" asp-for="featureInsert.FeatureURL" placeholder="Feature URL*" class="form-control mb-3">
+                    <span asp-validation-for="featureInsert.FeatureURL" class="text-danger"></span>
+
+                    <input type="text" id="featureLogo" asp-for="featureInsert.FeatureLogo" placeholder="Feature Icon" class="form-control mb-3">
+                    <span asp-validation-for="featureInsert.FeatureLogo" class="text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="saveFeature">Save Feature</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<!-- Add Plan Button -->
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#planModal">
+    Add Plan
+</button>
+
+<!-- Plan Modal -->
+<div class="modal fade" id="planModal" tabindex="-1" aria-labelledby="planModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="planModalLabel">New Plan</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="p-4" method="post" id="plansForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="text" id="PlanName" asp-for="insertPlan.PlanName" placeholder="Plan Name*" class="form-control mb-3">
+                    <span asp-validation-for="insertPlan.PlanName" class="text-danger"></span>
+
+                    <input type="number" id="duration" asp-for="insertPlan.Duration" placeholder="Duration*" class="form-control mb-3">
+                    <span asp-validation-for="insertPlan.Duration" class="text-danger"></span>
+
+                    <input type="number" id="maxMembers" asp-for="insertPlan.MaxMembers" placeholder="Max Members*" class="form-control mb-3">
+                    <span asp-validation-for="insertPlan.MaxMembers" class="text-danger"></span>
+
+                    <input type="number" step="0.01" id="price" asp-for="insertPlan.Price" placeholder="Price*" class="form-control mb-3">
+                    <span asp-validation-for="insertPlan.Price" class="text-danger"></span>
+
+                    <!-- Dropdown with checkboxes for features -->
+                    <!-- Dropdown with checkboxes for features -->
+                    
+                    <div class="dropdown form-select p-0 m-0">
+                        <button class="btn bg-white dropdown-toggle w-full text-start" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select Features*
+                        </button>
+                        <ul class="dropdown-menu w-full" aria-labelledby="dropdownMenuButton">
+                            @foreach (var feature in Model.features)
+                            {
+                                <li class="p-1  text-body font-semibold">
+                                    <input type="checkbox" class="form-check-input mx-2" id="feature_@feature.FeatureID" value="@feature.FeatureID" />
+                                    <label for="feature_@feature.FeatureID" >@feature.FeatureName</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="savePlan">Save Plan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Submit Feature Form
+            $("#featureForm").on("submit", function (event) {
+                event.preventDefault();
+
+                var formData = {
+                    FeatureName: $("#featureName").val(),
+                    FeatureURL: $("#featureURL").val(),
+                    FeatureLogo: $("#featureLogo").val()
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/SuperAdmin/Dashboard?handler=InsertFeature",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Feature Saved successfully!");
+                            $("#featureName, #featureURL, #featureLogo").val('');
+                        } else {
+                            alert("Failed to save the feature.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while saving the feature.");
+                    }
+                });
+            });
+
+            // Submit Plan Form
+            $("#plansForm").on("submit", function (event) {
+                event.preventDefault();
+
+
+                var selectedFeatures = [];
+                $("input[type='checkbox']:checked").each(function () {
+                    selectedFeatures.push($(this).val());
+                });
+
+                var formData = {
+                    PlanName: $("#PlanName").val(),
+                    Duration: $("#duration").val(),
+                    MaxMembers: $("#maxMembers").val(),
+                    Price: $("#price").val(),
+                    SelectedFeatureIds: selectedFeatures
+                };
+
+                console.log(formData)
+
+                $.ajax({
+                    method: "POST",
+                    url: "/SuperAdmin/Dashboard?handler=AddPlan",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Plan Saved successfully!");
+                            $("#PlanName, #duration, #maxMembers, #price").val('');
+                        } else {
+                            alert("Failed to save the plan.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while saving the plan.");
+                    }
+                });
+            });
+        });
+    </script>
+}
