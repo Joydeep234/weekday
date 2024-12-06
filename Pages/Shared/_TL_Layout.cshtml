@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/weekday.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/tl_style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" asp-append-version="true" />
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" asp-append-version="true" />
    
@@ -46,18 +47,6 @@
                                 <i class="fa-solid fa-layer-group"></i> Board
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa-solid fa-users"></i> Team
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa-solid fa-code"></i> Task
-                            </a>
-                        </li>
-                        
                     </ul>
                     <!-- Divider -->
                     <hr class="navbar-divider my-5 opacity-20">
@@ -67,12 +56,7 @@
                     <!-- User (md) -->
                     <ul class="navbar-nav mb-5">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa-solid fa-user"></i> Account
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" asp-page="/Index">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                             </a>
                         </li>
@@ -84,6 +68,7 @@
         <div class="h-screen px-2 px-lg-7 flex-grow-1 overflow-y-lg-auto bg-surface-secondary" style="margin-left: 250px;">
             <main >
                 <div class="container-xl">
+                    @await Html.PartialAsync("_Notification")
                     @RenderBody()
                 </div>
             </main>
@@ -94,6 +79,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

@@ -114,7 +114,18 @@
                                                         }
                                                     </span>
                                                     <div class="avatar rounded-circle" style="height: 28px; width: 28px;">
-                                                        <img alt="..." src="~/Images/profile-photo.png">
+                                                    @{
+                                                          if(task.AssigneeImageURL == null)
+                                                          {
+                                                               <img alt="..." src="~/Images/profile-photo.png">
+                                                          }
+                                                          else
+                                                          {
+                                                              <img alt="..." src="~/uploads/@task.AssigneeImageURL">      
+                                                          }
+
+                                                    }
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,6 +139,7 @@
                                                     <span class="font-semibold text-muted text-sm"> @task.TeamName </span>
                                                 </div>
                                             </div>
+                                                
                                         </div>
                                     </div>
                                     </a>
@@ -202,7 +214,17 @@
                                                         }
                                                     </span>
                                                     <div class="avatar rounded-circle" style="height: 28px; width: 28px;">
-                                                        <img alt="..." src="~/Images/profile-photo.png">
+                                                            @{
+                                                                if (task.AssigneeImageURL == null)
+                                                                {
+                                                                    <img alt="..." src="~/Images/profile-photo.png">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img alt="..." src="~/uploads/@task.AssigneeImageURL">
+                                                                }
+
+                                                            }
                                                     </div>
                                                 </div>
                                             </div>
@@ -216,7 +238,7 @@
                                                     <span class="font-semibold text-muted text-sm"> @task.TeamName </span>
                                                 </div>
                                             </div>
-
+                                                
                                         </div>
                                     </div>
                                     </a>
@@ -294,7 +316,18 @@
                                                         }
                                                     </span>
                                                     <div class="avatar rounded-circle" style="height: 28px; width: 28px;">
-                                                        <img alt="..." src="~/Images/profile-photo.png">
+                                                            @{
+                                                                if (task.AssigneeImageURL == null)
+                                                                {
+                                                                    <img alt="..." src="~/Images/profile-photo.png">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img alt="..." src="~/uploads/@task.AssigneeImageURL">
+                                                                }
+
+                                                            }
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -369,7 +402,7 @@
                                 {
                                     <div class="dropdown-item">
                                         <div class="avatar rounded-circle">
-                                            <img alt="..." src="https://images.unsplash.com/photo-1522307837370-cc113a36b784?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80">
+                                            <img alt="..." src="~/uploads/@employee.ImageURL">
                                         </div>
                                         <input type="checkbox" class="member-checkbox" value="@employee.EmployeeId" data-name="@($"{employee.FirstName} {employee.LastName}")" />
                                         @($"{employee.FirstName} {employee.LastName}")
@@ -704,6 +737,8 @@
 
                 $("#T_TeamList").on('change', function() {
                     $('#profileDropdown').html(`<div>Choose Assignee</div>`);
+
+                    console.log("teamList ids " + $(this).val());
                     $.ajax({
                         type: 'GET',
                         url: '@Url.Page("/TeamLead/Board","ProjectTeamMembers")',
@@ -726,8 +761,8 @@
                                 response.teamMembers.forEach((item) => {
                                     const userName = item.firstName + " " + item.lastName;
                                     
-                                    $("#profileList").append(`<a class="dropdown-item profile-item" href="#" data-user-id="${item.employeeId}" data-user-name="${userName}" data-user-img="https://pics.craiyon.com/2023-12-05/_Aqc-hELTrSTfFsgYDoHwA.webp">
-                                            <img src="https://pics.craiyon.com/2023-12-05/_Aqc-hELTrSTfFsgYDoHwA.webp" alt="Profile">
+                                    $("#profileList").append(`<a class="dropdown-item profile-item" href="#" data-user-id="${item.employeeId}" data-user-name="${userName}" data-user-img="${imageURL}">
+                                            <img src="${imageURL}" alt="Profile">
                                                          ${userName}
                                           </a>`)
                                 });
@@ -786,9 +821,7 @@
                         Description : descriptionInput.value,
                         StartDate : $('#StartDate').val(),
                         Deadline : $('#Deadline').val()
-                    }
-
-                   
+                    }                  
 
                     $.ajax({
                         url: '@Url.Page("/TeamLead/Board", "CreateOrUpdateTask")',
@@ -801,6 +834,7 @@
                         success: function (response) {
                             if (response.success) {
                                 $("#task_close-btn").trigger('click');
+                                toastr[response.type](response.message);
 
                             // Clear the form fields
                             $('#projectForm')[0].reset();
