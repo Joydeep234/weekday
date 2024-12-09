@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using weekday.Data.Context;
 using weekday.Models;
 using weekday.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace weekday.Pages.Team_Lead
 {
+    [Authorize(Policy = "TEAM_LEAD")]
     public class ProjectsModel : PageModel
     {
         private readonly AppDbcontext _context;
