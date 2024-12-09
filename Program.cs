@@ -29,7 +29,7 @@ builder.Services.AddAuthorization(options =>
         options.AddPolicy("MANAGER", policy =>
         policy.RequireClaim("DesigName", "MANAGER"));
         options.AddPolicy("PROJECT_MANAGER", policy =>
-        policy.RequireClaim("DesigName", "PROJECT_MANAGER"));
+        policy.RequireClaim("DesigName", "PROJECT MANAGER"));
         options.AddPolicy("TEAM_LEAD", policy =>
         policy.RequireClaim("DesigName", "TEAM_LEAD"));
         options.AddPolicy("TEAM_MEMBERS", policy =>

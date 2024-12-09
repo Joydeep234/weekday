@@ -43,7 +43,7 @@ namespace weekday.Pages
                 {
                     "HR" => RedirectToPage("HR/Dashboard"),
                     "MANAGER" => RedirectToPage("Manager/Dashboard"),
-                    "PROJECT_MANAGER" => RedirectToPage("ProjectManager/Dashboard"),
+                    "PROJECT MANAGER" => RedirectToPage("ProjectManager/Dashboard"),
                     "TEAM_LEAD" => RedirectToPage("TeamLead/Board"),
                     "TEAM_MEMBERS" => RedirectToPage("TeamMember/Dashboard"),
                     _ => RedirectToPage("Index") 
@@ -101,7 +101,7 @@ namespace weekday.Pages
                 }
                 else if(userDesignation.Name=="MANAGER"){
                     return RedirectToPage("Manager/Dashboard");
-                }else if(userDesignation.Name=="PROJECT_MANAGER"){
+                }else if(userDesignation.Name=="PROJECT MANAGER"){
                     return RedirectToPage("ProjectManager/Dashboard");
                 }else if(userDesignation.Name=="TEAM_LEAD"){
                     return RedirectToPage("TeamLead/Board");
