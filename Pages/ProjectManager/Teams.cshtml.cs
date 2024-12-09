@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using weekday.Models.ProjectManagerModel;
 
 namespace weekday.Pages.ProjectManager
 {
+    [Authorize (Policy ="PROJECT_MANAGER")]
     public class TeamsModel : PageModel
     {
 

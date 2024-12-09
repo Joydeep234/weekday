@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace weekday.Pages.Manager
         public int employeeid { get; set; }
         public bool assigned { get; set; }
     } 
+    [Authorize (Policy ="MANAGER")]
     public class AddManagers : PageModel
     {
         private readonly AppDbcontext _context;
@@ -147,7 +149,7 @@ namespace weekday.Pages.Manager
                         MemberId = i,
                         DesignationId = desig.DesignationId,
                         status = "Active",
-                        OrgId = 2                        
+                        OrgId = Convert.ToInt32(User.FindFirst("OrgID"))                        
                     };
                     await _context.teamMembers.AddAsync(teammem);
                     await _context.SaveChangesAsync();

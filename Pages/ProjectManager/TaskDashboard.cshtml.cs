@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using weekday.Models.Team_Member;
 
 namespace weekday.Pages.ProjectManager
 {
+    [Authorize (Policy ="PROJECT_MANAGER")]
     public class TaskDashboardModel : PageModel
     {
         public readonly AppDbcontext _context;

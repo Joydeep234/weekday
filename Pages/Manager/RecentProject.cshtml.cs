@@ -39,7 +39,10 @@ namespace weekday.Pages.Manager
         public List<ProjectTask> task {get; set;} = new List<ProjectTask>();
         public async Task OnGet()
         {
-           AllprojectData = await _context.project.Where(p=>p.OrgId==2 && p.Status!="Completed").ToListAsync();
+            var orgidClaims = User.FindFirst("OrgID")?.Value;
+            int orgid=0;
+            if(orgidClaims != null)orgid = Convert.ToInt32(orgidClaims);
+           AllprojectData = await _context.project.Where(p=>p.OrgId== orgid&& p.Status!="Completed").ToListAsync();
                 if(AllprojectData.Count<1)throw new CustomExceptionClass("Project cannot fetch from db");
                 
                 foreach(var team in AllprojectData){

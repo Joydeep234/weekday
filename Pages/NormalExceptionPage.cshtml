@@ -1,8 +1,10 @@
 @page
-@model weekday.Pages.AccessDeniedPage
+@model weekday.Pages.NormalExceptionPage
 @{
-    Layout=null;
+    Layout = null;
+    var errormessage = Request.Query["error"];
 }
+
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/webpixels.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -11,10 +13,10 @@
 
     <div class="d-flex align-items-center justify-content-center bg-dark" style="width: 100%; height: 100vh;">
         <div class="d-flex flex-column align-items-center justify-content-center ">
-            <p class="text-danger font-code" style="font-size: 4rem;"> Access Denied</p>
+            <p class="fs-2 text-danger">@errormessage</p>
             <hr class="" style="color: white; background-color: white; width: 50%;">
-            <p class="text-white fs-5">Access to this page is restricted <i class="fa-solid fa-lock text-danger ms-4 fs-2"></i></p>
-            <p class="text-danger fs-5 mt-2">403 Forbidden</p>
+            <p class="text-white fs-5">Internal Server Error! Try after sometime <i class="fa-solid fa-lock text-danger ms-4 fs-2"></i></p>
+            <p class="text-danger fs-5 mt-2">500 Error</p>
             
         </div>    
     </div>

@@ -36,6 +36,14 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("DesigName", "TEAM_MEMBERS"));
         options.AddPolicy("HR", policy =>
         policy.RequireClaim("DesigName", "HR"));
+         options.AddPolicy("NoDesignationOrManager", policy =>
+            policy.RequireAssertion(context =>
+            {
+                var desigNameClaim = context.User.FindFirst(c => c.Type == "DesigName");
+                var desigName = desigNameClaim?.Value;
+                return string.IsNullOrEmpty(desigName) || desigName == "MANAGER";
+            })
+        );
     });
 
 var app = builder.Build();

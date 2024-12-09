@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Primitives;
@@ -6,6 +7,7 @@ using weekday.Data.Entity;
 
 namespace weekday.Pages.TeamLead
 {
+    [Authorize(Policy = "TEAM_LEAD")]
     public class TaskModel : PageModel
     {
         private readonly AppDbcontext _context;
@@ -73,6 +75,24 @@ namespace weekday.Pages.TeamLead
             else
                 return "Just now";
         }
+
+        public static string GetRelativeTimeDeadline(DateTime? deadline)
+        {
+            if (deadline == null) return "No deadline set";
+
+            var now = DateTime.Now;
+            var timespan = deadline.Value - now;
+
+            if (timespan.TotalDays > 0)
+                return $"{(int)timespan.TotalDays} days left";
+            else if (timespan.TotalHours > 0)
+                return $"{(int)timespan.TotalHours} hours left";
+            else if (timespan.TotalMinutes > 0)
+                return $"{(int)timespan.TotalMinutes} minutes left";
+            else
+                return "Deadline passed";
+        }
+
 
         public class TaskDetails            
         {

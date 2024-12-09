@@ -31,9 +31,27 @@ namespace weekday.Pages
         public LoginModelClass userlogin { get; set; } = new LoginModelClass();
         public Employee userData { get; set; }
         public Designation userDesignation { get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                
+                var desigName = User.FindFirst("DesigName")?.Value;
 
+                
+                return desigName switch
+                {
+                    "HR" => RedirectToPage("HR/Dashboard"),
+                    "MANAGER" => RedirectToPage("Manager/Dashboard"),
+                    "PROJECT_MANAGER" => RedirectToPage("ProjectManager/Dashboard"),
+                    "TEAM_LEAD" => RedirectToPage("TeamLead/Board"),
+                    "TEAM_MEMBERS" => RedirectToPage("TeamMember/Dashboard"),
+                    _ => RedirectToPage("Index") 
+                };
+            }
+
+            
+            return Page();
 
         }
         public async Task<IActionResult> OnPostLogin(){
@@ -48,20 +66,36 @@ namespace weekday.Pages
                     throw new Exception("Invalid Credentials");
                 }
                 userDesignation = await _context.designation.FirstOrDefaultAsync(d=>d.DesignationId==userData.DesignationId);
-                if(userDesignation==null)throw new Exception("UserDesignation not found");
-                
+                var designame = "";
+                var desigid = "";
+                var orgid = "";
+                var planid = "";
+                var orgdet = await _context.organization.Where(o=>o.OrgId == userData.OrgId).FirstOrDefaultAsync();
+                if(userDesignation!=null){
+                    designame = userDesignation.Name.ToString();
+                    desigid = userData.DesignationId.ToString();
+                    
+                }
+                if(orgdet!=null){
+                    orgid = orgdet.OrgId.ToString();
+                    planid = orgdet.PlanID.ToString();
+                }
                     var claims = new List<Claim>{new Claim("empID",userData.EmployeeId.ToString()),
-                                                    new Claim("OrgID",userData.OrgId.ToString()),
-                                                    new Claim("DesigName",userDesignation.Name.ToString()),
-                                                    new Claim("DesigID",userData.DesignationId.ToString())};
+                                                    new Claim("OrgID",orgid),
+                                                    new Claim("DesigName",designame),
+                                                    new Claim("DesigID",desigid),
+                                                    new Claim("PlanID",planid)};
 
+                    
                     var claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
                     var authProperties= new AuthenticationProperties{IsPersistent=false};
 
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(claimsIdentity),authProperties);
 
-
-                if(userDesignation.Name=="HR"){
+                if(userDesignation==null){
+                    return RedirectToPage("Index");
+                }
+                else if(userDesignation.Name=="HR"){
                     
                     return RedirectToPage("HR/Dashboard");
                 }
