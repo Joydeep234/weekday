@@ -1,0 +1,79 @@
+@page
+@model weekday.Pages.Account
+@{
+    Layout = "_AccountLayout";
+    var errormessage = Request.Query["error"];
+}
+ <div class="w-full d-flex justify-content-center align-items-center">
+    
+    <div class="w-2/4 rounded-5  mt-10" style="background-color: white; box-shadow: 0px 0px 7px rgba(60, 60, 60, 0.797);">
+    @if(!string.IsNullOrEmpty(errormessage)){
+        <p class="text-danger text-center fs-5" id="errormess">
+            @errormessage
+        </p>
+    }
+    <form method="post" asp-page-handler="HandlePersonalDetails" enctype="multipart/form-data">
+        <div class="d-flex align-items-center position-relative">
+            <div class="">
+                <div class="ms-4 mt-5" style="width: 200px; height: 200px; overflow: hidden; border-radius: 50%; box-shadow: 0px 0px 7px rgba(25, 25, 25, 0.845);">
+                    <img src="~/uploads/@Model.employeedetails.ImageURL" class="" alt="" srcset="" style="object-fit: cover; width: 100%; height: 100%;">
+                </div>
+                <i class="fa-solid fa-pen-to-square position-absolute fs-4" id="editicon" style="color: #0079d6; bottom:70px; left: 200px; cursor: pointer;"></i>
+            </div>
+            <div class="ms-10">
+            <p class="mt-5 fs-5"><b>Name :</b> @Model.employeedetails.FirstName @Model.employeedetails.LastName</p>
+            <p class="mt-5 fs-5"><b>Email :</b> @Model.employeedetails.Email</p>
+            </div>
+        </div>
+        
+        <div class=" mt-10 px-10">
+
+                <label class="form-label" asp-for="accountmodel.firstName"></label>
+                <input type="text" class="form-control" asp-for="accountmodel.firstName"/>
+                <label class="form-label" asp-for="accountmodel.lastName"></label>
+                <input type="text" class="form-control" asp-for="accountmodel.lastName"/>
+                <label class="" style="display: none;"  asp-for="accountmodel.image"></label>
+                <input type="file" class="" style="display: none;" id="imageinput"  asp-for="accountmodel.image"/>
+                <div class="d-flex align-items-center me-10 mt-5">
+                <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+        </div>
+    </form>
+        <div class=" mt-10 px-10">
+            <p class="fs-5 mb-5">Change Password</p>
+            <form method="post" asp-page-handler="HandlePassword">
+                <label class="form-label" asp-for="OldPassword">Old Password</label>
+                <input type="text" class="form-control" asp-for="OldPassword" placeholder="Enter old password"/>
+                <label class="form-label" asp-for="Newpassword">new Password</label>
+                <input type="text" class="form-control" asp-for="Newpassword" placeholder="Enter new password"/>
+                <div class="d-flex align-items-center me-10 my-5">
+                <button class="btn btn-primary" type="submit">Change</button>
+                </div>
+            </form>
+        </div> 
+    </div>
+</div>
+
+    
+<script src="/_framework/aspnetcore-browser-refresh.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+            
+            setTimeout(()=>{
+                $('#errormess').css('display','none');
+            },5000)
+
+            $('#editicon').on('click',(e)=>{
+                e.preventDefault(); 
+                e.stopPropagation();
+                console.log("click");
+                $('#imageinput').click();
+            })
+        })
+    </script>
+}
+
+
+
+

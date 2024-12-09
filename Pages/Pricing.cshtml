@@ -2,6 +2,7 @@
 @model weekday.Pages.Pricing
 @{
    Layout = null;
+   var errormessage = Request.Query["error"];
 }
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -9,14 +10,15 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/weekday.styles.css" asp-append-version="true" />   
 
-    <div class="overflow-x-hidden" style="100%">
+<body>
+      <div class="overflow-x-hidden" style="100%">
         <div class="">
             <div>
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-0 py-3">
       <div class="container-xl max-w-screen-xl">
         <!-- Logo -->
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" asp-page="Index">
           <img src="https://preview.webpixels.io/web/img/logos/clever-light.svg" class="h-8" alt="...">
         </a>
         <!-- Navbar toggle -->
@@ -28,13 +30,13 @@
           <!-- Nav -->
           <ul class="navbar-nav mx-lg-auto">
             <li class="nav-item">
-              <a class="nav-link" asp-page="index">Home</a>
+              <a class="nav-link" asp-page="Index">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" asp-page="">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" asp-page="">Dashboard</a>
+              <a class="nav-link" asp-page="/Manager/Dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" asp-page="Pricing">Pricing</a>
@@ -42,22 +44,46 @@
           </ul>
           <!-- Right navigation -->
           <div class="navbar-nav ms-lg-4">
-            <a class="nav-item nav-link" href="#">Sign in</a>
-          </div>
-          <!-- Action -->
-          <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
-            <a href="#" class="btn btn-sm btn-light w-full w-lg-auto">
-              Register
-            </a>
+            @if(User.FindFirst("empID")!=null){
+              <a class="btn btn-sm btn-light w-full w-lg-auto" asp-page="/Manager/logout">Logout</a>
+            }else{
+              <a class="btn btn-sm btn-light w-full w-lg-auto" asp-page="Login">LogIn</a>
+            }
           </div>
         </div>
       </div>
     </nav>
 
     <main class="bg-primary py-40" >
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center ">
                 @foreach(var item in Model.plans){
-                    <div class="d-flex mx-10 flex-wrap" style="box-shadow: 0px 0px 20px rgba(57, 57, 57, 0.752);">
+                  //modal start----------------------------------
+                  <!-- Button trigger modal -->
+              
+
+              <!-- Modal -->
+              <form method="post" asp-page-handler="Confirmation" asp-route-planid="@item.planID" asp-route-planexp="@item.Duration" class="modal fade" id="exampleModal-@item.planID" tabindex="-1" aria-labelledby="exampleModalLabel-@item.planID" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <label asp-for="@Model.orgName" class="form-label">Organization Name</label>
+                      <input type="text" class="form-control" asp-for="@Model.orgName"/>
+                      <span asp-validation-for="@Model.orgName" class="text-danger"></span>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button  type="submit" class="btn btn-primary" >Purchase</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+//------------------------modal end--------------------------
+                    <div  class="d-flex mx-10 flex-wrap text-decoration-none text-dark" style="box-shadow: 0px 0px 20px rgba(57, 57, 57, 0.752);">
                       <div class="bg-white border rounded-2" style="min-height: 400px;width: 280px;">
                         <div class="text-center p-3 fs-4" style=""><b>@item.PlanName</b></div>
                         <div class="ps-4 border" style="min-height:240px ;">
@@ -78,7 +104,12 @@
                         </div>
                         <div class="text-center">Total Members :@item.MaxMembers</div>
                         <hr>
-                        <div class="text-center mb-4"><button class="btn btn-warning px-10 rounded-pill" style="box-shadow: 0px 0px 7px rgba(85, 85, 85, 0.558);">$@item.Price</button></div>
+                        <div class="text-center mb-4">
+                          <button type="button" class="btn btn-warning px-10 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal-@item.planID" style="box-shadow: 0px 0px 7px rgba(85, 85, 85, 0.558);">
+                            $@item.Price
+                          </button>
+                          @* <button class="btn btn-warning px-10 rounded-pill" style="box-shadow: 0px 0px 7px rgba(85, 85, 85, 0.558);">$@item.Price</button> *@
+                          </div>
                     </div>
                 </div>
                 }
@@ -227,4 +258,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
+    <script>
+      alert(errormessage);
+    </script>
+</body>
 

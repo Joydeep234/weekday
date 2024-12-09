@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using weekday.Data.Entity;
 
 namespace weekday.Pages.Manager
 {
+    [Authorize (Policy ="MANAGER")]
     public class PastProject : PageModel
     {
         private readonly AppDbcontext _context;
@@ -27,7 +29,7 @@ namespace weekday.Pages.Manager
         {
             try
             {
-                AllprojectData = await _context.project.Where(p=>p.OrgId==2 && p.Status=="Completed").ToListAsync();
+                AllprojectData = await _context.project.Where(p=>p.OrgId==Convert.ToInt32(User.FindFirst("OrgID")) && p.Status=="Completed").ToListAsync();
                 if(AllprojectData.Count<1)throw new Exception("Product cannot fetch from db");
             }
             catch (Exception e)

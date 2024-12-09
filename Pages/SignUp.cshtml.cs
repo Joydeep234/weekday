@@ -22,15 +22,34 @@ namespace weekday.Pages
 
         [BindProperty]
         public SignUp signUp { get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+             if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                
+                var desigName = User.FindFirst("DesigName")?.Value;
+
+                
+                return desigName switch
+                {
+                    "HR" => RedirectToPage("HR/Dashboard"),
+                    "MANAGER" => RedirectToPage("Manager/Dashboard"),
+                    "PROJECT_MANAGER" => RedirectToPage("ProjectManager/Dashboard"),
+                    "TEAM_LEAD" => RedirectToPage("TeamLead/Board"),
+                    "TEAM_MEMBERS" => RedirectToPage("TeamMember/Dashboard"),
+                    _ => RedirectToPage("Index") 
+                };
+            }
+
+            
+            return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
             if (signUp.ImageURL != null)
             {
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(signUp.ImageURL.FileName);
-                string filepath = Path.Combine(_environment.WebRootPath, "Uploads", filename);
+                string filepath = Path.Combine(_environment.WebRootPath, "uploads", filename);
                 Directory.CreateDirectory(Path.GetDirectoryName(filepath)!);
                 var newEmployee = new Employee
                 {
@@ -65,7 +84,7 @@ namespace weekday.Pages
             
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("~/Login");
+            return RedirectToPage("/Login");
         }
         
     }
