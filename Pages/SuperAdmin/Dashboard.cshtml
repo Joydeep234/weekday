@@ -4,12 +4,36 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<h1>@ViewData["Title"]</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary px-0 py-3">
+    <div class="container-xl max-w-screen-xl">
+        <!-- Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="https://preview.webpixels.io/web/img/logos/clever-light.svg" class="h-8" alt="...">
+        </a>
+        <!-- Navbar toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarCollapse">
+            
+            <!-- Right navigation -->
+            <div class="navbar-nav ms-lg-4">
+                <button type="button" class="btn btn-sm btn-light text-dark font-semibold" data-bs-toggle="modal" data-bs-target="#featureModal">
+                    Add Feature
+                </button>
+            </div>
+            
+            <!-- Action -->
+            <div class="navbar-nav ms-lg-4">
+                <button type="button" class="btn btn-sm btn-light text-dark font-semibold" data-bs-toggle="modal" data-bs-target="#planModal">
+                    Add Plan
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
 
-<!-- Add Feature Button -->
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#featureModal">
-    Add Feature
-</button>
 
 <!-- Feature Modal -->
 <div class="modal fade" id="featureModal" tabindex="-1" aria-labelledby="featureModalLabel" aria-hidden="true">
@@ -30,20 +54,32 @@
 
                     <input type="text" id="featureLogo" asp-for="featureInsert.FeatureLogo" placeholder="Feature Icon" class="form-control mb-3">
                     <span asp-validation-for="featureInsert.FeatureLogo" class="text-danger"></span>
+
+                    <!-- Dropdown with checkboxes for designations -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="designationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select Designations
+                        </button>
+                        <ul class="dropdown-menu w-100" aria-labelledby="designationDropdown">
+                            @foreach (var designation in Model.DesignationsList)
+                            {
+                                <li class="dropdown-item">
+                                    <input type="checkbox" class="form-check-input" id="designation_@designation.DesignationId" name="SelectedDesignations" value="@designation.DesignationId">
+                                    <label for="designation_@designation.DesignationId">@designation.Name</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" id="saveFeature">Save Feature</button>
+                    <button type="submit" class="btn btn-warning" id="saveFeature">Save Feature</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
-
-<!-- Add Plan Button -->
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#planModal">
-    Add Plan
-</button>
 
 <!-- Plan Modal -->
 <div class="modal fade" id="planModal" tabindex="-1" aria-labelledby="planModalLabel" aria-hidden="true">
@@ -89,13 +125,57 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" id="savePlan">Save Plan</button>
+                    <button type="submit" class="btn btn-warning" id="savePlan">Save Plan</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+
+@* --------------------------------------------------------------------------------------------------------- *@
+
+<div class="d-flex justify-content-center my-20">
+    @foreach (var item in Model.PriceData)
+    {
+        <div class="d-flex mx-10 flex-wrap" style="box-shadow: 0px 0px 20px rgba(57, 57, 57, 0.752); border-radius: 1em;">
+            <div class="price-card" style="min-height: 300px;width: 280px;">
+                <div class="text-center p-3 fs-4" style=""><b>@item.PlanName</b></div>
+                <div class="ps-4 border" style="min-height:240px ;">
+                    <ul>
+                        @foreach (var des in Model.DesignationsList)
+                        {
+                            if (des.Name != "HR")
+                            {
+                                <p><strong>@des.Name</strong></p>
+                                <ul>
+                                    @foreach (var feat in Model.displayFeaturesDesignations)
+                                    {
+                                        if (feat.DescriptionName == des.Name) // Match features with designation
+                                        {
+                                            <li style="list-style-type: none;">@feat.FeatureName</li>
+                                        }
+                                    }
+                                </ul>
+                            }
+                        }
+
+                    </ul>
+                </div>
+                <div class="text-center">Total Members :@item.MaxMembers</div>
+                <hr>
+                <div class="text-center mb-4"><button class="btn btn-warning px-10 rounded-pill" style="box-shadow: 0px 0px 7px rgba(85, 85, 85, 0.558);">$@item.Price</button></div>
+                <div class="text-center mb-4">
+                    <a  href="/SuperAdmin/EditPlan" class="btn btn-warning px-10 rounded-pill" style="box-shadow: 0px 0px 7px rgba(85, 85, 85, 0.558);">Edit</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@* -------------------------------------------------------------------------------------------------------- *@
 @section Scripts {
     <script>
         $(document).ready(function () {
@@ -103,11 +183,19 @@
             $("#featureForm").on("submit", function (event) {
                 event.preventDefault();
 
+                var selectedDesignation = [];
+                $("input[type='checkbox']:checked").each(function () {
+                    selectedDesignation.push($(this).val());
+                });
+
+
                 var formData = {
                     FeatureName: $("#featureName").val(),
                     FeatureURL: $("#featureURL").val(),
-                    FeatureLogo: $("#featureLogo").val()
+                    FeatureLogo: $("#featureLogo").val(),
+                    SelectedDesignationIds : selectedDesignation
                 };
+                console.log(formData);
 
                 $.ajax({
                     method: "POST",

@@ -34,10 +34,33 @@ namespace weekday.Pages.SuperAdmin
         public List<Features> features { get; set; }
 
         public PlanData PlanData { get; set; }
+
+        public List<PLans> PriceData { get; set; }
+
+        public List<Designation> DesignationsList { get; set; }
+
+        public List<DisplayFeaturesDesignation> displayFeaturesDesignations { get; set; }
+
         public void OnGet()
         {
-
+            PriceData = _context.plans.ToList();
+            DesignationsList = _context.designation.ToList();
             features = _context.feature.ToList();
+
+            displayFeaturesDesignations = (from features in _context.feature
+                                          join
+                                          Designation in _context.designation on
+                                          features.designationId equals Designation.DesignationId
+                                          select new DisplayFeaturesDesignation
+                                          {
+                                              DesignationId = Designation.DesignationId,
+                                              DescriptionName = Designation.Name,
+                                              FeatureId = features.FeatureID,
+                                              FeatureName = features.FeatureName
+                                          }).ToList();
+
+
+
 
         }
 
@@ -50,15 +73,21 @@ namespace weekday.Pages.SuperAdmin
 
             if (formData !=  null)
             {
-                var newFeature = new Features
+                var featuresToAdd = new List<Features>();
+                foreach (var item in formData.SelectedDesignationIds)
                 {
-                    FeatureName = formData.FeatureName,
-                    FeatureURL = formData.FeatureURL,
-                    FeatureLogo = formData.FeatureLogo,
-                    designationId = 0
-                };
+                    var newFeature = new Features
+                    {
+                        FeatureName = formData.FeatureName,
+                        FeatureURL = formData.FeatureURL,
+                        FeatureLogo = formData.FeatureLogo,
+                        designationId = item
+                    };
+                    featuresToAdd.Add(newFeature);
+                }
 
-                _context.feature.Add(newFeature);
+
+                _context.feature.AddRange(featuresToAdd);
                 await _context.SaveChangesAsync();
                 return new JsonResult(new { success = true });
             }
@@ -117,6 +146,8 @@ namespace weekday.Pages.SuperAdmin
         public string FeatureURL { get; set; }
 
         public string FeatureLogo { get; set; }
+
+        public List<int> SelectedDesignationIds { get; set; }
     }
 
     public class PlanData

@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Data.Entity;
+using weekday.Middleware;
 using weekday.Models.ProjectManagerModel;
 
 namespace weekday.Pages.Project_Manager
@@ -26,8 +28,19 @@ namespace weekday.Pages.Project_Manager
 
         public List<ProjectDisplay> employeeProjects = new List<ProjectDisplay>();
 
+        public int PM_id { get; set; }
+        public int Org_id { get; set; }
+        public string DesignationName { get; set; }
+        public int Designation_id { get; set; }
+
         public void  OnGet()
         {
+/*
+            PM_id = Convert.ToInt32(User.FindFirst("empID")?.Value ?? throw new CustomExceptionClass("Employee ID claim not found"));
+            Org_id = Convert.ToInt32(User.FindFirst("OrgID")?.Value ?? throw new CustomExceptionClass("Organization ID claim not found"));
+            DesignationName = User.FindFirst("DesigName")?.Value ?? throw new CustomExceptionClass("Designation Name claim not found");
+            Designation_id = Convert.ToInt32(User.FindFirst("DesigID")?.Value ?? throw new CustomExceptionClass("Designation ID claim not found"));*/
+
             employeeProjects = (from project in _context.project
                                 join team in _context.team on project.ProjectId equals team.ProjectId
                                 join teamMember in _context.teamMembers on team.TeamId equals teamMember.TeamId
