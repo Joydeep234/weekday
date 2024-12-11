@@ -4,8 +4,262 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<h1>@ViewData["Title"]</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary px-0 py-3">
+    <div class="container-xl max-w-screen-xl">
+        <!-- Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="https://preview.webpixels.io/web/img/logos/clever-light.svg" class="h-8" alt="...">
+        </a>
+        <!-- Navbar toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarCollapse">
+            
+            <!-- Right navigation -->
+            <div class="navbar-nav ms-lg-4">
+                <button type="button" class="btn btn-sm btn-light text-dark font-semibold" data-bs-toggle="modal" data-bs-target="#featureModal">
+                    Add Feature
+                </button>
+            </div>
+            
+            <!-- Action -->
+            <div class="navbar-nav ms-lg-4">
+                <button type="button" class="btn btn-sm btn-light text-dark font-semibold" data-bs-toggle="modal" data-bs-target="#planModal">
+                    Add Plan
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
 
-<div>
-    
+
+<!-- Feature Modal -->
+<div class="modal fade" id="featureModal" tabindex="-1" aria-labelledby="featureModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="featureModalLabel">New Feature</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="p-4" method="post" id="featureForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="text" id="featureName" asp-for="featureInsert.FeatureName" placeholder="Feature Name*" class="form-control mb-3">
+                    <span asp-validation-for="featureInsert.FeatureName" class="text-danger"></span>
+
+                    <input type="text" id="featureURL" asp-for="featureInsert.FeatureURL" placeholder="Feature URL*" class="form-control mb-3">
+                    <span asp-validation-for="featureInsert.FeatureURL" class="text-danger"></span>
+
+                    <input type="text" id="featureLogo" asp-for="featureInsert.FeatureLogo" placeholder="Feature Icon" class="form-control mb-3">
+                    <span asp-validation-for="featureInsert.FeatureLogo" class="text-danger"></span>
+
+                    <!-- Dropdown with checkboxes for designations -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="designationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select Designations
+                        </button>
+                        <ul class="dropdown-menu w-100" aria-labelledby="designationDropdown">
+                            @foreach (var designation in Model.DesignationsList)
+                            {
+                                <li class="dropdown-item">
+                                    <input type="checkbox" class="form-check-input" id="designation_@designation.DesignationId" name="SelectedDesignations" value="@designation.DesignationId">
+                                    <label for="designation_@designation.DesignationId">@designation.Name</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" id="saveFeature">Save Feature</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </div>
+
+<!-- Plan Modal -->
+<div class="modal fade" id="planModal" tabindex="-1" aria-labelledby="planModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="planModalLabel">New Plan</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="p-4" method="post" id="plansForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="text" id="PlanName" asp-for="insertPlan.PlanName" placeholder="Plan Name*" class="form-control mb-3">
+                    <span asp-validation-for="insertPlan.PlanName" class="text-danger"></span>
+
+                    <input type="number" id="duration" asp-for="insertPlan.Duration" placeholder="Duration*" class="form-control mb-3">
+                    <span asp-validation-for="insertPlan.Duration" class="text-danger"></span>
+
+                    <input type="number" id="maxMembers" asp-for="insertPlan.MaxMembers" placeholder="Max Members*" class="form-control mb-3">
+                    <span asp-validation-for="insertPlan.MaxMembers" class="text-danger"></span>
+
+                    <input type="number" step="0.01" id="price" asp-for="insertPlan.Price" placeholder="Price*" class="form-control mb-3">
+                    <span asp-validation-for="insertPlan.Price" class="text-danger"></span>
+
+                    <!-- Dropdown with checkboxes for features -->
+                    <!-- Dropdown with checkboxes for features -->
+                    
+                    <div class="dropdown form-select p-0 m-0">
+                        <button class="btn bg-white dropdown-toggle w-full text-start" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select Features*
+                        </button>
+                        <ul class="dropdown-menu w-full" aria-labelledby="dropdownMenuButton">
+                            @foreach (var feature in Model.features)
+                            {
+                                <li class="p-1  text-body font-semibold">
+                                    <input type="checkbox" class="form-check-input mx-2" id="feature_@feature.FeatureID" value="@feature.FeatureID" />
+                                    <label for="feature_@feature.FeatureID" >@feature.FeatureName</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" id="savePlan">Save Plan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@* --------------------------------------------------------------------------------------------------------- *@
+
+<div class="d-flex justify-content-center my-20">
+    @foreach (var item in Model.PriceData)
+    {
+        <div class="d-flex mx-10 flex-wrap" style="box-shadow: 0px 0px 20px rgba(57, 57, 57, 0.752); border-radius: 1em;">
+            <div class="price-card" style="min-height: 300px;width: 280px;">
+                <div class="text-center p-3 fs-4" style=""><b>@item.PlanName</b></div>
+                <div class="ps-4 border" style="min-height:240px ;">
+                    <ul>
+                        @foreach (var des in Model.DesignationsList)
+                        {
+                            if (des.Name != "HR")
+                            {
+                                <p><strong>@des.Name</strong></p>
+                                <ul>
+                                    @foreach (var feat in Model.displayFeaturesDesignations)
+                                    {
+                                        if (feat.DescriptionName == des.Name) // Match features with designation
+                                        {
+                                            <li style="list-style-type: none;">@feat.FeatureName</li>
+                                        }
+                                    }
+                                </ul>
+                            }
+                        }
+
+                    </ul>
+                </div>
+                <div class="text-center">Total Members :@item.MaxMembers</div>
+                <hr>
+                <div class="text-center mb-4"><button class="btn btn-warning px-10 rounded-pill" style="box-shadow: 0px 0px 7px rgba(85, 85, 85, 0.558);">$@item.Price</button></div>
+                <div class="text-center mb-4">
+                    <a  href="/SuperAdmin/EditPlan" class="btn btn-warning px-10 rounded-pill" style="box-shadow: 0px 0px 7px rgba(85, 85, 85, 0.558);">Edit</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@* -------------------------------------------------------------------------------------------------------- *@
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Submit Feature Form
+            $("#featureForm").on("submit", function (event) {
+                event.preventDefault();
+
+                var selectedDesignation = [];
+                $("input[type='checkbox']:checked").each(function () {
+                    selectedDesignation.push($(this).val());
+                });
+
+
+                var formData = {
+                    FeatureName: $("#featureName").val(),
+                    FeatureURL: $("#featureURL").val(),
+                    FeatureLogo: $("#featureLogo").val(),
+                    SelectedDesignationIds : selectedDesignation
+                };
+                console.log(formData);
+
+                $.ajax({
+                    method: "POST",
+                    url: "/SuperAdmin/Dashboard?handler=InsertFeature",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Feature Saved successfully!");
+                            $("#featureName, #featureURL, #featureLogo").val('');
+                        } else {
+                            alert("Failed to save the feature.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while saving the feature.");
+                    }
+                });
+            });
+
+            // Submit Plan Form
+            $("#plansForm").on("submit", function (event) {
+                event.preventDefault();
+
+
+                var selectedFeatures = [];
+                $("input[type='checkbox']:checked").each(function () {
+                    selectedFeatures.push($(this).val());
+                });
+
+                var formData = {
+                    PlanName: $("#PlanName").val(),
+                    Duration: $("#duration").val(),
+                    MaxMembers: $("#maxMembers").val(),
+                    Price: $("#price").val(),
+                    SelectedFeatureIds: selectedFeatures
+                };
+
+                console.log(formData)
+
+                $.ajax({
+                    method: "POST",
+                    url: "/SuperAdmin/Dashboard?handler=AddPlan",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        RequestVerificationToken: $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Plan Saved successfully!");
+                            $("#PlanName, #duration, #maxMembers, #price").val('');
+                        } else {
+                            alert("Failed to save the plan.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while saving the plan.");
+                    }
+                });
+            });
+        });
+    </script>
+}

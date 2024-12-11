@@ -81,6 +81,7 @@
                 </div>
             </div>
           </li>
+          @await Component.InvokeAsync("Navbar")
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="bi bi-chat"></i> Messages
@@ -102,7 +103,7 @@
         
         <ul class="navbar-nav mb-5">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" asp-page="/Account">
               <i class="fa-regular fa-user"></i>Account
             </a>
           </li>

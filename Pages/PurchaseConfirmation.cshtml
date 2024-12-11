@@ -1,0 +1,41 @@
+@page
+@model weekday.Pages.PurchaseConfirmation
+@{
+    Layout = "_AccountLayout";
+    ViewData["Title"] = "PurchaseConfirmation";
+}
+
+
+    <a id="gotodashboard" asp-page="/Manager/Dashboard" class="btn btn-secondary w-1/4" style="display: none;">goto Dashboard</a>
+
+<div class="d-flex align-items-center justify-content-center" style="height: 100vh; width: 100%;">
+    <div class="" id="spinicon">
+        <i class="fa-solid fa-spinner fa-spin fs-center ms-18" style="color: #757575; font-size: 5rem;" ></i>
+        <p class="text-center fs-3">
+            Wait for a minute.....
+        </p>
+    </div>
+        <div class="" id="purchase" style="display: none; height: 50vh; width: 50%;">
+        <div class="rounded-2 d-flex flex-column align-items-center justify-content-center"  style="height: 50vh; width: 100%; box-shadow: 0px 0px 7px rgb(47, 47, 47); ">
+        <p class="text-success fs-2">Thankyou for Purchasing</p>
+        <i class="fa-solid fa-check fs-1 border rounded-circle p-5 border-success mt-3" style="color: #0b9d28;"></i>
+    </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+            setTimeout(()=>{
+                $('#spinicon').css('display','none');
+                $('#purchase').css('display','block');
+                $('#gotodashboard').css('display','block');
+            },5000)
+            
+        })
+    </script>
+}
+
+
+

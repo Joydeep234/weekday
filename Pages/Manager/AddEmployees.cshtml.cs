@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,7 @@ using weekday.Models;
 
 namespace weekday.Pages.Manager
 {
+    [Authorize (Policy ="MANAGER")]
     public class AddEmployees : PageModel
     {
         private readonly AppDbcontext _context;
@@ -58,6 +60,12 @@ namespace weekday.Pages.Manager
                 var fileStream = new FileStream(filepath,FileMode.Create);
                 await employeeSelection.ImageURL.CopyToAsync(fileStream);
 
+                var managerorgidclaims = User.FindFirst("OrgID");
+                int managerid = new int();
+                if(managerorgidclaims != null){
+                    managerid = Convert.ToInt32(managerorgidclaims);
+                }
+
                 var  emp = new Employee{
                     FirstName= employeeSelection.FirstName,
                     LastName = employeeSelection.LastName,
@@ -66,7 +74,7 @@ namespace weekday.Pages.Manager
                     Status = employeeSelection.Status,
                     ImageURL = filename,
                     Password = employeeSelection.Password,
-                    OrgId = 2
+                    OrgId = managerid
                 };
 
                 await _context.employee.AddAsync(emp);

@@ -29,13 +29,21 @@ builder.Services.AddAuthorization(options =>
         options.AddPolicy("MANAGER", policy =>
         policy.RequireClaim("DesigName", "MANAGER"));
         options.AddPolicy("PROJECT_MANAGER", policy =>
-        policy.RequireClaim("DesigName", "PROJECT_MANAGER"));
+        policy.RequireClaim("DesigName", "PROJECT MANAGER"));
         options.AddPolicy("TEAM_LEAD", policy =>
         policy.RequireClaim("DesigName", "TEAM_LEAD"));
         options.AddPolicy("TEAM_MEMBERS", policy =>
         policy.RequireClaim("DesigName", "TEAM_MEMBERS"));
         options.AddPolicy("HR", policy =>
         policy.RequireClaim("DesigName", "HR"));
+         options.AddPolicy("NoDesignationOrManager", policy =>
+            policy.RequireAssertion(context =>
+            {
+                var desigNameClaim = context.User.FindFirst(c => c.Type == "DesigName");
+                var desigName = desigNameClaim?.Value;
+                return string.IsNullOrEmpty(desigName) || desigName == "MANAGER";
+            })
+        );
     });
 
 var app = builder.Build();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace weekday.Pages.Manager
         public string teamstatus { get; set; }
         public double taskcomplete { get; set; }
     }
+    [Authorize (Policy ="MANAGER")]
     public class ProjectDetails : PageModel
     {
         private readonly AppDbcontext _context;
@@ -135,8 +137,8 @@ namespace weekday.Pages.Manager
                     Name = team.Name,
                     Status = team.Status.ToString(),
                     Description = team.Description,
-                    ManagerId = 1,
-                    OrgId = 2
+                    ManagerId = Convert.ToInt32(User.FindFirst("empID")),
+                    OrgId = Convert.ToInt32(User.FindFirst("OrgID"))
                 };
                 await _context.team.AddAsync(newTeam);
                 await _context.SaveChangesAsync();

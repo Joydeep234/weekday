@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using weekday.Pages.HR;
 
 namespace weekday.Pages.ProjectManager
 {
+    [Authorize (Policy ="PROJECT_MANAGER")]
     public class ProjectDiscriptionModel : PageModel
     {
         public readonly AppDbcontext _context;

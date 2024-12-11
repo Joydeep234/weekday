@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Data.Entity;
+using weekday.Middleware;
 using weekday.Models;
 
 namespace weekday.Pages.Manager
 {
+    [Authorize (Policy ="MANAGER")]
     public class CreateProjects : PageModel
     {
         private readonly AppDbcontext _context;
@@ -29,29 +32,30 @@ namespace weekday.Pages.Manager
         }
 
         public async Task<IActionResult> OnPostAddProject(){
-            try
-            {
-                if(!ModelState.IsValid)throw new Exception("Some feild is empty");
+            var empidClaims = User.FindFirst("empID");
+            var orgidclaims = User.FindFirst("OrgId");
+            int empid = 0,orgid=0;
+            if(empidClaims!=null){
+                empid = Convert.ToInt32(empidClaims);
+            }
+            if(orgidclaims!=null){
+                orgid = Convert.ToInt32(orgidclaims);
+            }
+             if(!ModelState.IsValid)throw new CustomExceptionClass("Some feild is empty");
                 var project = new Project{
                     Name = projectmodel.Name,
                     About = projectmodel.About,
                     CreatedAt = projectmodel.CreatedAt,
                     Deadline = projectmodel.Deadline,
-                    CreatedByID = 1,
+                    CreatedByID = empid,
                     Details = projectmodel.Details,
                     Status = projectmodel.Status.ToString(),
-                    OrgId = 2
+                    OrgId = orgid
                 };
                 await _context.project.AddAsync(project);
                 await _context.SaveChangesAsync();
                 System.Console.WriteLine($"project id ==>{project.ProjectId}");
                 return RedirectToPage("../Manager/RecentProject");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Create Project Error => {e.Message}");
-                return Page();
-            }
         }
     }
 }

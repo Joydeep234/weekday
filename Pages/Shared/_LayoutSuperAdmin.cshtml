@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/webpixels.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Manager/manager.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/weekday.styles.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
+    @* <link rel="stylesheet" href="~/weekday.styles.css" asp-append-version="true" /> *@
+    <link rel="stylesheet" href="~/css/Manager/SuperAdmin.css" asp-append-version="true"/>
 
 </head>
 <body>
-    <a class="nav-link" asp-page="../Manager/Dashboard">
-        <i class="bi bi-house"></i> Dashboard
-    </a>
+    
     <div>
         @RenderBody()
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
