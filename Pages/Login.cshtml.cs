@@ -43,7 +43,7 @@ namespace weekday.Pages
                 {
                     "HR" => RedirectToPage("HR/Dashboard"),
                     "MANAGER" => RedirectToPage("Manager/Dashboard"),
-                    "PROJECT_MANAGER" => RedirectToPage("ProjectManager/Dashboard"),
+                    "PROJECT MANAGER" => RedirectToPage("ProjectManager/Dashboard"),
                     "TEAM_LEAD" => RedirectToPage("TeamLead/Board"),
                     "TEAM_MEMBERS" => RedirectToPage("TeamMember/Dashboard"),
                     _ => RedirectToPage("Index") 

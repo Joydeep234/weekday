@@ -46,13 +46,13 @@
                     <span asp-validation-for="TaskMdIP.DeadlineM"></span>
                 </div>
                 <div>
-                    <label>Current Status: @Model.TaskMdIP.StatusM</label>
-                    @* <input asp-for="TaskMdIP.StatusM" readonly/> *@
-                    
-                </div>
-                <div>
                     <label>Last Updated time: </label>
                     <input asp-for="TaskMdIP.LatestUpdateTimeM" readonly/>
+                    
+                </div>
+                <div style="display: none;">
+                    <label>Last Updated time: </label>
+                    <input asp-for="TaskMdIP.AssignedForIdM" readonly/>
                     
                 </div>
                 <div>

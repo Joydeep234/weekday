@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using weekday.Models.Team_Member;
 
 namespace weekday.Pages.TeamMember
 {
+    [Authorize(Policy = "TEAM_MEMBERS")]
     public class TaskCompletionModel : PageModel
     {
         private readonly AppDbcontext _context;
@@ -51,13 +53,11 @@ namespace weekday.Pages.TeamMember
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid) {
+            
                 var editWork = await _context.projecttask.FirstOrDefaultAsync(p => p.TaskId == TaskMdIP.TaskIdM);
                 if (editWork != null) {
-                    editWork.TaskId = TaskMdIP.TaskIdM;
                     editWork.Status = TaskMdIP.StatusM.ToUpper();
                     editWork.LatestUpdateTime = DateTime.Now;
-                    editWork.Details=TaskMdIP.DetailsM;
                     if (TaskMdIP.StatusM.ToUpper() == "DONE")
                     {
                         editWork.EndDate = DateTime.Now;
@@ -68,7 +68,7 @@ namespace weekday.Pages.TeamMember
                     //int prjid, string prjName
                     //return RedirectToPage("/TeamMember/ProjectDashBoard");
                 }
-            }
+            
 
             return Page();
         }

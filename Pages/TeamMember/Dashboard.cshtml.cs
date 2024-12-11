@@ -13,9 +13,11 @@ using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Data.Entity;
 using weekday.Models.Team_Member;
+using Microsoft.AspNetCore.Authorization;
 
 namespace weekday.Pages.TeamMember
 {
+    [Authorize (Policy= "TEAM_MEMBERS")]
     public class Dashboard : PageModel
     {
         private readonly AppDbcontext _context;
@@ -38,9 +40,9 @@ namespace weekday.Pages.TeamMember
         public int ProjectId;
         public string ProjectName;
         //prjid and prjName getting from ProjectDashboard page
-        public async Task OnGetAsync(int prjid, string prjName, int empId = 1) //assigned parameters follows un-assigned parameters 
+        public async Task OnGetAsync(int prjid, string prjName, int empId) //assigned parameters follows un-assigned parameters 
         {// empId need to get from session after implemention login page 
-            employeeID = empId;
+            employeeID = int.Parse(User.FindFirst("empID")?.Value);
             ProjectName = prjName;
             ProjectId = prjid;
 
