@@ -5,6 +5,7 @@ using weekday.Data.Context;
 using weekday.Models;
 using weekday.Data.Entity;
 using Microsoft.AspNetCore.Authorization;
+using weekday.Middleware;
 
 namespace weekday.Pages.Team_Lead
 {
@@ -27,14 +28,23 @@ namespace weekday.Pages.Team_Lead
 
         public List<Team> teamList { get; set; } = new List<Team>();
 
+         public int TL_id { get; set; }
+        public int Org_id { get; set; }
+        public string? DesignationName { get; set; }
+        public int Designation_id { get; set; }
         public void OnGet()
         {
-            
+            TL_id = Convert.ToInt32(User.FindFirst("empID")?.Value ?? throw new CustomExceptionClass("Employee ID claim not found"));
+            Org_id = Convert.ToInt32(User.FindFirst("OrgID")?.Value ?? throw new CustomExceptionClass("Organization ID claim not found"));
+            DesignationName = User.FindFirst("DesigName")?.Value ?? throw new CustomExceptionClass("Designation Name claim not found");
+            Designation_id = Convert.ToInt32(User.FindFirst("DesigID")?.Value ?? throw new CustomExceptionClass("Designation ID claim not found"));
+
+
             projectDetails = (from p in _context.project
                                     join t in _context.team on p.ProjectId equals t.ProjectId
                                     join tM in _context.teamMembers on t.TeamId equals tM.TeamId
                                     join e in _context.employee on t.ManagerId equals e.EmployeeId 
-                                    where tM.MemberId == 3 // Assuming 3 is the current Team Member ID (e.g., Team Lead)
+                                    where tM.MemberId == TL_id // Assuming 3 is the current Team Member ID (e.g., Team Lead)
                                     select new ProjectDetails
                                     {
                                         ProjectId = p.ProjectId,
@@ -57,7 +67,7 @@ namespace weekday.Pages.Team_Lead
             employees = (from E in _context.employee
                                join D in _context.designation
                                on E.DesignationId equals D.DesignationId
-                               where D.Name == "TEAM_MEMBER"
+                               where D.Name == "TEAM_MEMBERS"
                                select E)
                                .ToList();
 

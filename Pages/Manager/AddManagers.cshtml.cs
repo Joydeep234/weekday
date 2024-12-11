@@ -149,7 +149,7 @@ namespace weekday.Pages.Manager
                         MemberId = i,
                         DesignationId = desig.DesignationId,
                         status = "Active",
-                        OrgId = Convert.ToInt32(User.FindFirst("OrgID"))                        
+                        OrgId = Convert.ToInt32(User.FindFirst("OrgID").Value)                        
                     };
                     await _context.teamMembers.AddAsync(teammem);
                     await _context.SaveChangesAsync();

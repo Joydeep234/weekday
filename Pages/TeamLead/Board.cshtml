@@ -761,8 +761,8 @@
                                 response.teamMembers.forEach((item) => {
                                     const userName = item.firstName + " " + item.lastName;
                                     
-                                    $("#profileList").append(`<a class="dropdown-item profile-item" href="#" data-user-id="${item.employeeId}" data-user-name="${userName}" data-user-img="${imageURL}">
-                                            <img src="${imageURL}" alt="Profile">
+                                    $("#profileList").append(`<a class="dropdown-item profile-item" href="#" data-user-id="${item.employeeId}" data-user-name="${userName}" data-user-img="${item.imageURL}">
+                                            <img src="${item.imageURL}" alt="Profile">
                                                          ${userName}
                                           </a>`)
                                 });

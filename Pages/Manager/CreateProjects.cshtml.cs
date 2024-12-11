@@ -34,12 +34,13 @@ namespace weekday.Pages.Manager
         public async Task<IActionResult> OnPostAddProject(){
             var empidClaims = User.FindFirst("empID");
             var orgidclaims = User.FindFirst("OrgId");
-            int empid = 0,orgid=0;
+            Int32 empid = new Int32();
+            Int32 orgid=new Int32();
             if(empidClaims!=null){
-                empid = Convert.ToInt32(empidClaims);
+                empid = Convert.ToInt32(empidClaims.Value);
             }
             if(orgidclaims!=null){
-                orgid = Convert.ToInt32(orgidclaims);
+                orgid = Convert.ToInt32(orgidclaims.Value);
             }
              if(!ModelState.IsValid)throw new CustomExceptionClass("Some feild is empty");
                 var project = new Project{

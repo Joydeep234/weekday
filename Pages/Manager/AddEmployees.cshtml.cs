@@ -61,9 +61,9 @@ namespace weekday.Pages.Manager
                 await employeeSelection.ImageURL.CopyToAsync(fileStream);
 
                 var managerorgidclaims = User.FindFirst("OrgID");
-                int managerid = new int();
+                Int32 managerid = new Int32();
                 if(managerorgidclaims != null){
-                    managerid = Convert.ToInt32(managerorgidclaims);
+                    managerid = Convert.ToInt32(managerorgidclaims.Value);
                 }
 
                 var  emp = new Employee{

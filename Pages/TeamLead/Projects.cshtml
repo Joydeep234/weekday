@@ -19,7 +19,7 @@
                         {
                             foreach(var projectCard in Model.projectDetails)
                             {
-                                if(projectCard.ProjectStatus.Equals("TODO"))
+                                if(projectCard.ProjectStatus.Equals("ToDo"))
                                 {
                                     <div class="card">
                                         <div class="card-body">
@@ -57,7 +57,7 @@
                         {
                             foreach (var projectCard in Model.projectDetails)
                             {
-                                if (projectCard.ProjectStatus.Equals("IN-PROGRESS"))
+                                if (projectCard.ProjectStatus.Equals("OnGoing"))
                                 {
                                     <div class="card">
                                         <div class="card-body">
@@ -95,7 +95,7 @@
                         {
                             foreach (var projectCard in Model.projectDetails)
                             {
-                                if (projectCard.ProjectStatus.Equals("DONE"))
+                                if (projectCard.ProjectStatus.Equals("Completed"))
                                 {
                                     <div class="card">
                                         <div class="card-body">

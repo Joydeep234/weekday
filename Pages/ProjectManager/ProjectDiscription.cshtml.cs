@@ -63,8 +63,7 @@ namespace weekday.Pages.ProjectManager
             Employees = await (from Employee in _context.employee
                                join Designation in _context.designation
                                on Employee.DesignationId equals Designation.DesignationId
-                               join teamMembers in _context.teamMembers on Employee.EmployeeId equals teamMembers.MemberId
-                               where Designation.DesignationId == 3 & teamMembers.status == "Active"
+                               where Designation.DesignationId == 3 
                                select new Employee
                                {
                                    EmployeeId = Employee.EmployeeId,
@@ -94,7 +93,7 @@ namespace weekday.Pages.ProjectManager
         [HttpPost]
         public async Task<IActionResult> OnPostCreateAsync([FromBody] FormData formData)
         {
-            bool team_exist = await _context.teamMembers.AnyAsync(x => x.TeamId == formData.teamId);
+            bool team_exist = await _context.teamMembers.AnyAsync(x => x.MemberId == formData.teamLeaderId);
             //var teamMember = await _context.teamMembers.FindAsync(formData.teamId);
 
             if (!team_exist)
@@ -105,7 +104,7 @@ namespace weekday.Pages.ProjectManager
                     TeamId = formData.teamId,
                     MemberId = formData.teamLeaderId,
                     DesignationId = 3,
-                    OrgId = 1,
+                    OrgId = Convert.ToInt32(User.FindFirst("OrgID").Value),
                     status = "InActive"
                 };
                 

@@ -34,7 +34,7 @@ namespace weekday.Pages.Project_Manager
                                 join team in _context.team on project.ProjectId equals team.ProjectId
                                 join teamMember in _context.teamMembers on team.TeamId equals teamMember.TeamId
                                 join Employee in _context.employee on teamMember.MemberId equals Employee.EmployeeId
-                                where Employee.EmployeeId == 1
+                                where Employee.EmployeeId == Convert.ToInt32(User.FindFirst("empID").Value)
                                 select new ProjectDisplay
                                 {
                                     ProjectId = project.ProjectId,

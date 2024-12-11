@@ -82,7 +82,7 @@ namespace weekday.Pages.TeamLead
             employees = (from E in _context.employee
                              join D in _context.designation
                              on E.DesignationId equals D.DesignationId
-                             where D.Name == "TEAM_MEMBERS" && D.OrgId == Org_id
+                             where D.Name == "TEAM_MEMBERS" && E.OrgId == Org_id
                              select E)
                              .ToList() ?? throw new CustomExceptionClass("No team members found");
 
@@ -125,7 +125,7 @@ namespace weekday.Pages.TeamLead
                                         join Tm in _context.teamMembers on T.TeamId equals Tm.TeamId
                                         join E in _context.employee on Tm.MemberId equals E.EmployeeId
                                         join D in _context.designation on E.DesignationId equals D.DesignationId
-                                        where T.ProjectId == ProjectId && T.TeamId == TeamId && D.Name == "TEAM_MEMBERS" && D.OrgId == Org_id
+                                        where T.ProjectId == ProjectId && T.TeamId == TeamId && D.Name == "TEAM_MEMBERS" && E.OrgId == Org_id
                                         select new ProjectTeamMembers
                                         {
                                             EmployeeId = E.EmployeeId,

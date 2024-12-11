@@ -137,8 +137,8 @@ namespace weekday.Pages.Manager
                     Name = team.Name,
                     Status = team.Status.ToString(),
                     Description = team.Description,
-                    ManagerId = Convert.ToInt32(User.FindFirst("empID")),
-                    OrgId = Convert.ToInt32(User.FindFirst("OrgID"))
+                    ManagerId = Convert.ToInt32(User.FindFirst("empID").Value),
+                    OrgId = Convert.ToInt32(User.FindFirst("OrgID").Value)
                 };
                 await _context.team.AddAsync(newTeam);
                 await _context.SaveChangesAsync();

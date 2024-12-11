@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Primitives;
 using weekday.Data.Context;
 using weekday.Data.Entity;
+using weekday.Middleware;
 
 namespace weekday.Pages.TeamLead
 {
@@ -20,11 +21,20 @@ namespace weekday.Pages.TeamLead
 
         public string ReporterImageURL { get; set; }
 
-
+         public int TL_id { get; set; }
+        public int Org_id { get; set; }
+        public string? DesignationName { get; set; }
+        public int Designation_id { get; set; }
         public TaskDetails? taskInfo { get; set; } = new TaskDetails();
 
         public void OnGet(int taskId, string imageURL)
         {
+            TL_id = Convert.ToInt32(User.FindFirst("empID")?.Value ?? throw new CustomExceptionClass("Employee ID claim not found"));
+            Org_id = Convert.ToInt32(User.FindFirst("OrgID")?.Value ?? throw new CustomExceptionClass("Organization ID claim not found"));
+            DesignationName = User.FindFirst("DesigName")?.Value ?? throw new CustomExceptionClass("Designation Name claim not found");
+            Designation_id = Convert.ToInt32(User.FindFirst("DesigID")?.Value ?? throw new CustomExceptionClass("Designation ID claim not found"));
+
+
             if(taskId != 0)
             {
                 taskInfo = (from T in _context.projecttask
@@ -35,7 +45,7 @@ namespace weekday.Pages.TeamLead
                             join E in _context.employee
                             on T.AssignedForId equals E.EmployeeId
                             where T.TaskId == taskId
-                            && T.AssignedById ==  3 // user session Data
+                            && T.AssignedById == TL_id && T.OrgId == Org_id  // user session Data
                             select new TaskDetails
                             {
                                 taskDetails = T,

@@ -17,7 +17,7 @@
                     {
                         foreach(var item in Model.employeeProjects)
                         {
-                            if (item.ProjectStatus == "New")
+                            if (item.ProjectStatus == "ToDo")
                             {
                                 <a asp-page="/ProjectManager/ProjectDiscription" asp-route-ProjectId="@item.ProjectId">
                                     <div class="card shadow-lg bg-surface-secondary mb-5">
