@@ -13,9 +13,11 @@ using Microsoft.Extensions.Logging;
 using weekday.Data.Context;
 using weekday.Data.Entity;
 using weekday.Models.Team_Member;
+using Microsoft.AspNetCore.Authorization;
 
 namespace weekday.Pages.TeamMember
 {
+    [Authorize (Policy= "TEAM_MEMBERS")]
     public class Dashboard : PageModel
     {
         private readonly AppDbcontext _context;

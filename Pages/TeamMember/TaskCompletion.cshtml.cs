@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using weekday.Models.Team_Member;
 
 namespace weekday.Pages.TeamMember
 {
+    [Authorize(Policy = "TEAM_MEMBERS")]
     public class TaskCompletionModel : PageModel
     {
         private readonly AppDbcontext _context;
